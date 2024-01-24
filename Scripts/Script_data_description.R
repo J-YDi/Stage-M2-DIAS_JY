@@ -352,7 +352,7 @@ Table_Station_select <- read_delim("data_modif/Table_FLORTOT_S_select_5A.csv",
 Worldmap <- map_data('worldHires')
 
 ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
-  coord_fixed(xlim=c(-5.5,7), ylim=c(42,51.5), ratio=1.4)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41.5,51.5), ratio=1.4)+
   labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
   theme_gdocs()+
   geom_point(data = Table_Station_select, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =5)+
@@ -371,7 +371,7 @@ Table_Station_select <- read_delim("data_modif/Table_FLORTOT_S_select.csv",
 Worldmap <- map_data('worldHires')
 
 ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
-  coord_fixed(xlim=c(-5.5,7), ylim=c(42,51.5), ratio=1.4)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41.5,51.5), ratio=1.4)+
   labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
   theme_gdocs()+
   geom_point(data = Table_Station_select, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =5)+
@@ -387,20 +387,23 @@ ggsave('maps_station_select.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table.Manche_select$lon)-1,max(Table.Manche_select$lon)+1), ylim=c(min(Table.Manche_select$lat)-0.5,max(Table.Manche_select$lat)+0.5), ratio=1.4)+
-  geom_point(data=Table.Manche_select ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_Manche_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+  geom_point(data=Table.Manche_select ,aes(y=lat,x=lon,colour=Code_point_Libelle,shape=Code_point_Libelle),size=5)+
+  scale_shape_manual(values = rep(c(15, 16, 17),10))
+ggsave('maps_Manche_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 300, height = 200, units = 'mm')
 
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table.Atlantic_select$lon)-1,max(Table.Atlantic_select$lon)+1), ylim=c(min(Table.Atlantic_select$lat)-0.5,max(Table.Atlantic_select$lat)+0.5), ratio=1.4)+
-  geom_point(data=Table.Atlantic_select ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_Atlantic_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+  geom_point(data=Table.Atlantic_select ,aes(y=lat,x=lon,colour=Code_point_Libelle, shape = Code_point_Libelle),size=5)+
+  scale_shape_manual(values = rep(c(15, 16, 17),10))
+ggsave('maps_Atlantic_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 300, height = 200, units = 'mm')
 
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table.Med_select$lon)-1,max(Table.Med_select$lon)+1), ylim=c(min(Table.Med_select$lat)-0.5,max(Table.Med_select$lat)+0.5), ratio=1.4)+
-  geom_point(data=Table.Med_select ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_Med_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+  geom_point(data=Table.Med_select ,aes(y=lat,x=lon,colour=Code_point_Libelle, shape =Code_point_Libelle),size=5)+
+  scale_shape_manual(values = rep(c(15, 16, 17),10))
+ggsave('maps_Med_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 300, height = 200, units = 'mm')
 
 
 # Nombre de taxons detectes uniquement pour les stations selectionnees 5A>

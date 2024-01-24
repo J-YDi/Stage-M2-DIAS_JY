@@ -433,9 +433,9 @@ Table_St_select_5
 
 # Creation de tableau par facade pour les stations selectionnees
 # Channel
-Table.Manche_select <- filter(Table_St_select_5, Code.Region %in% c(11,12,13))
+Table.Manche_select <- filter(Table_Station_select, Code.Region %in% c(11,12,13))
 # Atlantic
-Table.Atlantic_select <- filter(Table_St_select_5, Code.Region %in% c(21,22,23))
+Table.Atlantic_select <- filter(Table_Station_select, Code.Region %in% c(21,22,23))
 # Mediterranean
 Table.Med_select <- filter(Table_Station_select, Code.Region %in% c(31,32))
 
