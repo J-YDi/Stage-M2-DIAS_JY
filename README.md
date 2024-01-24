@@ -31,8 +31,6 @@ Dossiers crees par les scripts (non present sur le Github) :
   data_modif : lieu de stockage des nouveaux jeu de donnees à partir de Script_data_import
   
   output : lieu de stockage de sorties de R, contenant lui meme des dossiers crees par les scripts d'analyse
-  
-    data : resultats sous forme de tableaux
-    
+    data : resultats sous forme de tableaux et 
     graphs : resultats sous forme de graphes, qui peuvent eux meme avoir des dossiers par analyse
     
