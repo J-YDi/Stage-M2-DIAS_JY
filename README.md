@@ -25,9 +25,14 @@ Dossier data :
   Script_data_import.R . Les donnees sont trop importantes en taille pour y etre stockées, le fichier takedata permet 
   de les telecharger a partir d'un onedrive.
 
+
 Dossiers crees par les scripts (non present sur le Github) :
+
   data_modif : lieu de stockage des nouveaux jeu de donnees à partir de Script_data_import
+  
   output : lieu de stockage de sorties de R, contenant lui meme des dossiers crees par les scripts d'analyse
+  
     data : resultats sous forme de tableaux
+    
     graphs : resultats sous forme de graphes, qui peuvent eux meme avoir des dossiers par analyse
     
