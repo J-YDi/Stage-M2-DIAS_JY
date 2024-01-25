@@ -362,6 +362,16 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
   scale_colour_discrete(name = "Code Region")
 ggsave('maps_station_select5M.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
+ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41.5,51.5), ratio=1.4)+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  theme_gdocs()+
+  geom_point(data = Table_St_select_20, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =5)+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
+        panel.background = element_rect(fill = 'lightblue2'))+
+  guides(color = guide_legend(override.aes = list(size = 10)))+
+  scale_colour_discrete(name = "Code Region")
+ggsave('maps_station_select20A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
 
 Table_Station_select <- read_delim("data_modif/Table_FLORTOT_S_select.csv", 

@@ -428,6 +428,23 @@ Table_St_select_5 <- filter(Table,
 write.csv2(Table_St_select_5,file="data_modif/Table_FLORTOT_S_select_5A.csv", row.names = FALSE,dec = ".")
 
 Table_St_select_5 
+# Critere serie temporelle de plus de 20 ans
+Table_St_select_20 <- filter(Table,
+                             Code_point_Libelle == "Point 1 Dunkerque" | 
+                               Code_point_Libelle == "Point 1 Boulogne" |
+                               Code_point_Libelle == "At so" |
+                               Code_point_Libelle == "Anse de Carteau 2" |
+                               Code_point_Libelle == "Villefranche"|
+                               Code_point_Libelle == "Lazaret (a)"|
+                               Code_point_Libelle == "Le Croisic (a)"|
+                               Code_point_Libelle == "Le Cornard"|
+                               Code_point_Libelle == "L'Eperon (terre)"|
+                               Code_point_Libelle == "Boyard"|
+                               Code_point_Libelle == "Cabourg"|
+                               Code_point_Libelle == "Antifer ponton pétrolier"|
+                               Code_point_Libelle == "Arcachon - Bouée 7"|
+                               Code_point_Libelle == "Loguivy"|
+                               Code_point_Libelle == "les Hébihens")
 
 
 
