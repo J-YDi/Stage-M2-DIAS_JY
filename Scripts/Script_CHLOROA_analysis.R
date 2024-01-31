@@ -245,6 +245,28 @@ t <- filter(data_LIQ,Code.Region %in% c(11,12,13))
 Table <- read_delim("data_modif/Table_S_select5A_chloro.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
+Table <- read_delim("data_modif/Table_S_chloro_oldnew.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+# Tableau pour comparaison spectro
+Table <- filter(Table, Methode.chloro == "CHLOROA_SPECMO04"
+                |Methode.chloro == "CHLOROA_SPECMO83"|
+                  Methode.chloro == "CHLOROA_FLUO04"
+                     |Methode.chloro == "CHLOROA_FLUO87" |Methode.chloro == "CHLOROA_CHRL01"
+                     |Methode.chloro == "CHLOROA_CHRL00"|
+                  Methode.chloro == "CHLOROA_SPECMO04"
+                        |Methode.chloro == "CHLOROA_SPECMO83"|Methode.chloro == "CHLOROA_FLUO04"
+                        |Methode.chloro == "CHLOROA_FLUO87")
+
+Table <- filter(Table, Methode.chloro == "CHLOROA_SPECMO83"
+                |Methode.chloro == "CHLOROA_FLUO87" 
+                |Methode.chloro == "CHLOROA_CHRL00")
+
+Table_hplc <- filter(Table, Methode.chloro == "CHLOROA_CHRL01"
+                     |Methode.chloro == "CHLOROA_CHRL00")
+
+
 ggplot(filter(Table,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=Month,y=Code_point_Libelle),col = "grey")+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = CHLOROA,shape=Methode.chloro))+
@@ -253,7 +275,7 @@ ggplot(filter(Table,Code.Region %in% c(11,12,13)))+
   facet_wrap(~Year)+
   labs(title = " Chl-A region Manche", x= "Mois", y="Station",size=0.5,shape="Methode")+
   theme(legend.position = "left",legend.box = "horizontal")
-ggsave('Chloro_methode_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
+ggsave('Chloro_spectro_Manche_oldnew.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
 
 ggplot(filter(Table,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=Month,y=Code_point_Libelle),col = "grey")+
@@ -263,7 +285,7 @@ ggplot(filter(Table,Code.Region %in% c(21,22,23)))+
   facet_wrap(~Year)+
   labs(title = " Chl-A region Atlantique", x= "Mois", y="Station",size=0.5,shape="Methode")+
   theme(legend.position = "left",legend.box = "horizontal")
-ggsave('Chloro_methode_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
+ggsave('Chloro_spectro_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
 
 ggplot(filter(Table,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle),col = "grey")+
@@ -274,7 +296,7 @@ ggplot(filter(Table,Code.Region %in% c(31,32)))+
   labs(title = " Chl-A region Mediterranee", x= "Mois", y="Station",size=0.5,shape="Methode")+
   theme(legend.position = "left",legend.box = "horizontal")+
   scale_shape_manual(values = c(17, 15, 3))
-ggsave('Chloro_methode_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
+ggsave('Chloro_spectro_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 400, units = 'mm')
 
 
 # A certaines stations, il y a plusieurs méthodes utilisé pour le même mois à la meme annee 
@@ -464,18 +486,22 @@ Table_compar_incompar2 <-
 Table <- read_delim("data_modif/Table_S_chloro.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
+
+
 Table <- filter(Table, Code.Region != "0")
+
+Table <- Table_hplc
 
 doublons <- Table[duplicated(Table$ID.interne.passage) | duplicated(Table$ID.interne.passage, fromLast = TRUE), ]
 
 
 Table <- doublons |>
   pivot_wider(names_from = "Methode.chloro",values_from = "CHLOROA") |>
-  select(Code.Region:Prelevement.niveau,CHLOROA_CHRL01:CHLOROA_FLUO04)
+  select(Code.Region:Prelevement.niveau,CHLOROA_CHRL00:CHLOROA_FLUO87)
 
 # On prend une des lignes ci-dessous
-Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_CHRL01,CHLOROA_FLUO04)
-Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_CHRL01,CHLOROA_SPECMO04)
+Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_CHRL01,CHLOROA_CHRL00)
+Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_SPECMO04,CHLOROA_SPECMO83)
 Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_SPECMO04,CHLOROA_FLUO04)
 
 # Analyse difference
@@ -483,7 +509,8 @@ Table <- select(Table,Code.Region:Prelevement.niveau,CHLOROA_SPECMO04,CHLOROA_FL
 Table <- Table[complete.cases(Table),]
 
 
-mean(Table$CHLOROA_CHRL01)
+mean(Table$CHLOROA_CHRL01,na.rm=T)
+mean(Table$CHLOROA_CHRL00,na.rm=T)
 mean(Table$CHLOROA_FLUO04,na.rm=T)
 mean(Table$CHLOROA_SPECMO04,na.rm=T)
 
@@ -494,9 +521,10 @@ sd(Table$CHLOROA_SPECMO04,na.rm=T)
 shapiro.test(Table$CHLOROA_CHRL01)
 shapiro.test(Table$CHLOROA_SPECMO04)
 shapiro.test(Table$CHLOROA_FLUO04)
-t.test(Table$CHLOROA_CHRL01,Table$CHLOROA_FLUO04,paired = T)
-t.test(Table$CHLOROA_CHRL01,Table$CHLOROA_SPECMO04,paired = T)
+t.test(Table$CHLOROA_CHRL00,Table$CHLOROA_FLUO04,paired = T)
+t.test(Table$CHLOROA_CHRL00,Table$CHLOROA_SPECMO83,paired = T)
 
+t.test(Table$CHLOROA_CHRL00,Table$CHLOROA_CHRL01,paired = T)
 
 wilcox.test(Table$CHLOROA_CHRL01,Table$CHLOROA_FLUO04,paired = T)
 wilcox.test(Table$CHLOROA_CHRL01,Table$CHLOROA_SPECMO04,paired = T)
@@ -515,7 +543,7 @@ DunnTest(Table$CHLOROA~Table$Methode.chloro,method="BH")
 
 summary(aov(CHLOROA ~ Methode.chloro, data = Table))
 
-ggplot(doublons)+
+ggplot(Table)+
   geom_boxplot(aes(Methode.chloro,CHLOROA))+
   labs(title = "Methode chloro toutes stations", x= "Methode", y="Concentration chl-a",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
