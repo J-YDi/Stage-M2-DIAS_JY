@@ -1,2 +1,8 @@
+Le fichier Table_FLORTOT_Surf_9523_hydro_phyto_chloro correspond aux données de 95 à 2023, FLORTOT, avec 
+uniquement les données de surface à 5m, avec une priorisation des niveaux Surface (0-1m) > 2 à 3m > 3 à 5m > Mi-profondeur
+avec les valeurs d'oxygene dans la meme unité
+avec les méthodes de mesures de la chlorophylle uniquement : liquide, spectrophotometrie et fluorimetrie
+
+
 Lien pour recuperer les donnees :
 https://etusorbonneuniversitefr-my.sharepoint.com/:f:/g/personal/jean-yves_dias_1_etu_sorbonne-universite_fr/EoNnRcAjmwlLm4TNLbd9PyMBTckhSVxcb2_Z25EM_mfS7A?e=591xb2
