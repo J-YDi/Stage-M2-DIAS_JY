@@ -189,14 +189,15 @@ Table_test <- dplyr::filter(Table,
                        Code_point_Libelle != "Marseillan (a)"&
                        Code_point_Libelle != "Parc Leucate 2")
 
-# Ou pas Table <- Table_test 
+# Ou pas 
+Table <- Table_test 
 
 Table_PCA <- Table[, c("SALI","TEMP","TURB","NH4","PO4","SIOH","OXYGENE","NO3+NO2","TURB-FNU")]
 PCA_result <- PCA(Table_PCA,scale.unit = T,graph=T,ncp = 20)
 coord_PCA <- PCA_result$ind$coord
 
 fviz_eig(PCA_result,addlabels = T)
-Table_abio_PCA <- cbind(Table$Code_point_Libelle,Table$lon,Table$lat, coord_PCA)
+Table_abio_PCA <- cbind(Table$Code_point_Libelle,Table$ID.interne.passage,Table$lon,Table$lat, coord_PCA)
 Table_abio_PCA <- as.data.frame(Table_abio_PCA)
 Table_abio_PCA$Dim.1 <- as.numeric(Table_abio_PCA$Dim.1)
 Table_abio_PCA$Dim.2 <- as.numeric(Table_abio_PCA$Dim.2)
@@ -208,7 +209,7 @@ Table_abio_PCA$Dim.7 <- as.numeric(Table_abio_PCA$Dim.7)
 Table_abio_PCA$Dim.8 <- as.numeric(Table_abio_PCA$Dim.8)
 Table_abio_PCA$Dim.9 <- as.numeric(Table_abio_PCA$Dim.9)
 
-colnames(Table_abio_PCA)[1:3] <- c("Code_point_Libelle","lon","lat")
+colnames(Table_abio_PCA)[1:4] <- c("Code_point_Libelle","ID.interne.passage","lon","lat")
 
 Table_abio_st <- summarise(group_by(Table_abio_PCA, Code_point_Libelle,lon,lat), mean_dim1=mean(Dim.1,na.rm=T)
                    , mean_dim2=mean(Dim.2,na.rm=T),
@@ -237,7 +238,7 @@ plot(tree,hang = -1, label = F,
      xlab = "", sub = "",
      main = "Ward dendrogram with D0 only")
 
-rect.hclust(tree ,k = 3, border = c(4,5,3,2,1))
+rect.hclust(tree ,k = 7, border = c(4,5,3,2,1))
 
 
 
@@ -246,7 +247,7 @@ euclidDist <- sp::spDists(firstPoints,longlat = FALSE)
 
 D1 <- as.dist(euclidDist)
 range.alpha <- seq(0,1,0.1)
-K <- 3
+K <- 10
 cr <- choicealpha(D0, D1, range.alpha, 
                   K, graph = FALSE)
 cr$Q # proportion of explained inertia
@@ -255,8 +256,8 @@ plot(cr)
 cr$Qnorm
 plot(cr,norm =TRUE)
 
-tree <- hclustgeo(D0,D1,alpha=0.1)
-P5bis <- cutree(tree,3)
+tree <- hclustgeo(D0,D1,alpha=0)
+P5bis <- cutree(tree,10)
 Table_clust <- cbind(Table_abio_st,P5bis)
 
 
@@ -272,6 +273,8 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
   theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
         panel.background = element_rect(fill = 'lightblue2'))+
   guides(color = guide_legend(override.aes = list(size = 10)))
+
+
 
 
 # test de ne pas se baser sur l'ACP mais la RDA : marche pas
@@ -293,6 +296,7 @@ RsquareAdj(phyto_rda)
 
 # Analyse de silhouette pour determiner le nombre de cluster
 matrice_distance <- D1 #ou D0
+silhouette_vals <- c()
 for (k in 2:10) {
   kmeans_result <- kmeans(matrice_distance, centers = k)
   cluster_assignments <- kmeans_result$cluster
@@ -307,3 +311,37 @@ plot(x=1:10, y=silhouette_vals, type = "b", pch = 19)
 abline(v = optimal_k, col = "red")
 # Afficher le résultat
 cat("Le nombre optimal de clusters selon la méthode de la silhouette est :", optimal_k, "\n")
+
+
+
+# ACP temporelle
+Table_abio_PCA$ID.interne.passage <- as.double(Table_abio_PCA$ID.interne.passage)
+
+
+# test structure temporelle avec l'ACP
+Table_abio_PCA <- left_join(select(Table, Date,ID.interne.passage),Table_abio_PCA)
+
+ggplot(Table_abio_PCA)+
+  geom_line(aes(x=Date,y=Dim.1))
+  facet_wrap(~Code_point_Libelle)
+
+  ggplot(Table_abio_PCA)+
+    geom_line(aes(x=Date,y=Dim.2))+
+  facet_wrap(~Code_point_Libelle)
+
+
+    # Sélection des composantes principales (choisies en fonction de la visualisation)
+  composantes_principales <- PCA_result$ind$coord[, c(1, 2)]
+  
+  # Appliquer DBSCAN
+  dbscan_result <- dbscan(select(Table,SALI:OXYGENE), eps = 0.5, MinPts = 5)
+  
+  # Visualiser les résultats de DBSCAN
+  plot(composantes_principales, col = dbscan_result$cluster + 1, pch = 16, main = "DBSCAN Results")
+
+  Table_abio_PCA <- cbind(Table_abio_PCA,dbscan_result$cluster)  
+
+  ggplot(Table_abio_PCA)+
+    geom_line(aes(y=dbscan_result$cluster,x=Date))+
+    facet_wrap(~Code_point_Libelle)
+    geom_line()

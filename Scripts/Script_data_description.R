@@ -229,19 +229,30 @@ length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region
 length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region == "31")$Code_point_Libelle)))
 length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region == "32")$Code_point_Libelle)))
 
+
 # Carte des stations
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
 Worldmap <- map_data('worldHires')
+
+Table$lon <- as.numeric(Table$lon)
+Table$lat <- as.numeric(Table$lat)
 
 ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(-5.5,7), ylim=c(42,51.5), ratio=1.4)+
   labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
   theme_gdocs()+
-  geom_point(data = data_descript_data_station, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =2)+
+  geom_point(data = Table, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
   theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
         panel.background = element_rect(fill = 'lightblue2'))+
   guides(color = guide_legend(override.aes = list(size = 10)))+
   scale_colour_discrete(name = "Code Region")
 ggsave('maps_all_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+
+
 
 # On regarde les coordonnees des stations pour trouver les stations mal attribuees
 # Autant le faire en carte

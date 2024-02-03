@@ -1058,10 +1058,20 @@ colnames(Table1)[which(names(Table1) == "Prélèvement...Service.préleveur...Co
 colnames(Table1)[which(names(Table1) == "Prélèvement...Identifiant.interne")] <- "ID.interne.prelevement"
 colnames(Table1)[which(names(Table1) == "Passage...Identifiant.interne")] <- "ID.interne.passage"
 
+# Convertir les ml/l en mg/l pour l'oxygene
+Table1$Valeur_mesure <-  str_replace_all(Table1$Valeur_mesure, ',', '.')
+Table1 <- Table1 %>%
+  mutate(Valeur_mesure = as.numeric(Valeur_mesure))
+
+Table1$Valeur_mesure <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesure_Symbole == "ml.l-1", Table1$Valeur_mesure * 1.429 , Table1$Valeur_mesure)
+# On indique le changement 
+Table1$Mesure_Symbole <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesure_Symbole == "ml.l-1", "mg.l-1 converted" , Table1$Mesure_Symbole)
+
+
 #### Curate table to keep only desired variables ####
 Table1 <- Table1 %>%
   dplyr::select(c('ZM_Quadrige_Numero', 'Code_point_Mnemonique', 'Code_point_Libelle', 'Date', 
-                  'Heure', 'lon', 'lat', 'Mesure_Unite', 'Mesure_Symbole', 'Taxon', 'Valeur_mesure', 
+                  'Heure', 'lon', 'lat', 'Mesure_Unite', 'Mesure_Symbole', 'Taxon', 'Valeur_mesure', 'Résultat...Libellé.méthode',
                   'Prelevement.niveau', 'Profondeur.metre', 'Code.parametre', 'Parametre', 
                   'Qualite.prelevement', 'Qualite.resultat', 'ID.interne.prelevement', 'ID.interne.passage'))
 
@@ -1074,77 +1084,85 @@ Table1 <- Table1 %>%
   mutate(Year = year(Date)) %>%
   filter(!is.na(Year))
 
-# Transform the measured values into numbers
-# Caution! The decimal separator is a comma, 
-# we need first to transform it to a full stop to avoid fuckery
-Table1$Valeur_mesure <-  str_replace_all(Table1$Valeur_mesure, ',', '.')
-Table1 <- Table1 %>%
-  mutate(Valeur_mesure = as.numeric(Valeur_mesure))
-
 #### Tidying table structure ####
 
 ## Associate a region with each ZM code
 Table1 <- left_join(Table1, ZM, by='ZM_Quadrige_Numero', suffix=c('',''))
 
-# Basically, we want the hydrological measurements as columns and the phytoplankton taxa as rows
-
-# Separate the table into 2 : 1 for hydrology and the other for phytoplankton
+# Separate the table for hydrology and phytoplankton
 Table1_hydro <- Table1 %>%
   filter(Taxon == "")
 
+Table1_phyto <- Table1 %>%
+  filter(Taxon != "")
+
+# HYDRO SEULEMENT
 # Selection de la profondeur entre 0 et 5m
 Table1_hydro$Profondeur.metre <- as.numeric(Table1_hydro$Profondeur.metre)
 Table1_hydro <- Table1_hydro |> filter(Profondeur.metre <= 5 | is.na(Profondeur.metre)) |> #Profondeur pas toujours indiquee
   filter(Year >= 1995) 
+Table1_hydro_b <- Table1_hydro
+# Garder la chlorophylle qu'on veut
+Table1_hydro <- filter(Table1_hydro, Code.parametre != "CHLOROA")
+Table1_hydro_chloro <- Table1_hydro_b |>
+  filter(Code.parametre == "CHLOROA") |>
+  filter(Résultat...Libellé.méthode == "Chromatographie liquide - pigments phytoplanctoniques (Van Heukelem et Thomas 2001)" |
+         Résultat...Libellé.méthode == "Chromatographie liquide - pigments phytoplanctoniques (Zapata et al. 2000)" |
+         Résultat...Libellé.méthode == "Fluorimétrie (Aminot A. Kérouel R. 2004 - Chlorophylle)" |
+         Résultat...Libellé.méthode == "Fluorimétrie (Neveux J. et Panouse M. 1987  - Chlorophylle)" |
+         Résultat...Libellé.méthode == "Spectrophotométrie monochromatique (Aminot A. Kérouel R. 2004 - Chlorophylle)" |
+         Résultat...Libellé.méthode == "Spectrophotométrie monochromatique (Aminot et Chaussepied 1983 - Chlorophylle)" )
 
+Table1_hydro_chloro <- dplyr::select(Table1_hydro_chloro, Date, ID.interne.passage,
+                              Prelevement.niveau,Valeur_mesure,Résultat...Libellé.méthode)
 
+colnames(Table1_hydro_chloro)[4:5] <- c("CHLOROA","Methode_CHLOROA")
+  
 
-
+Table1_hydro <- Table1_hydro |>
+  filter(Code.Region != 0) %>%
+  filter(Prelevement.niveau == "Surface (0-1m)" |Prelevement.niveau == "2 mètres" |Prelevement.niveau == "de 3 à 5 mètres" |Prelevement.niveau == "Mi-profondeur" ) |>
+  #filter(Qualite.resultat == 'Bon') %>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau, Profondeur.metre, Code.parametre) %>%
+  # There is probably something shifty here, regarding multiple CHLOROA measurements at certain stations,
+  # made with different methods. For now we average everything but this is quite bad.
+  summarise(Valeur_mesure = mean(Valeur_mesure), .groups = 'keep') %>%
+  pivot_wider(names_from = Code.parametre, values_from = Valeur_mesure)
 
 # Choix niveaux par ordre
 #detection des doublons
-doublons <-
-  Table1_hydro_select[duplicated(Table1_hydro_select$ID.interne.passage) |
-                        duplicated(Table1_hydro_select$ID.interne.passage, fromLast = TRUE), ]
-
-doublons_phyto <-
-  Table1_phyto_taxon[duplicated(Table1_phyto_taxon$ID.interne.passage) |
-                       duplicated(Table1_phyto_taxon$ID.interne.passage, fromLast = TRUE), ] %>%
-  filter(Code.parametre == 'FLORTOT')
-# --> Pb ici: on considère FLORTOT et FLORIND d'un même passage comme un doublon. Autrement dit, la grande majorité
-# des doublons ne sont PAS des profondeurs différentes d'un même passage
-
-# Donnees d'essai
-donnees2 <- data.frame(Identifiant = c("25", "25", "25", "2",  "2", 
-                                       "3",  "3",  "2","2"),
-                       Prelevement.niveau = c("Surface (0-1m)",  "Surface (0-1m)", 
-                                              "de 3 à 5 mètres", "de 3 à 5 mètres", "2 mètres", "2 mètres",
-                                              "de 3 à 5 mètres", "de 3 à 5 mètres","Surface (0-1m)")
-)
+doublons_hydro <- Table1_hydro[duplicated(Table1_hydro$ID.interne.passage) |
+                        duplicated(Table1_hydro$ID.interne.passage, fromLast = TRUE), ]
 
 # Filtre des doublons hydro :
-resultat_filtre <- doublons %>%
-  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres")) %>%
+resultat_filtre <- doublons_hydro %>%
+  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur")) %>%
   group_by(ID.interne.passage) %>%
-  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres"))) %>%
+  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur"))) %>%
   arrange(desc(Ordre)) %>%
   filter(duplicated(ID.interne.passage) | n()==1)
 
-# Filtre des doublons phyto :
-resultat_filtre2 <- doublons_phyto %>%
-  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres")) %>%
-  filter(Code.parametre == 'FLORTOT') %>%
-  group_by(ID.interne.passage) %>%
-  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres"))) %>%
-  arrange(desc(Ordre)) %>%
-  filter(duplicated(ID.interne.passage) | n()==1)
+# On supprime les lignes en doublon dans le jeu de données initial
+Table1_unique <- subset(Table1_hydro, !(ID.interne.passage %in% unique(doublons_hydro$ID.interne.passage)))
+# On les remets ces doublons filtres
+Table1_hydro <- bind_rows(Table1_unique,resultat_filtre)
+# On remet au propre
+Table1_hydro <- Table1_hydro |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Profondeur.metre)
 
 
+# S'occuper du jeu de donnees phyto
+# Selection de la profondeur entre 0 et 5m
+Table1_phyto$Profondeur.metre <- as.numeric(Table1_phyto$Profondeur.metre)
+Table1_phyto <- Table1_phyto |> filter(Profondeur.metre <= 5 | is.na(Profondeur.metre)) |> #Profondeur pas toujours indiquee
+  filter(Year >= 1995) |>
+  filter(Code.parametre == "FLORTOT")
 
-
-
-Table1_phyto <- Table1 %>%
-  filter(Taxon != "")
+Table1_phyto <- Table1_phyto |>
+  filter(Code.Region != 0) %>%
+  filter(Prelevement.niveau == "Surface (0-1m)" |Prelevement.niveau == "2 mètres" |Prelevement.niveau == "de 3 à 5 mètres" |Prelevement.niveau == "Mi-profondeur" ) |>
+  #filter(Qualite.resultat == 'Bon') %>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Profondeur.metre, Code.parametre)
 
 ### Manipulating the phyto table ###
 # Associate the Phylum/Class to the taxon
@@ -1155,39 +1173,55 @@ Table1_phyto <- left_join(Table1_phyto, PhyClasse, by='Taxon', suffix=c('',''))
 Table1_phyto <- Table1_phyto %>%
   mutate(Genus = str_extract(Taxon, 'Pseudo-nitzschia|[:alnum:]+'))
 
-# Applying quality control and selecting only FLORTOT
-Table1_phyto_select <- Table1_phyto %>%
-  #filter out Code.Region = 0 (only a few mysterious events in 2011-2013)
-  filter(Code.Region != 0) %>%
-  filter(Code.parametre == 'FLORTOT') #%>%
-  # Keeping only surface (or near surface) sampling
-  filter(Prelevement.niveau == 'Surface (0-1m)' | Prelevement.niveau == '2 mètres' |
-           Prelevement.niveau == 'de 3 à 5 mètres')
-# We're cutting the pipe here so we can create 3 tables: 1 grouped by genus, 1 by class and 1 by taxon
-
 # On ne preserve que les Bacillariophyceae et Dinophyceae (et Mesodinium, cilie)
-Table1_phyto_select <- Table1_phyto_select |>
+Table1_phyto_select <- Table1_phyto |>
   filter(Phylum.Classe == "Bacillariophyceae" | Phylum.Classe == "Dinophyceae" |
-           Genus == "Mesodinium") |>
-  filter(Year >= 1995)
-    
+           Genus == "Mesodinium")
+
 Table1_phyto_genus <- Table1_phyto_select %>%
-  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Code.parametre, Genus) %>%
-  summarise(Comptage = sum(Valeur_mesure), .groups = 'keep') #%>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau, Profondeur.metre,Code.parametre, Genus) %>%
+  summarise(Comptage = sum(Valeur_mesure), .groups = 'keep') %>%
   pivot_wider(names_from = Genus, values_from = Comptage)
 
-Table1_phyto_class <- left_join(Table1_phyto_select, PhyClasse, by = 'Taxon', suffix = c('','')) %>%
-  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Code.parametre, Phylum.Classe) %>%
-  summarise(Comptage = sum(Valeur_mesure), .groups = 'keep')
+# Choix niveaux par ordre
+# detection doublons phyto
+doublons_phyto_genus <- Table1_phyto_genus[duplicated(Table1_phyto_genus$ID.interne.passage) |
+                       duplicated(Table1_phyto_genus$ID.interne.passage, fromLast = TRUE), ]
 
-# Des classes non attribues
-unique(Table1_phyto_class$Phylum.Classe) # Effectivement
-Table1_phyto_class <- Table1_phyto_class[Table1_phyto_class$Phylum.Classe != "", ] #On les supprime ces lignes
-Table1_phyto_class <- pivot_wider(Table1_phyto_class ,names_from="Phylum.Classe", values_from = "Comptage",values_fn = mean) #On pivote
+# Filtre des doublons hydro :
+resultat_filtre_genus <- doublons_phyto_genus %>%
+  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur")) %>%
+  group_by(ID.interne.passage) %>%
+  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur"))) %>%
+  arrange(desc(Ordre)) %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
 
+# On supprime les lignes en doublon dans le jeu de données initial
+Table1_phyto_unique <- subset(Table1_phyto_genus, !(ID.interne.passage %in% unique(doublons_phyto_genus$ID.interne.passage)))
+# On les remets ces doublons filtres
+Table1_phyto_genus <- bind_rows(Table1_phyto_unique,resultat_filtre_genus)
+# On remet au propre
+Table1_phyto_genus <- Table1_phyto_genus |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
 
-Table1_phyto_taxon <- Table1_phyto_select %>%
-  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Code.parametre, Taxon) %>%
-  summarise(Comptage = sum(Valeur_mesure), .groups = 'keep') %>%
-  pivot_wider(names_from = Taxon, values_from = Comptage)
+Table1_hydro <- dplyr::select(ungroup(Table1_hydro),Date:Prelevement.niveau,SALI:PCYAN )
+
+data_hp <- left_join(Table1_phyto_genus,Table1_hydro,by = join_by(Date, ID.interne.passage,
+                                                        Prelevement.niveau))
+
+data_hp <- dplyr::select(data_hp, Code.Region:Code.parametre, SALI:`NO3+NO2`, `Actinoptychus`:`Coscinodiscophycidae`)
+
+# Avec filtrage de la chlorophylle
+data_hp <- left_join(data_hp, Table1_hydro_chloro)
+
+data_hp <- dplyr::select(data_hp, Code.Region:Code.parametre,Methode_CHLOROA,CHLOROA, SALI:`NO3+NO2`, `Actinoptychus`:`Coscinodiscophycidae`)
+
+# Les profondeurs manquantes correspondent uniquement a de la "Surface (0-1m)" donc on dis que correspond 
+# a une profondeur de 0.5 les Profondeur en NA
+data_hp$Profondeur.metre <- ifelse(is.na(data_hp$Profondeur.metre),0.5,data_hp$Profondeur.metre) 
+
+data_hp <- data_hp |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
+
+write.csv2(data_hp,file="data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro.csv", row.names = FALSE,dec = ".")
 
