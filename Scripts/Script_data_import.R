@@ -1117,6 +1117,27 @@ Table1_hydro_chloro <- dplyr::select(Table1_hydro_chloro, Date, ID.interne.passa
                               Prelevement.niveau,Valeur_mesure,Résultat...Libellé.méthode)
 
 colnames(Table1_hydro_chloro)[4:5] <- c("CHLOROA","Methode_CHLOROA")
+
+# Regler le probleme des doublons a cause de double mesure de chloro avec des methodes differentes
+doublons_chloro <- Table1_hydro_chloro[duplicated(Table1_hydro_chloro$ID.interne.passage) |
+                                 duplicated(Table1_hydro_chloro$ID.interne.passage, fromLast = TRUE), ]
+# Filtre des doublons hydro :
+resultat_filtre_chloro <- doublons_chloro %>%
+  filter(Methode_CHLOROA %in% levels(as.factor(doublons_chloro$Methode_CHLOROA))) %>%
+  group_by(ID.interne.passage) %>%
+  mutate(Ordre = match(Methode_CHLOROA, c("Spectrophotométrie monochromatique (Aminot A. Kérouel R. 2004 - Chlorophylle)",
+                                          "Fluorimétrie (Aminot A. Kérouel R. 2004 - Chlorophylle)",
+                                          "Chromatographie liquide - pigments phytoplanctoniques (Van Heukelem et Thomas 2001)",
+                                          "Spectrophotométrie monochromatique (Aminot et Chaussepied 1983 - Chlorophylle)",
+                                          "Fluorimétrie (Neveux J. et Panouse M. 1987  - Chlorophylle)",
+                                          "Chromatographie liquide - pigments phytoplanctoniques (Zapata et al. 2000)"))) %>%
+  arrange(desc(Ordre)) %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+Table1_hydro_chloro_unique <- subset(Table1_hydro_chloro, !(ID.interne.passage %in% unique(doublons_chloro$ID.interne.passage)))
+# On les remets ces doublons filtres
+Table1_hydro_chloro <- bind_rows(Table1_hydro_chloro_unique,resultat_filtre_chloro)
   
 
 Table1_hydro <- Table1_hydro |>
@@ -1183,12 +1204,19 @@ Table1_phyto_genus <- Table1_phyto_select %>%
   summarise(Comptage = sum(Valeur_mesure), .groups = 'keep') %>%
   pivot_wider(names_from = Genus, values_from = Comptage)
 
+Table1_phyto_class <- Table1_phyto[Table1_phyto$Phylum.Classe != "", ]
+
+Table1_phyto_classe <- Table1_phyto_class %>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau, Profondeur.metre,Code.parametre, Phylum.Classe) %>%
+  summarise(Comptage = sum(Valeur_mesure), .groups = 'keep') %>%
+  pivot_wider(names_from = Phylum.Classe, values_from = Comptage)
+
 # Choix niveaux par ordre
 # detection doublons phyto
 doublons_phyto_genus <- Table1_phyto_genus[duplicated(Table1_phyto_genus$ID.interne.passage) |
                        duplicated(Table1_phyto_genus$ID.interne.passage, fromLast = TRUE), ]
 
-# Filtre des doublons hydro :
+# Filtre des doublons phyto :
 resultat_filtre_genus <- doublons_phyto_genus %>%
   filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur")) %>%
   group_by(ID.interne.passage) %>%
@@ -1209,19 +1237,56 @@ Table1_hydro <- dplyr::select(ungroup(Table1_hydro),Date:Prelevement.niveau,SALI
 data_hp <- left_join(Table1_phyto_genus,Table1_hydro,by = join_by(Date, ID.interne.passage,
                                                         Prelevement.niveau))
 
-data_hp <- dplyr::select(data_hp, Code.Region:Code.parametre, SALI:`NO3+NO2`, `Actinoptychus`:`Coscinodiscophycidae`)
+Table1_phyto_classe <- select(ungroup(Table1_phyto_classe),Date, ID.interne.passage, Prelevement.niveau,Bacillariophyceae:Xanthophyceae)
+
+data_hpc <- left_join(data_hp,Table1_phyto_classe,by = join_by(Date, ID.interne.passage,
+                                                                  Prelevement.niveau))
+
+data_hpc <- dplyr::select(data_hpc, Code.Region:Code.parametre, SALI:`NO3+NO2`,`TURB-FNU`, `Actinoptychus`:`Coscinodiscophycidae`,Bacillariophyceae.y:Xanthophyceae)
 
 # Avec filtrage de la chlorophylle
-data_hp <- left_join(data_hp, Table1_hydro_chloro)
+data_hpc2 <- left_join(data_hpc, Table1_hydro_chloro)
 
-data_hp <- dplyr::select(data_hp, Code.Region:Code.parametre,Methode_CHLOROA,CHLOROA, SALI:`NO3+NO2`, `Actinoptychus`:`Coscinodiscophycidae`)
+data_hpc2 <- dplyr::select(data_hpc2, Code.Region:Code.parametre,Methode_CHLOROA,CHLOROA, SALI:`NO3+NO2`, `TURB-FNU`, `Actinoptychus`:`Coscinodiscophycidae`,Bacillariophyceae.y:Xanthophyceae)
 
 # Les profondeurs manquantes correspondent uniquement a de la "Surface (0-1m)" donc on dis que correspond 
 # a une profondeur de 0.5 les Profondeur en NA
-data_hp$Profondeur.metre <- ifelse(is.na(data_hp$Profondeur.metre),0.5,data_hp$Profondeur.metre) 
+data_hpc2$Profondeur.metre <- ifelse(is.na(data_hpc2$Profondeur.metre),0.5,data_hpc2$Profondeur.metre) 
 
-data_hp <- data_hp |>
+data_hpc2 <- data_hpc2 |>
   group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
 
-write.csv2(data_hp,file="data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro.csv", row.names = FALSE,dec = ".")
+
+## On remet au propre
+#data_hpc_ok <- data_hpc_ok |>
+#  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Profondeur.metre)
+
+#data_hpc_ok <- select(data_hpc_ok, -Ordre)
+#colnames(data_hpc_ok)[246:247] <- c("Bacillariophyceae","Dinophyceae")
+
+
+colnames(data_hpc2)[247:248] <- c("Bacillariophyceae","Dinophyceae")
+# Il reste des doublons 
+# detection doublons phyto
+doublons_final <- data_hpc2[duplicated(data_hpc2$ID.interne.passage) |
+                                             duplicated(data_hpc2$ID.interne.passage, fromLast = TRUE), ]
+# Filtre des doublons phyto :
+resultat_filtre_final <- doublons_final %>%
+  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur")) %>%
+  group_by(ID.interne.passage) %>%
+  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur"))) %>%
+  arrange(desc(Ordre)) %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+data_hpc2_unique <- subset(data_hpc2, !(ID.interne.passage %in% unique(doublons_final$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_hpc3 <- bind_rows(data_hpc2_unique,resultat_filtre_final)
+# On remet au propre
+data_hpc3 <- data_hpc3 |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
+
+data_hpc3 <- select(data_hpc3, -Ordre)
+
+write.csv2(data_hpc3,file="data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum.csv", row.names = FALSE,dec = ".")
 

@@ -10,7 +10,7 @@ library (ggplot2)
 library(naniar)
 
 ################## FLORTOT SURFACE ################
-Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro.csv", 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
 

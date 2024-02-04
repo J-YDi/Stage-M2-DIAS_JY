@@ -231,7 +231,7 @@ length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region
 
 
 # Carte des stations
-Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro.csv", 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
 
