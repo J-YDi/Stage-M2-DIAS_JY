@@ -17,20 +17,19 @@ library(rasterVis)
 
 # Chargement donnees
 # Donnees hydro
-data_hydro <- read_delim("data_modif/Table1_hydro_JY.csv", 
-                                  delim = ";", escape_double = FALSE, trim_ws = TRUE)
-# Donnees phyto
-data_phyto <- read_delim("data_modif/Table1_phyto_taxon_JY.csv", 
-                                 delim = ";", escape_double = FALSE, trim_ws = TRUE)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
 
 
 # Passage en presence/absence 
-data_phyto_binaire <- ifelse(select(data_phyto,-(Code.Region:Code.parametre)) > 0, 1, 0)
+data_phyto_binaire <- ifelse(select(Table,Actinoptychus:Coscinodiscophycidae) > 0, 1, 0)
 data_phyto_binaire <- as.data.frame(data_phyto_binaire)
 data_phyto_binaire[is.na(data_phyto_binaire)] <- 0
-data_phyto_binaire <- cbind(select(data_phyto,Code.Region:Code.parametre),data_phyto_binaire)
+data_phyto_binaire <- cbind(select(Table,Code.Region:Code.parametre),data_phyto_binaire)
 
-# Nombre de taxons detecte par prelevement
+##### Nombre de taxons detecte par prelevement ####
 
 # Detecte
 data_phyto_sum <- select(data_phyto_binaire,-(Code.Region:Code.parametre)) |>
@@ -63,7 +62,7 @@ write.csv2(data_descript_data, file="data_modif/data_descript_data.csv")
  
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "11"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=5)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 11", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
@@ -71,7 +70,7 @@ ggsave('N_tax_11.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "12"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 12", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -80,7 +79,7 @@ ggsave('N_tax_12.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "13"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 13", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -89,7 +88,7 @@ ggsave('N_tax_13.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "21"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 21", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -98,7 +97,7 @@ ggsave('N_tax_21.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "22"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=2)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 22", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -107,7 +106,7 @@ ggsave('N_tax_22.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "23"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 23", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
@@ -116,7 +115,7 @@ ggsave('N_tax_23.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "31"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 31", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -125,7 +124,7 @@ ggsave('N_tax_31.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite
 
 ggplot(filter(data_descript_data,data_descript_data$Code.Region == "32"))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region 32", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -139,8 +138,8 @@ data_descript_data_station <- left_join(data_descript_data_station,data_descript
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "32"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 32", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "32")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -149,8 +148,8 @@ ggsave('meanN_tax_32.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "31"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 31", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "31")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -159,8 +158,8 @@ ggsave('meanN_tax_31.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "23"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 23", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "23")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -169,8 +168,8 @@ ggsave('meanN_tax_23.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "22"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,35))+
   labs(title = "Moyenne Taxon detecte region 22", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "22")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -179,8 +178,8 @@ ggsave('meanN_tax_22.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "21"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 21", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "21")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -189,8 +188,8 @@ ggsave('meanN_tax_21.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "13"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 13", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "13")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -199,8 +198,8 @@ ggsave('meanN_tax_13.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "12"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 12", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "12")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -209,8 +208,8 @@ ggsave('meanN_tax_12.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 ggplot(filter(data_descript_data_station,data_descript_data$Code.Region == "11"))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,30, by = 5), limits = c(0,30))+
   labs(title = "Moyenne Taxon detecte region 11", x= "Moyenne", y="Station",colour = "Nombre",size=0.5,
        subtitle = mean(filter(data_descript_data_station,data_descript_data$Code.Region == "11")$mean_Ndetect))+
   theme(legend.position = "left",legend.box = "horizontal",
@@ -230,8 +229,8 @@ length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region
 length(levels(as.factor(filter(data_descript_data,data_descript_data$Code.Region == "32")$Code_point_Libelle)))
 
 
-# Carte des stations
-Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum.csv", 
+##### Carte des stations ####
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
 
@@ -242,7 +241,7 @@ Table$lon <- as.numeric(Table$lon)
 Table$lat <- as.numeric(Table$lat)
 
 ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
-  coord_fixed(xlim=c(-5.5,7), ylim=c(42,51.5), ratio=1.4)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
   labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
   theme_gdocs()+
   geom_point(data = Table, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
@@ -250,112 +249,76 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
         panel.background = element_rect(fill = 'lightblue2'))+
   guides(color = guide_legend(override.aes = list(size = 10)))+
   scale_colour_discrete(name = "Code Region")
-ggsave('maps_all_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+ggsave('maps_station_select.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
 
 
-# On regarde les coordonnees des stations pour trouver les stations mal attribuees
+##### On regarde les coordonnees des stations pour trouver les stations mouvantes ####
 # Autant le faire en carte
-Table_R11 <- filter(data_phyto, Code.Region == "11")
+Table_R11 <- filter(Table, Code.Region == "11")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R11$lon)-1,max(Table_R11$lon)+1), ylim=c(min(Table_R11$lat)-0.5,max(Table_R11$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R11 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R11_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+ggsave('maps_R11_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
-Table_R12 <- filter(data_phyto, Code.Region == "12")
+Table_R12 <- filter(Table, Code.Region == "12")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R12$lon)-1,max(Table_R12$lon)+1), ylim=c(min(Table_R12$lat)-0.5,max(Table_R12$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R12 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R12_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+ggsave('maps_R12_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
-# La station avec une longitude >0.5 rien a faire la
-# Identification :
-filter(Table_R12, lon > 0.5) # Baie de Seine - Zone 4
-filter(Table_R12, Code_point_Libelle == "Baie de Seine - Zone 4")
 
-Table_R13 <- filter(data_phyto, Code.Region == "13")
+Table_R13 <- filter(Table, Code.Region == "13")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R13$lon)-1,max(Table_R13$lon)+1), ylim=c(min(Table_R13$lat)-0.5,max(Table_R13$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R13 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R13_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
-# Station avec longitude > -1 et station avec lat < 46 mal attribue
-# Identification : 
-filter(Table_R13,lon > -1 | lat < 46)
-filter(Table_R13, Code_point_Libelle == "Nord Cotentin")
+ggsave('maps_R13_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
-Table_R21 <- filter(data_phyto, Code.Region == "21")
+
+Table_R21 <- filter(Table, Code.Region == "21")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R21$lon)-1,max(Table_R21$lon)+1), ylim=c(min(Table_R21$lat)-0.5,max(Table_R21$lat)+0.5), ratio=1.4)+
-  geom_point(data=Table_R21 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=2)
-ggsave('maps_R21_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+  geom_point(data=Table_R21 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
+ggsave('maps_R21_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 # OK
 
-Table_R22 <- filter(data_phyto, Code.Region == "22")
+Table_R22 <- filter(Table, Code.Region == "22")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R22$lon)-1,max(Table_R22$lon)+1), ylim=c(min(Table_R22$lat)-0.5,max(Table_R22$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R22 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R22_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+ggsave('maps_R22_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 # OK
 
-Table_R23 <- filter(data_phyto, Code.Region == "23")
+Table_R23 <- filter(Table, Code.Region == "23")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R23$lon)-1,max(Table_R23$lon)+1), ylim=c(min(Table_R23$lat)-0.5,max(Table_R23$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R23 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R23_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
-# Station avec une lat > 48 mal attribue
-# Identification : 
-filter(Table_R23,lat > 48)
-filter(Table_R23, Code_point_Libelle == "Nord ouest Guernesey")
-filter(Table_R23, Code_point_Libelle == "Roscoff")
+ggsave('maps_R23_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
-Table_R31 <- filter(data_phyto, Code.Region == "31")
+Table_R31 <- filter(Table, Code.Region == "31")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R31$lon)-1,max(Table_R31$lon)+1), ylim=c(min(Table_R31$lat)-0.5,max(Table_R31$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R31 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
-ggsave('maps_R31_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
+ggsave('maps_R31_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 # OK 
 
-Table_R32 <- filter(data_phyto, Code.Region == "32")
+Table_R32 <- filter(Table, Code.Region == "32")
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table_R32$lon)-1,max(Table_R32$lon)+1), ylim=c(min(Table_R32$lat)-0.5,max(Table_R32$lat)+0.5), ratio=1.4)+
   geom_point(data=Table_R32 ,aes(y=lat,x=lon,colour=Code_point_Libelle),size=5)
 ggsave('maps_R32_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 900, height = 800, units = 'mm')
 
-# On regarde si ca serait pas une erreur de nomination plutot que de GPS
-filter(data_phyto, lon == -0.633333333 & lat==	49.66666667)
-filter(data_phyto, lon == -0.0365534755 & lat==	49.3899592617)
-filter(data_phyto, lon == -1.55 & lat == 45.265)
-filter(data_phyto, lon == -0.9333333333 & lat == 49.5166666667)
-# On regarde ou est situe Baie de Seine - Zone 1
-filter(data_phyto, Code_point_Libelle == "Baie de Seine - Zone 1")
-
-# On regroupe les stations problematiques pour annoter sur excel
-Table_Station_MisClass <- rbind(filter(Table_R23, Code_point_Libelle == "Nord ouest Guernesey"),
-                                filter(Table_R23, Code_point_Libelle == "Roscoff"),
-                                filter(Table_R13, Code_point_Libelle == "Nord Cotentin"),
-                                filter(Table_R12, Code_point_Libelle == "Baie de Seine - Zone 4"),
-                                filter(data_phyto, Code_point_Libelle == "Baie de Seine - Zone 1"))
-Table_Station_MisClass <- select(Table_Station_MisClass, Code.Region:Code.parametre)
-write.csv2(Table_Station_MisClass, file="output/data/Table_Station_MisClass.csv") # On enregistre
-
-# Representation de la position des stations problématiques
-ggplot() + 
-  geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
-  coord_fixed(xlim=c(min(Table_Station_MisClass$lon)-1,max(Table_Station_MisClass$lon)+1), ylim=c(min(Table_Station_MisClass$lat)-0.5,max(Table_Station_MisClass$lat)+0.5), ratio=1.4)+
-  geom_point(data=Table_Station_MisClass ,aes(y=lat,x=lon,colour=Code_point_Libelle,shape=as.character(Code.Region)),size=5)+
-  scale_shape_manual(values = c(15, 16, 17))
-ggsave('maps_Misclass_station.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 300, height = 200, units = 'mm')
 
 
-# Carte des stations selectionnees
+# Carte des stations selectionnees selon les differents criteres ####
 Table_Station_select <- read_delim("data_modif/Table_FLORTOT_S_select_5A.csv", 
                                      delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ","), 
                                      trim_ws = TRUE)
@@ -403,8 +366,15 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
 ggsave('maps_station_select.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
 
-# Carte des stations selectionnes longues series par region
+#### Carte des stations selectionnes longues series par facade #####
 # Manche
+Table.Atlantic_select$lon <- as.numeric(Table.Atlantic_select$lon)
+Table.Atlantic_select$lat <- as.numeric(Table.Atlantic_select$lat)
+Table.Manche_select$lon <- as.numeric(Table.Manche_select$lon)
+Table.Manche_select$lat <- as.numeric(Table.Manche_select$lat)
+Table.Med_select$lon <- as.numeric(Table.Med_select$lon)
+Table.Med_select$lat <- as.numeric(Table.Med_select$lat)
+
 ggplot() + 
   geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
   coord_fixed(xlim=c(min(Table.Manche_select$lon)-1,max(Table.Manche_select$lon)+1), ylim=c(min(Table.Manche_select$lat)-0.5,max(Table.Manche_select$lat)+0.5), ratio=1.4)+
@@ -428,18 +398,20 @@ ggsave('maps_Med_station_select_5.png', path = "C:/Users/jeany/OneDrive - etu.so
 
 
 # Nombre de taxons detectes uniquement pour les stations selectionnees 5A>
-Table_Station_select <- read_delim("data_modif/Table_FLORTOT_S_select_5A.csv", 
-                                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ","), 
-                                   trim_ws = TRUE)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
 
 
 # Passage en presence/absence 
-data_phyto_binaire <- ifelse(select(Table_Station_select,-(Code.Region:Code.parametre)) > 0, 1, 0)
+data_phyto_binaire <- ifelse(select(Table,Actinoptychus:Coscinodiscophycidae) > 0, 1, 0)
 data_phyto_binaire <- as.data.frame(data_phyto_binaire)
 data_phyto_binaire[is.na(data_phyto_binaire)] <- 0
-data_phyto_binaire <- cbind(select(Table_Station_select,Code.Region:Code.parametre),data_phyto_binaire)
+data_phyto_binaire <- cbind(select(Table,Code.Region:Code.parametre),data_phyto_binaire)
 
-# Nombre de taxons detecte par prelevement
+##### Nombre de taxons detecte par prelevement ####
 
 # Detecte
 data_phyto_sum <- select(data_phyto_binaire,-(Code.Region:Code.parametre)) |>
@@ -463,21 +435,21 @@ data_phyto_binaire_sumTax <- select(data_phyto_binaire,N_detect:N_nodetect) |>
 data_phyto_binaire$N_Tax <- data_phyto_binaire_sumTax$N_tax
 # C'est ok
 
-data_descript_data_select <- select(data_phyto_binaire,c(Code.Region:Code.parametre,N_detect:N_nodetect))
+data_descript_data <- select(data_phyto_binaire,c(Code.Region:Code.parametre,N_detect:N_nodetect))
 
 # Enregistrement
-#write.csv2(data_descript_data_select, file="data_modif/data_descript_data_station_select5A.csv")
+write.csv2(data_descript_data, file="data_modif/data_descript_data_station_select5A.csv")
 
 # Representation graphique du nombre de taxon par station par region par date par mois
 
 # Moyenne et ecart-type par station par region
-
+data_descript_data_select <- data_descript_data
 data_descript_data_station_select <- summarise(group_by(data_descript_data_select, Code_point_Libelle), mean_Ndetect=mean(N_detect,na.rm=T), sd_N_detect=sd(N_detect,na.rm=T),min_N_detect=min(N_detect,na.rm=T),max_N_detect=max(N_detect,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_descript_data_select)
 
 ggplot(filter(data_descript_data_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=5)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region Manche", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
@@ -485,7 +457,7 @@ ggsave('N_tax_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbon
 
 ggplot(filter(data_descript_data_select,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=5)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region Atlantique", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
@@ -493,7 +465,7 @@ ggsave('N_tax_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorb
 
 ggplot(filter(data_descript_data_select,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = N_detect),size=3)+
-  scale_colour_viridis(name = "N_detect",breaks = seq(0,73, by = 10), limits = c(0,73))+
+  scale_colour_viridis(name = "N_detect",breaks = seq(0,55, by = 10), limits = c(0,55))+
   facet_wrap(~Year)+
   labs(title = "Taxon detecte region Mediterranee", x= "Mois", y="Station",colour="Nombre",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
@@ -506,8 +478,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,55, by = 5), limits = c(0,55))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Taxon detecte region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
@@ -521,8 +493,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,55, by = 5), limits = c(0,55))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Taxon detecte region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
@@ -534,8 +506,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,55, by = 5), limits = c(0,55))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Taxon detecte region Mediterranee", x= "valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
@@ -545,8 +517,14 @@ ggsave('meanN_tax_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbo
 
 
 
-################# SALINITE 
-data_sali <- select(data_hp, Code.Region:SALI)
+################# SALINITE ####### 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
+
+data_sali <- select(Table, Code.Region:Code.parametre, SALI)
 
 ggplot(filter(data_sali,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = SALI),size=3)+
@@ -629,7 +607,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:18]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:17]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -646,8 +624,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -655,8 +633,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(15.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -675,8 +653,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(15.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -688,7 +666,7 @@ ggsave('Ech_SALI_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-unive
 
 
 
-Table <- select(data_sali, -c(Year,Month))
+Table <- dplyr::select(data_sali, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -741,7 +719,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:30]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:21]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -758,8 +736,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -767,8 +745,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(28.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -787,8 +765,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(28.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -799,7 +777,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_SALI_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_sali, -c(Year,Month))
+Table <- dplyr::select(data_sali, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -852,7 +830,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:18]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -869,8 +847,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -878,8 +856,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -898,8 +876,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -919,8 +897,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,6, by = 1), limits = c(0,6))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Salinite region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
@@ -932,8 +910,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,6, by = 1), limits = c(0,6))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Salinite region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
@@ -945,8 +923,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,72, by = 5), limits = c(0,72))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,6, by = 1), limits = c(0,6))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Salinite region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
@@ -955,8 +933,12 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
 ggsave('meanSALI_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-################# TURBIDITE 
-data_turb <- select(data_hp, Code.Region:Code.parametre,TURB)
+################# TURBIDITE ######
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_turb <- dplyr::select(Table, Code.Region:Code.parametre,TURB)
 
 ggplot(filter(data_turb,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURB),size=3)+
@@ -986,7 +968,7 @@ ggplot(filter(data_turb,Code.Region %in% c(11,12,13)))+
 ggsave('TURB_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 
-Table <- select(data_turb, -c(Year,Month))
+Table <- dplyr::select(data_turb, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(31,32))
 
@@ -1039,7 +1021,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:17]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:15]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -1056,8 +1038,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1065,8 +1047,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(15.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1085,8 +1067,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(15.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1098,7 +1080,7 @@ ggsave('Ech_TURB_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-unive
 
 
 
-Table <- select(data_turb, -c(Year,Month))
+Table <- dplyr::select(data_turb, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -1151,7 +1133,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:25]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:15]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -1168,8 +1150,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1177,8 +1159,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(23.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1197,8 +1179,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(23.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1209,7 +1191,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_TURB_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_turb, -c(Year,Month))
+Table <- dplyr::select(data_turb, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -1262,7 +1244,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:17]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:15]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -1279,8 +1261,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1288,8 +1270,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(15.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1308,8 +1290,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(15.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1320,7 +1302,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_TURB_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_turb, -c(Year,Month))
+Table <- dplyr::select(data_turb, -c(Year,Month))
 data_turb <- Table[complete.cases(Table),]
 
 data_descript_data_station_select <- summarise(group_by(data_turb, Code_point_Libelle), mean_Ndetect=mean(TURB,na.rm=T), sd_N_detect=sd(TURB,na.rm=T),min_N_detect=min(TURB,na.rm=T),max_N_detect=max(TURB,na.rm=T))
@@ -1330,8 +1312,8 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 5), limits = c(0,20))+
-  scale_x_continuous(breaks = seq(0,65, by = 5), limits = c(0,65))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,25, by = 5), limits = c(0,25))+
+  scale_x_continuous(breaks = seq(0,140, by = 5), limits = c(0,140))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Turbidite region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
        subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
