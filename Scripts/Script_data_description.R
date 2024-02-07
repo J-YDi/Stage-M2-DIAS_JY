@@ -1349,7 +1349,11 @@ ggsave('meanTURB_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbon
 
 
 ################# NH4 #######
-data_NH4 <- select(data_hp, Code.Region:Code.parametre,NH4)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_NH4 <- dplyr::select(Table, Code.Region:Code.parametre,NH4)
 
 ggplot(filter(data_NH4,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = NH4),size=3)+
@@ -1379,7 +1383,7 @@ ggplot(filter(data_NH4,Code.Region %in% c(11,12,13)))+
 ggsave('NH4_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 
-Table <- select(data_NH4, -c(Year,Month))
+Table <- dplyr::select(data_NH4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(31,32))
 
@@ -1432,7 +1436,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:12]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -1449,8 +1453,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1458,8 +1462,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1478,8 +1482,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1491,7 +1495,7 @@ ggsave('Ech_NH4_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 
 
-Table <- select(data_NH4, -c(Year,Month))
+Table <- dplyr::select(data_NH4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -1561,8 +1565,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1570,8 +1574,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1590,8 +1594,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1602,7 +1606,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_NH4_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_NH4, -c(Year,Month))
+Table <- dplyr::select(data_NH4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -1672,8 +1676,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1681,8 +1685,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1701,8 +1705,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1713,7 +1717,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_NH4_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_NH4, -c(Year,Month))
+Table <- dplyr::select(data_NH4, -c(Year,Month))
 data_NH4 <- Table[complete.cases(Table),]
 
 data_descript_data_station_select <- summarise(group_by(data_NH4, Code_point_Libelle), mean_Ndetect=mean(NH4,na.rm=T), sd_N_detect=sd(NH4,na.rm=T),min_N_detect=min(NH4,na.rm=T),max_N_detect=max(NH4,na.rm=T))
@@ -1760,7 +1764,11 @@ ggsave('meanNH4_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonn
 
 
 ################# PO4 #######
-data_PO4 <- select(data_hp, Code.Region:Code.parametre,PO4)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_PO4 <- dplyr::select(Table, Code.Region:Code.parametre,PO4)
 
 ggplot(filter(data_PO4,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = PO4),size=3)+
@@ -1790,7 +1798,7 @@ ggplot(filter(data_PO4,Code.Region %in% c(11,12,13)))+
 ggsave('PO4_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 
-Table <- select(data_PO4, -c(Year,Month))
+Table <- dplyr::select(data_PO4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(31,32))
 
@@ -1843,7 +1851,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:12]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -1860,8 +1868,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1869,8 +1877,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -1889,8 +1897,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -1902,7 +1910,7 @@ ggsave('Ech_PO4_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-univer
 
 
 
-Table <- select(data_PO4, -c(Year,Month))
+Table <- dplyr::select(data_PO4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -1972,8 +1980,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -1981,8 +1989,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2001,8 +2009,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2013,7 +2021,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_PO4_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_PO4, -c(Year,Month))
+Table <- dplyr::select(data_PO4, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -2083,8 +2091,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2092,8 +2100,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2112,8 +2120,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2124,7 +2132,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_PO4_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_PO4, -c(Year,Month))
+Table <- dplyr::select(data_PO4, -c(Year,Month))
 data_PO4 <- Table[complete.cases(Table),]
 
 data_descript_data_station_select <- summarise(group_by(data_PO4, Code_point_Libelle), mean_Ndetect=mean(PO4,na.rm=T), sd_N_detect=sd(PO4,na.rm=T),min_N_detect=min(PO4,na.rm=T),max_N_detect=max(PO4,na.rm=T))
@@ -2170,7 +2178,11 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
 ggsave('meanPO4_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 ################# SIOH #######
-data_SIOH <- select(data_hp, Code.Region:Code.parametre,SIOH)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_SIOH <- dplyr::select(Table, Code.Region:Code.parametre,SIOH)
 
 ggplot(filter(data_SIOH,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = SIOH),size=3)+
@@ -2200,7 +2212,7 @@ ggplot(filter(data_SIOH,Code.Region %in% c(11,12,13)))+
 ggsave('SIOH_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 
-Table <- select(data_SIOH, -c(Year,Month))
+Table <- dplyr::select(data_SIOH, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(31,32))
 
@@ -2253,7 +2265,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:12]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -2270,8 +2282,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2279,8 +2291,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2299,8 +2311,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2312,7 +2324,7 @@ ggsave('Ech_SIOH_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-unive
 
 
 
-Table <- select(data_SIOH, -c(Year,Month))
+Table <- dplyr::select(data_SIOH, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -2382,8 +2394,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2391,8 +2403,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2411,8 +2423,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2423,7 +2435,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_SIOH_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_SIOH, -c(Year,Month))
+Table <- dplyr::select(data_SIOH, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -2493,8 +2505,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2502,8 +2514,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2522,8 +2534,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2534,7 +2546,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_SIOH_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_SIOH, -c(Year,Month))
+Table <- dplyr::select(data_SIOH, -c(Year,Month))
 data_SIOH <- Table[complete.cases(Table),]
 
 data_descript_data_station_select <- summarise(group_by(data_SIOH, Code_point_Libelle), mean_Ndetect=mean(SIOH,na.rm=T), sd_N_detect=sd(SIOH,na.rm=T),min_N_detect=min(SIOH,na.rm=T),max_N_detect=max(SIOH,na.rm=T))
@@ -2580,7 +2592,11 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
 ggsave('meanSIOH_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 ################# OXYGENE #######
-data_OXYGENE <- select(data_hp, Code.Region:Code.parametre,OXYGENE)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_OXYGENE <- dplyr::select(Table, Code.Region:Code.parametre,OXYGENE)
 
 ggplot(filter(data_OXYGENE,Code.Region %in% c(31,32)))+
   geom_point(aes(x=Month,y=Code_point_Libelle,colour = OXYGENE),size=3)+
@@ -2610,9 +2626,121 @@ ggplot(filter(data_OXYGENE,Code.Region %in% c(11,12,13)))+
 ggsave('OXYGENE_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 
-Table <- select(data_OXYGENE, -c(Year,Month))
+Table <- dplyr::select(data_OXYGENE, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(31,32))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:15]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_OXYGENE_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_OXYGENE_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+
+Table <- dplyr::select(data_OXYGENE, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(21,22,23))
 
 # Transform the sampling date as date format 
 Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
@@ -2680,8 +2808,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2689,8 +2817,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(16.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -2698,7 +2826,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+ggsave('Ech_OXYGENE_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -2709,8 +2837,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(16.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -2718,11 +2846,1177 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+ggsave('Ech_OXYGENE_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_OXYGENE, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(11,12,13))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
 
 
 
-Table <- select(data_OXYGENE, -c(Year,Month))
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_OXYGENE_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_OXYGENE_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_OXYGENE, -c(Year,Month))
+data_OXYGENE <- Table[complete.cases(Table),]
+
+data_descript_data_station_select <- summarise(group_by(data_OXYGENE, Code_point_Libelle), mean_Ndetect=mean(OXYGENE,na.rm=T), sd_N_detect=sd(OXYGENE,na.rm=T),min_N_detect=min(OXYGENE,na.rm=T),max_N_detect=max(OXYGENE,na.rm=T))
+data_descript_data_station_select <- left_join(data_descript_data_station_select,data_OXYGENE)
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
+  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne OXYGENE region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanOXYGENE_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
+  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne OXYGENE region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanOXYGENE_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
+  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne OXYGENE region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanOXYGENE_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+################# TURB-FNU #######
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_TURBFNU <- dplyr::select(Table, Code.Region:Code.parametre,`TURB-FNU`)
+
+colnames(data_TURBFNU)[12] <- "TURBFNU"
+
+ggplot(filter(data_TURBFNU,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
+  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TURBFNU region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TURBFNU_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_TURBFNU,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
+  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TURBFNU region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TURBFNU_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_TURBFNU,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
+  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TURBFNU region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TURBFNU_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+
+Table <- dplyr::select(data_TURBFNU, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(31,32))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+
+Table <- dplyr::select(data_TURBFNU, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(21,22,23))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:19]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(17.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(17.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_TURBFNU, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(11,12,13))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:12]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TURBFNU_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_TURBFNU, -c(Year,Month))
+data_TURBFNU <- Table[complete.cases(Table),]
+
+data_descript_data_station_select <- summarise(group_by(data_TURBFNU, Code_point_Libelle), mean_Ndetect=mean(TURBFNU,na.rm=T), sd_N_detect=sd(TURBFNU,na.rm=T),min_N_detect=min(TURBFNU,na.rm=T),max_N_detect=max(TURBFNU,na.rm=T))
+data_descript_data_station_select <- left_join(data_descript_data_station_select,data_TURBFNU)
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_x_continuous(breaks = seq(0,65, by = 5), limits = c(0,65))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne TURBFNU region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanTURBFNU_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_x_continuous(breaks = seq(0,85, by = 5), limits = c(0,85))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne TURBFNU region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanTURBFNU_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 5), limits = c(0,35))+
+  scale_x_continuous(breaks = seq(0,190, by = 5), limits = c(0,190))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne TURBFNU region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanTURBFNU_Med_select5A_1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 1), limits = c(0,35))+
+  scale_x_continuous(breaks = seq(0,55, by = 5), limits = c(0,55))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne TURBFNU region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanTURBFNU_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+################# NO3NO2 #######
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_NO3NO2 <- dplyr::select(Table, Code.Region:Code.parametre,`NO3+NO2`)
+
+colnames(data_NO3NO2)[12] <- "NO3NO2"
+
+ggplot(filter(data_NO3NO2,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
+  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "NO3NO2 region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('NO3NO2_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_NO3NO2,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
+  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "NO3NO2 region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('NO3NO2_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_NO3NO2,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
+  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "NO3NO2 region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('NO3NO2_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+
+Table <- dplyr::select(data_NO3NO2, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(31,32))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:12]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(10.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+
+Table <- dplyr::select(data_NO3NO2, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(21,22,23))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_NO3NO2, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(11,12,13))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(11.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_NO3NO2_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+Table <- dplyr::select(data_NO3NO2, -c(Year,Month))
+data_NO3NO2 <- Table[complete.cases(Table),]
+
+data_descript_data_station_select <- summarise(group_by(data_NO3NO2, Code_point_Libelle), mean_Ndetect=mean(NO3NO2,na.rm=T), sd_N_detect=sd(NO3NO2,na.rm=T),min_N_detect=min(NO3NO2,na.rm=T),max_N_detect=max(NO3NO2,na.rm=T))
+data_descript_data_station_select <- left_join(data_descript_data_station_select,data_NO3NO2)
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
+  scale_x_continuous(breaks = seq(0,245, by = 10), limits = c(0,245))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne NO3NO2 region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanNO3NO2_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
+  scale_x_continuous(breaks = seq(0,245, by = 5), limits = c(0,245))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne NO3NO2 region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanNO3NO2_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
+  scale_x_continuous(breaks = seq(0,245, by = 5), limits = c(0,245))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne NO3NO2 region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanNO3NO2_Med_select5A_1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
+  scale_x_continuous(breaks = seq(0,130, by = 5), limits = c(0,130))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne NO3NO2 region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanNO3NO2_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+
+
+################# TEMP #######
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_TEMP <- dplyr::select(Table, Code.Region:Code.parametre, TEMP)
+
+
+
+ggplot(filter(data_TEMP,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
+  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TEMP region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TEMP_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_TEMP,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
+  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TEMP region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TEMP_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_TEMP,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
+  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "TEMP region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('TEMP_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+
+Table <- dplyr::select(data_TEMP, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(31,32))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:17]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(15.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TEMP_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(15.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_TEMP_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+
+Table <- dplyr::select(data_TEMP, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(21,22,23))
 
@@ -2792,8 +4086,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -2801,1274 +4095,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(19.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_OXYGENE, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(11,12,13))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_OXYGENE_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_OXYGENE, -c(Year,Month))
-data_OXYGENE <- Table[complete.cases(Table),]
-
-data_descript_data_station_select <- summarise(group_by(data_OXYGENE, Code_point_Libelle), mean_Ndetect=mean(OXYGENE,na.rm=T), sd_N_detect=sd(OXYGENE,na.rm=T),min_N_detect=min(OXYGENE,na.rm=T),max_N_detect=max(OXYGENE,na.rm=T))
-data_descript_data_station_select <- left_join(data_descript_data_station_select,data_OXYGENE)
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
-  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne OXYGENE region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanOXYGENE_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
-  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne OXYGENE region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanOXYGENE_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,3, by = 1), limits = c(0,3))+
-  scale_x_continuous(breaks = seq(0,24, by = 5), limits = c(0,24))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne OXYGENE region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanOXYGENE_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-################# TURB-FNU #######
-data_TURBFNU <- select(data_hp, Code.Region:Code.parametre,`TURB-FNU`)
-
-colnames(data_TURBFNU)[11] <- "TURBFNU"
-
-ggplot(filter(data_TURBFNU,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
-  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TURBFNU region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TURBFNU_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_TURBFNU,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
-  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TURBFNU region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TURBFNU_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_TURBFNU,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TURBFNU),size=3)+
-  scale_colour_viridis(name = "TURBFNU",breaks = seq(-2,90, by = 15), limits = c(-2,90))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TURBFNU region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TURBFNU_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-
-Table <- select(data_TURBFNU, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(31,32))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-
-Table <- select(data_TURBFNU, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(21,22,23))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:23]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(21.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(21.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_TURBFNU, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(11,12,13))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TURBFNU_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_TURBFNU, -c(Year,Month))
-data_TURBFNU <- Table[complete.cases(Table),]
-
-data_descript_data_station_select <- summarise(group_by(data_TURBFNU, Code_point_Libelle), mean_Ndetect=mean(TURBFNU,na.rm=T), sd_N_detect=sd(TURBFNU,na.rm=T),min_N_detect=min(TURBFNU,na.rm=T),max_N_detect=max(TURBFNU,na.rm=T))
-data_descript_data_station_select <- left_join(data_descript_data_station_select,data_TURBFNU)
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 1), limits = c(0,35))+
-  scale_x_continuous(breaks = seq(0,65, by = 5), limits = c(0,65))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne TURBFNU region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanTURBFNU_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 1), limits = c(0,35))+
-  scale_x_continuous(breaks = seq(0,85, by = 5), limits = c(0,85))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne TURBFNU region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanTURBFNU_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 1), limits = c(0,35))+
-  scale_x_continuous(breaks = seq(0,190, by = 5), limits = c(0,190))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne TURBFNU region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanTURBFNU_Med_select5A_1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,35, by = 1), limits = c(0,35))+
-  scale_x_continuous(breaks = seq(0,55, by = 5), limits = c(0,55))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne TURBFNU region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanTURBFNU_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-################# NO3NO2 #######
-data_NO3NO2 <- select(data_hp, Code.Region:Code.parametre,`NO3+NO2`)
-
-colnames(data_NO3NO2)[11] <- "NO3NO2"
-
-ggplot(filter(data_NO3NO2,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
-  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "NO3NO2 region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('NO3NO2_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_NO3NO2,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
-  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "NO3NO2 region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('NO3NO2_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_NO3NO2,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = NO3NO2),size=3)+
-  scale_colour_viridis(name = "NO3NO2",breaks = seq(0,245, by = 15), limits = c(0,245))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "NO3NO2 region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('NO3NO2_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-
-Table <- select(data_NO3NO2, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(31,32))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-
-Table <- select(data_NO3NO2, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(21,22,23))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(14.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_NO3NO2, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(11,12,13))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:13]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(11.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_NO3NO2_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-Table <- select(data_NO3NO2, -c(Year,Month))
-data_NO3NO2 <- Table[complete.cases(Table),]
-
-data_descript_data_station_select <- summarise(group_by(data_NO3NO2, Code_point_Libelle), mean_Ndetect=mean(NO3NO2,na.rm=T), sd_N_detect=sd(NO3NO2,na.rm=T),min_N_detect=min(NO3NO2,na.rm=T),max_N_detect=max(NO3NO2,na.rm=T))
-data_descript_data_station_select <- left_join(data_descript_data_station_select,data_NO3NO2)
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
-  scale_x_continuous(breaks = seq(0,245, by = 5), limits = c(0,245))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne NO3NO2 region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanNO3NO2_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
-  scale_x_continuous(breaks = seq(0,245, by = 5), limits = c(0,245))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne NO3NO2 region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanNO3NO2_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
-  scale_x_continuous(breaks = seq(0,245, by = 5), limits = c(0,245))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne NO3NO2 region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanNO3NO2_Med_select5A_1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
-  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
-  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,45, by = 5), limits = c(0,45))+
-  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
-  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
-  labs(title = "Moyenne NO3NO2 region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
-  theme(legend.position = "left",legend.box = "horizontal",
-        axis.text.y = element_text())
-ggsave('meanNO3NO2_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-
-
-################# TEMP #######
-data_TEMP <- select(data_hp, Code.Region:Code.parametre, TEMP)
-
-
-
-ggplot(filter(data_TEMP,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
-  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TEMP region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TEMP_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_TEMP,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
-  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TEMP region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TEMP_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-ggplot(filter(data_TEMP,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = TEMP),size=3)+
-  scale_colour_viridis(name = "TEMP",breaks = seq(-1,50, by = 15), limits = c(-1,50))+
-  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
-  facet_wrap(~Year)+
-  labs(title = "TEMP region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
-  theme(legend.position = "left",legend.box = "horizontal")
-ggsave('TEMP_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
-
-
-Table <- select(data_TEMP, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(31,32))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:18]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'grey80') +
-  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TEMP_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
-           size = 3, colour = 'black') +
-  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_TEMP_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-
-Table <- select(data_TEMP, -c(Year,Month))
-Table <- Table[complete.cases(Table),]
-Table <- filter(Table,Code.Region %in% c(21,22,23))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-# Getting rid of non-UTF8 characters in the Table
-Table$site <- gsub('<f4>','o', Table$site)
-Table$site <- gsub('<ea>','e', Table$site)
-
-
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:30]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
-
-# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(28.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -4087,8 +4115,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(28.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -4099,7 +4127,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_TEMP_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_TEMP, -c(Year,Month))
+Table <- dplyr::select(data_TEMP, -c(Year,Month))
 Table <- Table[complete.cases(Table),]
 Table <- filter(Table,Code.Region %in% c(11,12,13))
 
@@ -4152,7 +4180,7 @@ fq_month <- fq_month[order(fq_month$year,fq_month$month),]
 fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
 
 # Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:18]) ##NOMBRE DE STATIONS A ADAPTER
+fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
 # rownames(fq_month_heatmap) <- rownames(fq_month)
 fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
 fq_month_heatmap$date <- fq_month$sampling
@@ -4169,8 +4197,8 @@ fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
   group_by(year, month)
 
 ## Plot with points
-vertical <- paste(c(seq(1987,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(c(seq(1987,2023,1)), '-F', sep = '') ################ IDEM
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
 
 ## Heatmap - Sampling frequences - Horizontal
 ggplot(fq_month_heatmap_gg) +
@@ -4178,8 +4206,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_effort))) +
   scale_fill_viridis_d('Sampling effort') +
   geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'grey80') +
   scale_x_discrete(labels = rep(seq(1,12,1),37)) +
   theme_classic(base_size = 20) +
@@ -4198,8 +4226,8 @@ ggplot(fq_month_heatmap_gg) +
                 fill = factor(sampling_na))) +
   scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
   geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(16.5,37),
-           label = c(seq(1987,2023,1)),
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
            size = 3, colour = 'black') +
   scale_x_discrete(labels = rep(seq(1,12,1),38)) +
   theme_classic(base_size = 20) +
@@ -4210,7 +4238,7 @@ ggplot(fq_month_heatmap_gg) +
 ggsave('Ech_TEMP_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-Table <- select(data_TEMP, -c(Year,Month))
+Table <- dplyr::select(data_TEMP, -c(Year,Month))
 data_TEMP <- Table[complete.cases(Table),]
 
 data_descript_data_station_select <- summarise(group_by(data_TEMP, Code_point_Libelle), mean_Ndetect=mean(TEMP,na.rm=T), sd_N_detect=sd(TEMP,na.rm=T),min_N_detect=min(TEMP,na.rm=T),max_N_detect=max(TEMP,na.rm=T))
@@ -4255,18 +4283,18 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
         axis.text.y = element_text())
 ggsave('meanTEMP_Med_select5A_1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
-# Pigments
-summary(select(data_hp,Allo:PCYAN))
-
-# Taxons cibles 
 ################# Taxons cibles #######
-data_Alex <- select(data_hpT, Code.Region:Code.parametre, Alexandrium_g)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_Alex <- dplyr::select(Table, Code.Region:Code.parametre, Alexandrium)
 
 
 
 ggplot(filter(data_Alex,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Alexandrium_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium+1)),size=4)+
+  scale_colour_viridis(name = "log(Alexandrium +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Alexandrium region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4274,8 +4302,8 @@ ggplot(filter(data_Alex,Code.Region %in% c(31,32)))+
 ggsave('Alex_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Alex,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Alexandrium_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium+1)),size=4)+
+  scale_colour_viridis(name = "log(Alexandrium +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Alexandrium region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4283,26 +4311,26 @@ ggplot(filter(data_Alex,Code.Region %in% c(21,22,23)))+
 ggsave('Alex_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Alex,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Alexandrium_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Alexandrium+1)),size=4)+
+  scale_colour_viridis(name = "log(Alexandrium +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Alexandrium region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Alex_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Alex, -c(Year,Month))
+Table <- dplyr::select(data_Alex, -c(Year,Month))
 data_Alex <- Table[complete.cases(Table),]
-data_Alex$Alexandrium_g <- log(data_Alex$Alexandrium_g +1)
+data_Alex$Alexandrium <- log(data_Alex$Alexandrium +1)
 
-data_descript_data_station_select <- summarise(group_by(data_Alex, Code_point_Libelle), mean_Ndetect=mean(Alexandrium_g,na.rm=T), sd_N_detect=sd(Alexandrium_g,na.rm=T),min_N_detect=min(Alexandrium_g,na.rm=T),max_N_detect=max(Alexandrium_g,na.rm=T))
+data_descript_data_station_select <- summarise(group_by(data_Alex, Code_point_Libelle), mean_Ndetect=mean(Alexandrium,na.rm=T), sd_N_detect=sd(Alexandrium,na.rm=T),min_N_detect=min(Alexandrium,na.rm=T),max_N_detect=max(Alexandrium,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Alex)
 
 ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Alexandrium region Manche", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
@@ -4316,11 +4344,11 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Alexandrium region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanAlex_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4329,23 +4357,24 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Alexandrium region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,21))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanAlex_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
 
-data_Dino <- select(data_hpT, Code.Region:Code.parametre, Dinophysis_g)
-
-
+data_Dino <- dplyr::select(Table, Code.Region:Code.parametre, Dinophysis)
 
 ggplot(filter(data_Dino,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Dinophysis_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis+1)),size=4)+
+  scale_colour_viridis(name = "log(Dinophysis +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Dinophysis region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4353,8 +4382,8 @@ ggplot(filter(data_Dino,Code.Region %in% c(31,32)))+
 ggsave('Dino_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Dino,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Dinophysis_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis+1)),size=4)+
+  scale_colour_viridis(name = "log(Dinophysis +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Dinophysis region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4362,17 +4391,17 @@ ggplot(filter(data_Dino,Code.Region %in% c(21,22,23)))+
 ggsave('Dino_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Dino,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Dinophysis_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Dinophysis+1)),size=4)+
+  scale_colour_viridis(name = "log(Dinophysis +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Dinophysis region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Dino_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Dino, -c(Year,Month))
+Table <- dplyr::select(data_Dino, -c(Year,Month))
 data_Dino <- Table[complete.cases(Table),]
-data_Dino$Dinophysis_g <- log(data_Dino$Dinophysis_g +1)
+data_Dino$Dinophysis_g <- log(data_Dino$Dinophysis +1)
 
 data_descript_data_station_select <- summarise(group_by(data_Dino, Code_point_Libelle), mean_Ndetect=mean(Dinophysis_g,na.rm=T), sd_N_detect=sd(Dinophysis_g,na.rm=T),min_N_detect=min(Dinophysis_g,na.rm=T),max_N_detect=max(Dinophysis_g,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Dino)
@@ -4381,7 +4410,7 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Dinophysis region Manche", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
@@ -4395,11 +4424,11 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Dinophysis region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanDino_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4408,23 +4437,24 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
   geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
   geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
-  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,2, by = 0.2), limits = c(0,2))+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,4, by = 0.4), limits = c(0,4))+
   scale_x_continuous(breaks = seq(0,13, by = 3), limits = c(0,13))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Dinophysis region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanDino_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
 
-data_Lepido <- select(data_hpT, Code.Region:Code.parametre, Lepidodinium_g)
-
-
+data_Lepido <- dplyr::select(Table, Code.Region:Code.parametre, Lepidodinium)
 
 ggplot(filter(data_Lepido,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Lepidodinium_g +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Lepidodinium +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Lepidodinium region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4432,8 +4462,8 @@ ggplot(filter(data_Lepido,Code.Region %in% c(31,32)))+
 ggsave('Lepido_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Lepido,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Lepidodinium_g +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Lepidodinium +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Lepidodinium region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4441,17 +4471,17 @@ ggplot(filter(data_Lepido,Code.Region %in% c(21,22,23)))+
 ggsave('Lepido_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Lepido,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Lepidodinium_g +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lepidodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Lepidodinium +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Lepidodinium region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Lepido_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Lepido, -c(Year,Month))
+Table <- dplyr::select(data_Lepido, -c(Year,Month))
 data_Lepido <- Table[complete.cases(Table),]
-data_Lepido$Lepidodinium_g <- log(data_Lepido$Lepidodinium_g +1)
+data_Lepido$Lepidodinium_g <- log(data_Lepido$Lepidodinium +1)
 
 data_descript_data_station_select <- summarise(group_by(data_Lepido, Code_point_Libelle), mean_Ndetect=mean(Lepidodinium_g,na.rm=T), sd_N_detect=sd(Lepidodinium_g,na.rm=T),min_N_detect=min(Lepidodinium_g,na.rm=T),max_N_detect=max(Lepidodinium_g,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Lepido)
@@ -4478,7 +4508,7 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Lepidodinium region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanLepido_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4491,18 +4521,23 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Lepidodinium region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanLepido_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
-data_Lingulo <- select(data_hpT, Code.Region:Code.parametre, Lingulodinium_g)
+
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_Lingulo <- dplyr::select(Table, Code.Region:Code.parametre, Lingulodinium)
 
 
 
 ggplot(filter(data_Lingulo,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Lingulodinium_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Lingulodinium +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Lingulodinium region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4510,8 +4545,8 @@ ggplot(filter(data_Lingulo,Code.Region %in% c(31,32)))+
 ggsave('Lingulo_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Lingulo,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Lingulodinium_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Lingulodinium +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Lingulodinium region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4519,7 +4554,7 @@ ggplot(filter(data_Lingulo,Code.Region %in% c(21,22,23)))+
 ggsave('Lingulo_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Lingulo,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium_g+1)),size=4)+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Lingulodinium+1)),size=4)+
   scale_colour_viridis(name = "log(Lingulodinium_g +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
@@ -4527,9 +4562,9 @@ ggplot(filter(data_Lingulo,Code.Region %in% c(11,12,13)))+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Lingulo_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Lingulo, -c(Year,Month))
+Table <- dplyr::select(data_Lingulo, -c(Year,Month))
 data_Lingulo <- Table[complete.cases(Table),]
-data_Lingulo$Lingulodinium_g <- log(data_Lingulo$Lingulodinium_g +1)
+data_Lingulo$Lingulodinium_g <- log(data_Lingulo$Lingulodinium +1)
 
 data_descript_data_station_select <- summarise(group_by(data_Lingulo, Code_point_Libelle), mean_Ndetect=mean(Lingulodinium_g,na.rm=T), sd_N_detect=sd(Lingulodinium_g,na.rm=T),min_N_detect=min(Lingulodinium_g,na.rm=T),max_N_detect=max(Lingulodinium_g,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Lingulo)
@@ -4556,7 +4591,7 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Lingulodinium region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanLingulo_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4569,22 +4604,22 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Lingulodinium region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanLingulo_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
-
-
-
-data_Nocti <- select(data_hpT, Code.Region:Code.parametre, Noctiluca_g)
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+data_Nocti <- dplyr::select(Table, Code.Region:Code.parametre, Noctiluca)
 
 
 
 ggplot(filter(data_Nocti,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Noctiluca_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca+1)),size=4)+
+  scale_colour_viridis(name = "log(Noctiluca +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Noctiluca region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4592,8 +4627,8 @@ ggplot(filter(data_Nocti,Code.Region %in% c(31,32)))+
 ggsave('Nocti_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Nocti,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Noctiluca_g +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca+1)),size=4)+
+  scale_colour_viridis(name = "log(Noctiluca +1)",breaks = seq(0,10, by = 5), limits = c(0,10))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Noctiluca region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4601,17 +4636,17 @@ ggplot(filter(data_Nocti,Code.Region %in% c(21,22,23)))+
 ggsave('Nocti_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Nocti,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Noctiluca_g +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Noctiluca+1)),size=4)+
+  scale_colour_viridis(name = "log(Noctiluca +1)",breaks = seq(0,16, by = 5), limits = c(0,16))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Noctiluca region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Nocti_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Nocti, -c(Year,Month))
+Table <- dplyr::select(data_Nocti, -c(Year,Month))
 data_Nocti <- Table[complete.cases(Table),]
-data_Nocti$Noctiluca_g <- log(data_Nocti$Noctiluca_g +1)
+data_Nocti$Noctiluca_g <- log(data_Nocti$Noctiluca +1)
 
 data_descript_data_station_select <- summarise(group_by(data_Nocti, Code_point_Libelle), mean_Ndetect=mean(Noctiluca_g,na.rm=T), sd_N_detect=sd(Noctiluca_g,na.rm=T),min_N_detect=min(Noctiluca_g,na.rm=T),max_N_detect=max(Noctiluca_g,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Nocti)
@@ -4638,7 +4673,7 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Noctiluca region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanNocti_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4651,18 +4686,23 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Noctiluca region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanNocti_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
-data_Meso <- select(data_hpT, Code.Region:Code.parametre, Mesodinium_g)
+
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data_Meso <- dplyr::select(Table, Code.Region:Code.parametre, Mesodinium)
 
 
 
 ggplot(filter(data_Meso,Code.Region %in% c(31,32)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Mesodinium_g +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Mesodinium +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Mesodinium region Mediterranee", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4670,8 +4710,8 @@ ggplot(filter(data_Meso,Code.Region %in% c(31,32)))+
 ggsave('Meso_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Meso,Code.Region %in% c(21,22,23)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Mesodinium_g +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Mesodinium +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Mesodinium region Atlantique", x= "Mois", y="Station",colour="Salinite",size=0.5)+
@@ -4679,17 +4719,17 @@ ggplot(filter(data_Meso,Code.Region %in% c(21,22,23)))+
 ggsave('Meso_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
 ggplot(filter(data_Meso,Code.Region %in% c(11,12,13)))+
-  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium_g+1)),size=4)+
-  scale_colour_viridis(name = "log(Mesodinium_g +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = log(Mesodinium+1)),size=4)+
+  scale_colour_viridis(name = "log(Mesodinium +1)",breaks = seq(0,13, by = 5), limits = c(0,13))+
   scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
   facet_wrap(~Year)+
   labs(title = "Mesodinium region Manche", x= "Mois", y="Station",colour="Salinite",size=0.5)+
   theme(legend.position = "left",legend.box = "horizontal")
 ggsave('Meso_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
 
-Table <- select(data_Meso, -c(Year,Month))
+Table <- dplyr::select(data_Meso, -c(Year,Month))
 data_Meso <- Table[complete.cases(Table),]
-data_Meso$Mesodinium_g <- log(data_Meso$Mesodinium_g +1)
+data_Meso$Mesodinium_g <- log(data_Meso$Mesodinium +1)
 
 data_descript_data_station_select <- summarise(group_by(data_Meso, Code_point_Libelle), mean_Ndetect=mean(Mesodinium_g,na.rm=T), sd_N_detect=sd(Mesodinium_g,na.rm=T),min_N_detect=min(Mesodinium_g,na.rm=T),max_N_detect=max(Mesodinium_g,na.rm=T))
 data_descript_data_station_select <- left_join(data_descript_data_station_select,data_Meso)
@@ -4716,7 +4756,7 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Mesodinium region Atlantique", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanMeso_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
@@ -4729,8 +4769,596 @@ ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
   scale_x_continuous(breaks = seq(0,16, by = 2), limits = c(0,16))+
   geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
   labs(title = "Moyenne Mesodinium region Mediterranee", x= " log +1 Valeur", y="Station",size=0.5,colour="SD",
-       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
   theme(legend.position = "left",legend.box = "horizontal",
         axis.text.y = element_text())
 ggsave('meanMeso_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+### CHLOROPHYLLE #################
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
+
+data_chloro <- dplyr::select(Table, Code.Region:Code.parametre,Methode_CHLOROA, CHLOROA)
+
+ggplot(filter(data_chloro,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = CHLOROA),size=3)+
+  scale_colour_viridis(name = "Chlorophylle",breaks = seq(0,150, by = 20), limits = c(0,150))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Mediterranee", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('CHLOROA_Mediterranee_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_chloro,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = CHLOROA),size=3)+
+  scale_colour_viridis(name = "Chlorophylle",breaks = seq(0,50, by = 10), limits = c(0,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Atlantique", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('CHLOROA_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_chloro,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = CHLOROA),size=3)+
+  scale_colour_viridis(name = "Chlorophylle",breaks = seq(0,50, by = 10), limits = c(0,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Manche", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "left",legend.box = "horizontal")
+ggsave('CHLOROA_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+# Methode
+ggplot(filter(data_chloro,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = Methode_CHLOROA),size=3)+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Mediterranee", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "bottom",legend.box = "horizontal")
+ggsave('CHLOROA_Mediterranee_select5A_meth.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_chloro,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = Methode_CHLOROA),size=3)+
+  #scale_colour_viridis(name = "Chlorophylle",breaks = seq(0,50, by = 10), limits = c(0,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Atlantique", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "bottom",legend.box = "horizontal")
+ggsave('CHLOROA_Atlantic_select5A_meth.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+ggplot(filter(data_chloro,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=Month,y=Code_point_Libelle,colour = Methode_CHLOROA),size=3)+
+  #scale_colour_viridis(name = "Chlorophylle",breaks = seq(0,50, by = 10), limits = c(0,50))+
+  scale_x_discrete(breaks = waiver(), labels = waiver(), limits = c(1:12))+
+  facet_wrap(~Year)+
+  labs(title = "Chlorophylle region Manche", x= "Mois", y="Station",colour="Chlorophylle",size=0.5)+
+  theme(legend.position = "bottom",legend.box = "horizontal")
+ggsave('CHLOROA_Manche_select5A_meth.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 500, height = 420, units = 'mm')
+
+
+
+Table <- dplyr::select(data_chloro, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(31,32))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:15]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Med1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(13.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Med2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Med_chloro.csv", row.names = FALSE,dec = ".")
+
+
+
+Table <- dplyr::select(data_chloro, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(21,22,23))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:21]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Atlantic1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(19.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Atlantic2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Atlantic_chloro.csv", row.names = FALSE,dec = ".")
+
+
+Table <- dplyr::select(data_chloro, -c(Year,Month))
+Table <- Table[complete.cases(Table),]
+Table <- filter(Table,Code.Region %in% c(11,12,13))
+
+# Transform the sampling date as date format 
+Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
+
+# Create three separate column for day, month and year
+Table$day <- day(Table$sampling_date)
+Table$month <- month(Table$sampling_date, label = F)
+Table$year <- year(Table$sampling_date)
+
+# Change the column name to match 'site'
+colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
+colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
+
+# Getting rid of non-UTF8 characters in the Table
+Table$site <- gsub('<f4>','o', Table$site)
+Table$site <- gsub('<ea>','e', Table$site)
+
+
+
+Time_series_REPHY <- Table %>% 
+  dplyr::select(site, day, month, year, sampling_date) %>%
+  unique()
+
+# Create a fq_month to visualize the sampling frequency by month
+fq_month <- Time_series_REPHY %>%
+  group_by(site) %>% 
+  count(year, month) %>% 
+  pivot_wider(names_from = "site", values_from = "n")
+
+# Change months' numbers into letters
+fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
+                           ifelse(fq_month$month == '11', 'K',
+                                  ifelse(fq_month$month == '12', 'L',
+                                         ifelse(fq_month$month == '1', 'A',
+                                                ifelse(fq_month$month == '2', 'B',
+                                                       ifelse(fq_month$month == '3', 'C',
+                                                              ifelse(fq_month$month == '4', 'D',
+                                                                     ifelse(fq_month$month == '5', 'E',
+                                                                            ifelse(fq_month$month == '6', 'F',
+                                                                                   ifelse(fq_month$month == '7', 'G',
+                                                                                          ifelse(fq_month$month == '8', 'H',
+                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
+
+# Order by year 
+fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
+
+# Create a column merging year and month 
+fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
+
+# Heatmap
+fq_month_heatmap <- as.data.frame(fq_month[1:16]) ##NOMBRE DE STATIONS A ADAPTER
+# rownames(fq_month_heatmap) <- rownames(fq_month)
+fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
+fq_month_heatmap$date <- fq_month$sampling
+
+# heatmap(fq_month_heatmap, Rowv = NA, Colv = NA) not working for me
+
+# fq_month_heatmap <- as.data.frame(fq_month_heatmap)
+
+fq_month_heatmap_gg <- fq_month_heatmap %>%  
+  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
+
+# Order by chronological order 
+fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
+  group_by(year, month)
+
+## Plot with points
+vertical <- paste(c(seq(1995,2023,1)), '-L', sep = '') ################ ANNEES A ADAPTER
+year_half <- paste(c(seq(1995,2023,1)), '-F', sep = '') ################ IDEM
+
+## Heatmap - Sampling frequences - Horizontal
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_effort))) +
+  scale_fill_viridis_d('Sampling effort') +
+  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'grey80') +
+  scale_x_discrete(labels = rep(seq(1,12,1),37)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Manche1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+## Heatmap - NA or not NA - Horizontal
+fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
+
+ggplot(fq_month_heatmap_gg) +
+  geom_tile(aes(y = site, x = date,  
+                fill = factor(sampling_na))) +
+  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
+  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
+  annotate('text', x = year_half, y = rep(14.5,29),
+           label = c(seq(1995,2023,1)),
+           size = 3, colour = 'black') +
+  scale_x_discrete(labels = rep(seq(1,12,1),38)) +
+  theme_classic(base_size = 20) +
+  theme(axis.text.x = element_text(size = 5),
+        axis.title = element_blank(),
+        legend.position = 'top') +
+  guides(nrow = 1, byrow = TRUE)
+ggsave('Ech_CHLOROA_Manche2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Manche_chloro.csv", row.names = FALSE,dec = ".")
+
+
+
+data_descript_data_station_select <- summarise(group_by(data_chloro, Code_point_Libelle), mean_Ndetect=mean(CHLOROA,na.rm=T), sd_N_detect=sd(CHLOROA,na.rm=T),min_N_detect=min(CHLOROA,na.rm=F),max_N_detect=max(CHLOROA,na.rm=F))
+data_descript_data_station_select <- left_join(data_descript_data_station_select,data_chloro)
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 2), limits = c(0,20))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne Chlorophylle region Manche", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(11,12,13))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanCHLOROA_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,20, by = 2), limits = c(0,20))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne Chlorophylle region Atlantique", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(21,22,23))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanCHLOROA_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+ggplot(filter(data_descript_data_station_select,Code.Region %in% c(31,32)))+
+  geom_point(aes(x=mean_Ndetect,y=Code_point_Libelle,colour = sd_N_detect),size=5)+
+  geom_point(aes(x=max_N_detect,y=Code_point_Libelle),size=2,col="red")+
+  geom_point(aes(x=min_N_detect,y=Code_point_Libelle),size=2,col="violet")+
+  scale_colour_viridis(name = "Ecart-type",breaks = seq(0,10, by = 1), limits = c(0,10))+
+  scale_x_continuous(breaks = seq(0,40, by = 5), limits = c(0,40))+
+  geom_errorbar(aes(xmin = mean_Ndetect - sd_N_detect, xmax =mean_Ndetect + sd_N_detect, y=Code_point_Libelle,colour = sd_N_detect))+
+  labs(title = "Moyenne Chlorophylle region Mediterranee", x= "Valeur", y="Station",colour = "Nombre",size=0.5,
+       subtitle = paste("Moy:",mean(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Min:",min(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect),"Max:",max(filter(data_descript_data_station_select,Code.Region %in% c(31,32))$mean_Ndetect)))+
+  theme(legend.position = "left",legend.box = "horizontal",
+        axis.text.y = element_text())
+ggsave('meanCHLOROA_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description",dpi = 600, width = 400, height = 300, units = 'mm')
+
+
+#### Carte des stations selon differents temps de serie temporelle #####
+# Critere 5 ans
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
+Worldmap <- map_data('worldHires')
+
+Table$lon <- as.numeric(Table$lon)
+Table$lat <- as.numeric(Table$lat)
+
+Table <- dplyr::filter(Table, Code_point_Libelle != "Endoume" & Code_point_Libelle != "Antoine")
+
+ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  theme_gdocs()+
+  geom_point(data = Table, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
+        panel.background = element_rect(fill = 'lightblue2'))+
+  guides(color = guide_legend(override.aes = list(size = 10)))+
+  scale_colour_discrete(name = "Code Region")
+ggsave('maps_station_select_5chla.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+
+# Critere 15 ans
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+
+Worldmap <- map_data('worldHires')
+
+Table$lon <- as.numeric(Table$lon)
+Table$lat <- as.numeric(Table$lat)
+
+Table <- dplyr::filter(Table, Code_point_Libelle == "Point 1 Boulogne" |
+                              Code_point_Libelle == "At so"|
+                              Code_point_Libelle == "Sète mer"|
+                              Code_point_Libelle == "Parc Leucate 2"|
+                              Code_point_Libelle == "Bouzigues (a)"|
+                              Code_point_Libelle == "Barcares"|
+                              Code_point_Libelle == "Anse de Carteau 2"|
+                              Code_point_Libelle == "Géfosse"|
+                              Code_point_Libelle == "Cabourg"|
+                              Code_point_Libelle == "Antifer ponton pétrolier"|
+                              Code_point_Libelle == "Villefranche"|
+                              Code_point_Libelle == "Lazaret (a)"|
+                              Code_point_Libelle == "Diana centre"|
+                              Code_point_Libelle == "Calvi"|
+                              Code_point_Libelle == "22B - Toulon gde rade"|
+                              Code_point_Libelle == "Ouest Loscolo"|
+                              Code_point_Libelle == "Le Croisic (a)"|
+                              Code_point_Libelle == "Le Cornard"|
+                              Code_point_Libelle == "Boyard"|
+                              Code_point_Libelle == "Bois de la Chaise large"|
+                              Code_point_Libelle == "Auger" |
+                              Code_point_Libelle == "Teychan bis"|
+                              Code_point_Libelle == "Arcachon - Bouée 7"|
+                              Code_point_Libelle == "Men er Roue"|
+                              Code_point_Libelle == "Loguivy"|
+                              Code_point_Libelle == "les Hébihens")
+                       
+                       
+                       
+                       
+
+ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  theme_gdocs()+
+  geom_point(data = Table, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
+        panel.background = element_rect(fill = 'lightblue2'))+
+  guides(color = guide_legend(override.aes = list(size = 10)))+
+  scale_colour_discrete(name = "Code Region")
+ggsave('maps_station_select_15chla.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+
+
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period.csv", 
+                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+# Critere 10 ans
+Worldmap <- map_data('worldHires')
+
+Table <- dplyr::filter(Table, Code_point_Libelle == "Point 1 Boulogne" |
+                         Code_point_Libelle == "At so"|
+                         Code_point_Libelle == "Sète mer"|
+                         Code_point_Libelle == "Parc Leucate 2"|
+                         Code_point_Libelle == "Bouzigues (a)"|
+                         Code_point_Libelle == "Barcares"|
+                         Code_point_Libelle == "Anse de Carteau 2"|
+                         Code_point_Libelle == "Géfosse"|
+                         Code_point_Libelle == "Cabourg"|
+                         Code_point_Libelle == "Antifer ponton pétrolier"|
+                         Code_point_Libelle == "Villefranche"|
+                         Code_point_Libelle == "Lazaret (a)"|
+                         Code_point_Libelle == "Diana centre"|
+                         Code_point_Libelle == "Calvi"|
+                         Code_point_Libelle == "22B - Toulon gde rade"|
+                         Code_point_Libelle == "Ouest Loscolo"|
+                         Code_point_Libelle == "Le Croisic (a)"|
+                         Code_point_Libelle == "Le Cornard"|
+                         Code_point_Libelle == "Boyard"|
+                         Code_point_Libelle == "Bois de la Chaise large"|
+                         Code_point_Libelle == "Auger" |
+                         Code_point_Libelle == "Teychan bis"|
+                         Code_point_Libelle == "Arcachon - Bouée 7"|
+                         Code_point_Libelle == "Men er Roue"|
+                         Code_point_Libelle == "Loguivy"|
+                         Code_point_Libelle == "les Hébihens"|
+                         Code_point_Libelle == "Nord Saumonards"|
+                         Code_point_Libelle == "Lanvéoc large" |
+                         Code_point_Libelle == "Kervel large" |
+                         Code_point_Libelle == "Filiere w" |
+                         Code_point_Libelle == "Concarneau large" |
+                         Code_point_Libelle == "St Pol large" |
+                         Code_point_Libelle == "Point 1 Dunkerque" |
+                         Code_point_Libelle == "Pen al Lann" |
+                         Code_point_Libelle == "Donville" |
+                         Code_point_Libelle == "Sud Bastia" |
+                         Code_point_Libelle == "Marseillan (a)" )
+
+Table$lon <- as.numeric(Table$lon)
+Table$lat <- as.numeric(Table$lat)
+
+ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  theme_gdocs()+
+  geom_point(data = Table, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
+        panel.background = element_rect(fill = 'lightblue2'))+
+  guides(color = guide_legend(override.aes = list(size = 10)))+
+  scale_colour_discrete(name = "Code Region")
+ggsave('maps_station_select_10chla.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+
+
 
