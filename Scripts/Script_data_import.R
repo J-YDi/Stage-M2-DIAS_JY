@@ -1360,7 +1360,7 @@ Table_select <- filter(Table, Code_point_Libelle == "Point 1 Dunkerque" & (Date 
                          Code_point_Libelle == "At so" & (Date >= as.Date("2003-03-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "Sète mer" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2023-01-31"))|
                          Code_point_Libelle == "Parc Leucate 2" & (Date >= as.Date("1995-02-01") & Date <= as.Date("2022-12-31"))|
-                         Code_point_Libelle == "Grand Rhône" & (Date >= as.Date("2008-01-01") & Date <= as.Date("2015-08-31"))|
+                         Code_point_Libelle == "Grand Rhône" & (Date >= as.Date("2009-03-01") & Date <= as.Date("2015-08-31"))|
                          Code_point_Libelle == "Bouzigues (a)" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2023-02-28"))|
                          Code_point_Libelle == "Barcares" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2022-12-31"))|
                          Code_point_Libelle == "Antoine" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2003-01-31"))|
@@ -1454,7 +1454,7 @@ Table_select <- filter(Table, Code_point_Libelle == "Point 1 Dunkerque" & (Date 
                          Code_point_Libelle == "Basse Michaud" & (Date >= as.Date("2016-01-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "Auger" & (Date >= as.Date("1995-04-01") & Date <= as.Date("2023-03-31"))|
                          Code_point_Libelle == "Teychan bis" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2023-06-30"))|
-                         Code_point_Libelle == "Arcachon - Bouée 7" & (Date >= as.Date("2003-05-01") & Date <= as.Date("2023-06-30"))|
+                         Code_point_Libelle == "Arcachon - Bouée 7" & (Date >= as.Date("2014-10-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "Ouessant - Youc'h korz" & (Date >= as.Date("2016-01-01") & Date <= as.Date("2022-01-31"))|
                          Code_point_Libelle == "Men er Roue" & (Date >= as.Date("1996-01-01") & Date <= as.Date("2022-12-31"))|
                          Code_point_Libelle == "Men Du" & (Date >= as.Date("1995-02-01") & Date <= as.Date("2003-12-31"))|
@@ -1505,7 +1505,6 @@ Table_select <- filter(Table, Code_point_Libelle == "Point 1 Boulogne" & (Date >
                          Code_point_Libelle == "Bois de la Chaise large" & (Date >= as.Date("2007-03-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "Auger" & (Date >= as.Date("1995-04-01") & Date <= as.Date("2023-03-31"))|
                          Code_point_Libelle == "Teychan bis" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2023-06-30"))|
-                         Code_point_Libelle == "Arcachon - Bouée 7" & (Date >= as.Date("2003-05-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "Men er Roue" & (Date >= as.Date("1996-01-01") & Date <= as.Date("2022-12-31"))|
                          Code_point_Libelle == "Loguivy" & (Date >= as.Date("2007-03-01") & Date <= as.Date("2023-06-30"))|
                          Code_point_Libelle == "les Hébihens" & (Date >= as.Date("2007-03-01") & Date <= as.Date("2023-06-30"))
@@ -1514,7 +1513,35 @@ Table_select <- filter(Table, Code_point_Libelle == "Point 1 Boulogne" & (Date >
 
 write.csv2(Table_select,file="data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter.csv", row.names = FALSE,dec = ".")
 
+############## JEU DE DONNEES AVEC PERIODE COMMUNE POUR TENDANCE TEMPORELLE #######################
+data <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period5_chlafilter.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
 
+Table_select <- filter(data, Code_point_Libelle == "Teychan bis" |
+                         Code_point_Libelle == "Ouest Loscolo" |
+                         Code_point_Libelle == "Men er Roue" |
+                         Code_point_Libelle == "Le Cornard" |
+                         Code_point_Libelle == "Bois de la Chaise large" |
+                         Code_point_Libelle == "Auger" |
+                         Code_point_Libelle == "Point 1 Boulogne" |
+                         Code_point_Libelle == "Loguivy" |
+                         Code_point_Libelle == "les Hébihens" |
+                         Code_point_Libelle == "Géfosse" |
+                         Code_point_Libelle == "Cabourg" |
+                         Code_point_Libelle == "At so" |
+                         Code_point_Libelle == "Antifer ponton pétrolier" |
+                         Code_point_Libelle == "Sète mer" |
+                         Code_point_Libelle == "Parc Leucate 2" |
+                         Code_point_Libelle == "Diana centre" |
+                         Code_point_Libelle == "Calvi" |
+                         Code_point_Libelle == "Bouzigues (a)" |
+                         Code_point_Libelle == "Barcares" |
+                         Code_point_Libelle == "Anse de Carteau 2"|
+                         Code_point_Libelle == "22B - Toulon gde rade"
+                         
+)
+Table_select <- filter(Table_select, Year <= 2022 & Year >= 2007)
 
-
+write.csv2(Table_select,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter.csv", row.names = FALSE,dec = ".")
 

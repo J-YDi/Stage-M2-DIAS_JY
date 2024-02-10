@@ -5361,4 +5361,18 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
 ggsave('maps_station_select_10chla.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
 
 
+Table_select$lon <- as.numeric(Table_select$lon)
+Table_select$lat <- as.numeric(Table_select$lat)
+
+ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = 'gray', color = 'gray10', size = .25)+
+  coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  theme_gdocs()+
+  geom_point(data = Table_select, aes(x = lon, y = lat,colour=as.character(Code.Region)), size =4)+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
+        panel.background = element_rect(fill = 'lightblue2'))+
+  guides(color = guide_legend(override.aes = list(size = 10)))+
+  scale_colour_discrete(name = "Code Region")
+ggsave('maps_station_select_longterme.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/data_description", dpi = 600, width = 200, height = 200, units = 'mm')
+
 
