@@ -704,7 +704,7 @@ ZM <- read.csv('data/Zones_marines.csv', sep = ';', header = TRUE)
 # Load table "Liste_phylum.classe"
 PhyClasse <- read.csv('data/Liste_phylum.classe_REPHY.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
 
-#### Formatting the dataframe with better column names ####
+#### Formatting the dataframe with better column names 
 
 # Extracting the numeric code for the ZM
 Table1 <- DataREPHY_8723 %>%
@@ -891,7 +891,7 @@ ZM <- read.csv('data/Zones_marines.csv', sep = ';', header = TRUE)
 # Load table "Liste_phylum.classe"
 PhyClasse <- read.csv('data/Liste_phylum.classe_REPHY.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
 
-#### Formatting the dataframe with better column names ####
+#### Formatting the dataframe with better column names
 
 # Extracting the numeric code for the ZM
 Table1 <- DataREPHY_8723 %>%
@@ -1001,7 +1001,7 @@ write.csv2(Table1_hydro_chloro,file="data_modif/Table_S_chloro_oldnew.csv", row.
 
 ##### CE QUI EST AVANT PEUT ETRE VIRER ######
 ############ NOUVEAUX JEUX DE DONNEES POUR SELECTION FINALE ############
-#### Import data ####
+#### Import data 
 
 # Open with the correct file encoding allows to preserve accents
 DataREPHY_MA <- read.csv2('data/REPHY_Manche_Atlantique_1987-2022.csv', fileEncoding = "ISO-8859-1")
@@ -1028,7 +1028,7 @@ ZM <- read.csv('data/Zones_marines.csv', sep = ';', header = TRUE)
 # Load table "Liste_phylum.classe"
 PhyClasse <- read.csv('data/Liste_phylum.classe_REPHY.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
 
-#### Formatting the dataframe with better column names ####
+#### Formatting the dataframe with better column names
 
 # Extracting the numeric code for the ZM
 Table1 <- DataREPHY_8723 %>%
@@ -1068,7 +1068,7 @@ Table1$Valeur_mesure <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesur
 Table1$Mesure_Symbole <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesure_Symbole == "ml.l-1", "mg.l-1 converted" , Table1$Mesure_Symbole)
 
 
-#### Curate table to keep only desired variables ####
+#### Curate table to keep only desired variables
 Table1 <- Table1 %>%
   dplyr::select(c('ZM_Quadrige_Numero', 'Code_point_Mnemonique', 'Code_point_Libelle', 'Date', 
                   'Heure', 'lon', 'lat', 'Mesure_Unite', 'Mesure_Symbole', 'Taxon', 'Valeur_mesure', 'Résultat...Libellé.méthode',
@@ -1084,8 +1084,7 @@ Table1 <- Table1 %>%
   mutate(Year = year(Date)) %>%
   filter(!is.na(Year))
 
-#### Tidying table structure ####
-
+#### Tidying table structure 
 ## Associate a region with each ZM code
 Table1 <- left_join(Table1, ZM, by='ZM_Quadrige_Numero', suffix=c('',''))
 
@@ -1541,7 +1540,48 @@ Table_select <- filter(data, Code_point_Libelle == "Teychan bis" |
                          Code_point_Libelle == "22B - Toulon gde rade"
                          
 )
-Table_select <- filter(Table_select, Year <= 2022 & Year >= 2007)
+Table_select <- filter(Table_select, Date >= as.Date("2007-03-01") & Date <= as.Date("2022-08-31"))
 
 write.csv2(Table_select,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter.csv", row.names = FALSE,dec = ".")
 
+
+########## Associer l'information du clustering sur les donnees ######
+#### 5 ans ####
+data <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period5_chlafilter.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data_clust <- read_delim("data_modif/clusters_EM_01_k5.csv", 
+                         delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                             grouping_mark = ""), trim_ws = TRUE)
+# Pour s'affranchir des changements de position des stations
+data_clust <- dplyr::select(data_clust, Code_point_Libelle, cluster)
+
+# Association
+data_clusterised <- left_join(data,data_clust)
+# Rearrangement de l'ordre
+
+data_ok <- dplyr::select(data_clusterised,Code.Region:Code_point_Libelle,cluster,lon:Xanthophyceae)
+
+write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period5_chlafilter_cluster.csv", row.names = FALSE,dec = ".")
+
+#### 15 ans mais avec les clusters de 5 ans ####
+
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+
+data_clust <- read_delim("data_modif/clusters_EM_01_k5.csv", 
+                         delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                             grouping_mark = ""), trim_ws = TRUE)
+# Pour s'affranchir des changements de position des stations
+data_clust <- dplyr::select(data_clust, Code_point_Libelle, cluster)
+
+# Association
+data_clusterised <- left_join(data,data_clust)
+# Rearrangement de l'ordre
+
+data_ok <- dplyr::select(data_clusterised,Code.Region:Code_point_Libelle,cluster,lon:Xanthophyceae)
+
+write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5.csv", row.names = FALSE,dec = ".")
