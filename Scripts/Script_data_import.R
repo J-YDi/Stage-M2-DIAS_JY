@@ -1585,3 +1585,73 @@ data_clusterised <- left_join(data,data_clust)
 data_ok <- dplyr::select(data_clusterised,Code.Region:Code_point_Libelle,cluster,lon:Xanthophyceae)
 
 write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5.csv", row.names = FALSE,dec = ".")
+
+
+########## Rajouter les indices de diversite dans les données 
+data <- read_delim("data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period5_chlafilter_cluster.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+TableIDiv <- data
+TableIDiv <- dplyr::select(TableIDiv, ID.interne.passage, Asterionellopsis:Coscinodiscophycidae)
+
+Data_results <- as.data.frame(c("",""))
+Data_results[1,1] <- 0
+Data_results[1,2] <- 0
+
+library(OTUtable)
+
+# Sur toutes les annees UNIQUEMENT sur les genres
+for (i in 1:17110){
+  Table2 <- TableIDiv[i,]
+  abondance_sums <- apply(Table2[,2:224],2,sum,na.rm=T)
+  print(i/17110 * 100)
+  Data_results[i,1] <- diversity(abondance_sums,index = "shannon")
+  Data_results[i,2] <- diversity(abondance_sums,index = "simpson")
+  Data_results[i,3] <- max(abondance_sums) / sum(abondance_sums)
+  Data_results[i,4] <- pielou(sample = abondance_sums)
+  Data_results[i,5] <- TableIDiv[i,1]
+}
+colnames(Data_results) <- c("Shannon","Simpson","BergerParker","Pielou","ID.interne.passage")
+
+Data_results$Shannon <- as.numeric(Data_results$Shannon)
+
+data_ok <- left_join(data,Data_results)
+
+write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_9523_Stselect_hydro_phyto_chloro_phylum_period5_chlafilter_cluster_div.csv", row.names = FALSE,dec = ".")
+
+
+
+########## Rajouter les indices de diversite dans les données 
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+TableIDiv <- data
+TableIDiv <- dplyr::select(TableIDiv, ID.interne.passage, Asterionellopsis:Coscinodiscophycidae)
+
+Data_results <- as.data.frame(c("",""))
+Data_results[1,1] <- 0
+Data_results[1,2] <- 0
+
+library(OTUtable)
+
+# Sur toutes les annees UNIQUEMENT sur les genres
+for (i in 1:7582){
+  Table2 <- TableIDiv[i,]
+  abondance_sums <- apply(Table2[,2:224],2,sum,na.rm=T)
+  print(i/7582 * 100)
+  Data_results[i,1] <- diversity(abondance_sums,index = "shannon")
+  Data_results[i,2] <- diversity(abondance_sums,index = "simpson")
+  Data_results[i,3] <- max(abondance_sums) / sum(abondance_sums)
+  Data_results[i,4] <- pielou(sample = abondance_sums)
+  Data_results[i,5] <- TableIDiv[i,1]
+}
+colnames(Data_results) <- c("Shannon","Simpson","BergerParker","Pielou","ID.interne.passage")
+
+Data_results$Shannon <- as.numeric(Data_results$Shannon)
+
+data_ok <- left_join(data,Data_results)
+
+write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", row.names = FALSE,dec = ".")
+
