@@ -2392,3 +2392,5 @@ ggplot(Table.alex, aes(x = Month, y = cluster, fill = cluster))+
   guides(color = guide_legend(override.aes = list(size = 10)))
 ggsave('Phenologie_Alex_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
+
+
