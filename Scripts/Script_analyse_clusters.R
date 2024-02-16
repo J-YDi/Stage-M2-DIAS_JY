@@ -1835,6 +1835,18 @@ ggplot(data)+
 ggsave('TURBFNU_Station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 ggplot(data)+
+  geom_boxplot(aes(x=Code_point_Libelle,y=TURB,group = Code_point_Libelle,fill= cluster,fill=cluster),linewidth = 1)+
+  labs(title = "Turbidite (NTU) en fonction des stations des clusters",
+       x = "Station", y = "Turbidite (NTU)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,25, by = 5),limits = c(0,25))+
+  facet_wrap(~ cluster, nrow = 1, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1, size = 10))
+ggsave('TURB_Station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(data)+
   geom_boxplot(aes(x=Code_point_Libelle,y=log(Bacillariophyceae+1),group = Code_point_Libelle,fill= cluster,fill=cluster),linewidth = 1)+
   labs(title = "Abondance en Bacillariophyceae en fonction des stations des clusters",
        x = "Station", y = "log(Bacillariophyceae+1)",colour="Station")+
@@ -2192,6 +2204,52 @@ ggplot(dataforline_div)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1, size = 4))
 ggsave('Div_Moy_Annee_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+dataforline_hydro <- pivot_longer(data, names_to = "Variable",cols = c(CHLOROA:`TURB-FNU`))
+dataforline_hydro <- dplyr::select(dataforline_hydro,cluster,Year,Variable,value)
+
+dataforline_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Dinophysis,Noctiluca,Mesodinium,Lingulodinium,Lepidodinium,Alexandrium))
+dataforline_phyto <- dplyr::select(dataforline_phyto,cluster,Year,Variable,value)
+
+dataforline_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon:BergerParker))
+dataforline_div <- dplyr::select(dataforline_div,cluster,Year,Variable,value)
+
+ggplot(dataforline_hydro)+
+  geom_boxplot(aes(x=cluster,y=value,group = cluster,fill=cluster),linewidth = 1)+
+  labs(title = "",
+       x = "Cluster", y = "Temperature")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_x_continuous(breaks = c(1:12))+
+  #scale_y_continuous(breaks = seq(0,30, by = 5))+
+  facet_wrap(~ Variable, nrow = 2,scales = "free")+
+  theme_bw()
+ggsave('Hydro_Clus_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(dataforline_phyto)+
+  geom_boxplot(aes(x=cluster,y=log(value+1),group = cluster,fill=cluster),linewidth = 1)+
+  labs(title = "",
+       x = "Cluster", y = "Temperature")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_x_continuous(breaks = c(1:12))+
+  #scale_y_continuous(breaks = seq(0,30, by = 5))+
+  facet_wrap(~ Variable, nrow = 2,scales = "free")+
+  theme_bw()
+ggsave('Phyto_Clus_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(dataforline_div)+
+  geom_boxplot(aes(x=cluster,y=log(value+1),group = cluster,fill=cluster),linewidth = 1)+
+  labs(title = "",
+       x = "Cluster", y = "Temperature")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_x_continuous(breaks = c(1:12))+
+  #scale_y_continuous(breaks = seq(0,30, by = 5))+
+  facet_wrap(~ Variable, nrow = 1,scales = "free")+
+  theme_bw()
+ggsave('Div_Clus_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+
 
 
 # Test stats difference entre les clusters

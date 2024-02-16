@@ -1655,3 +1655,233 @@ data_ok <- left_join(data,Data_results)
 
 write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", row.names = FALSE,dec = ".")
 
+
+
+
+
+
+
+
+##### POUR TABLEAU CROISE DYNAMIQUE ######
+############ NOUVEAUX JEUX DE DONNEES POUR SELECTION FINALE ############
+#### Import data 
+
+# Open with the correct file encoding allows to preserve accents
+DataREPHY_MA <- read.csv2('data/REPHY_Manche_Atlantique_1987-2022.csv', fileEncoding = "ISO-8859-1")
+DataREPHY_Med <- read.csv2('data/REPHY_Med_1987-2022.csv', fileEncoding = "ISO-8859-1")
+
+# Creating a vector to import all columns as characters
+classes_char <- rep('character', 56)
+DataREPHY_2023 <- read.csv2('data/Extraction SEANOE_REPHY_phyto-Hydro_Manche_Atl-Med 2023 Semestre1 validé 16012024.csv', 
+                            fileEncoding = "ISO-8859-1", colClasses = classes_char)
+
+# Merge the first 2 datasets
+DataREPHY <- bind_rows(DataREPHY_MA, DataREPHY_Med) %>%
+  # This line allows to remove the problematic row that separates the hydro and phyto datasets
+  filter(Passage...Mois != 'Passage : Mois')
+
+# Binding the 2 datasets
+DataREPHY_8723 <- bind_rows(DataREPHY, DataREPHY_2023)
+
+
+### Load tables used to enrich the dataset
+# Load table "Zones_marines"
+ZM <- read.csv('data/Zones_marines.csv', sep = ';', header = TRUE)
+
+# Load table "Liste_phylum.classe"
+PhyClasse <- read.csv('data/Liste_phylum.classe_REPHY.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+
+#### Formatting the dataframe with better column names
+
+# Extracting the numeric code for the ZM
+Table1 <- DataREPHY_8723 %>%
+  mutate(ZM_Quadrige_Numero = as.numeric(str_extract(Lieu.de.surveillance...Entité.de.classement...Libellé, '[:alnum:]+')))
+
+# Change column names (to match ZM)
+colnames(Table1)[which(names(Table1) == "Lieu.de.surveillance...Mnémonique")] <- "Code_point_Mnemonique"
+colnames(Table1)[which(names(Table1) == "Lieu.de.surveillance...Libellé")] <- "Code_point_Libelle"
+colnames(Table1)[which(names(Table1) == "Passage...Date")] <- "Date"
+colnames(Table1)[which(names(Table1) == "Coordonnées.passage...Coordonnées.minx")] <- "lon"
+colnames(Table1)[which(names(Table1) == "Coordonnées.passage...Coordonnées.miny")] <- "lat"
+colnames(Table1)[which(names(Table1) == "Résultat...Libellé.unité.de.mesure.associé.au.quintuplet")] <- "Mesure_Unite"
+colnames(Table1)[which(names(Table1) == "Résultat...Symbole.unité.de.mesure.associé.au.quintuplet")] <- "Mesure_Symbole"
+colnames(Table1)[which(names(Table1) == "Résultat...Nom.du.taxon.référent")] <- "Taxon"
+colnames(Table1)[which(names(Table1) == "Résultat...Libellé.du.groupe.de.taxon")] <- "Groupe_Taxon"
+colnames(Table1)[which(names(Table1) == "Résultat...Valeur.de.la.mesure")] <- "Valeur_mesure"
+colnames(Table1)[which(names(Table1) == "Prélèvement...Immersion")] <- "Profondeur.metre"
+colnames(Table1)[which(names(Table1) == "Prélèvement...Niveau")] <- "Prelevement.niveau"
+colnames(Table1)[which(names(Table1) == "Résultat...Code.paramètre")] <- "Code.parametre"
+colnames(Table1)[which(names(Table1) == "Résultat...Libellé.paramètre")] <- "Parametre"
+colnames(Table1)[which(names(Table1) == "Résultat...Niveau.de.qualité")] <- "Qualite.resultat"
+colnames(Table1)[which(names(Table1) == "Prélèvement...Niveau.de.qualité")] <- "Qualite.prelevement"
+colnames(Table1)[which(names(Table1) == "Passage...Service.saisisseur...Libellé")] <- "Service.saisie"
+colnames(Table1)[which(names(Table1) == "Passage...Heure")] <- "Heure"
+colnames(Table1)[which(names(Table1) == "Résultat...Service.analyste...Code")] <- "Service.analyse"
+colnames(Table1)[which(names(Table1) == "Prélèvement...Service.préleveur...Code")] <- "Service.prelevement"
+colnames(Table1)[which(names(Table1) == "Prélèvement...Identifiant.interne")] <- "ID.interne.prelevement"
+colnames(Table1)[which(names(Table1) == "Passage...Identifiant.interne")] <- "ID.interne.passage"
+
+# Convertir les ml/l en mg/l pour l'oxygene
+Table1$Valeur_mesure <-  str_replace_all(Table1$Valeur_mesure, ',', '.')
+Table1 <- Table1 %>%
+  mutate(Valeur_mesure = as.numeric(Valeur_mesure))
+
+Table1$Valeur_mesure <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesure_Symbole == "ml.l-1", Table1$Valeur_mesure * 1.429 , Table1$Valeur_mesure)
+# On indique le changement 
+Table1$Mesure_Symbole <- ifelse(Table1$Code.parametre == "OXYGENE" & Table1$Mesure_Symbole == "ml.l-1", "mg.l-1 converted" , Table1$Mesure_Symbole)
+
+
+#### Curate table to keep only desired variables
+Table1 <- Table1 %>%
+  dplyr::select(c('ZM_Quadrige_Numero', 'Code_point_Mnemonique', 'Code_point_Libelle', 'Date', 
+                  'Heure', 'lon', 'lat', 'Mesure_Unite', 'Mesure_Symbole', 'Taxon', 'Valeur_mesure', 'Résultat...Libellé.méthode',
+                  'Prelevement.niveau', 'Profondeur.metre', 'Code.parametre', 'Parametre', 
+                  'Qualite.prelevement', 'Qualite.resultat', 'ID.interne.prelevement', 'ID.interne.passage'))
+
+# Modifying date format so that it gives the year and month, and getting rid of rows with no Year value
+Table1 <- Table1 %>%
+  mutate(Date = dmy(Date)) %>%
+  # modifies the date format
+  mutate(Day = day(Date)) %>%
+  mutate(Month = month(Date, label = F)) %>%
+  mutate(Year = year(Date)) %>%
+  filter(!is.na(Year))
+
+#### Tidying table structure 
+## Associate a region with each ZM code
+Table1 <- left_join(Table1, ZM, by='ZM_Quadrige_Numero', suffix=c('',''))
+
+# Separate the table for hydrology and phytoplankton
+Table1_hydro <- Table1 %>%
+  filter(Taxon == "")
+
+Table1_phyto <- Table1 %>%
+  filter(Taxon != "")
+
+# HYDRO SEULEMENT
+# Selection de la profondeur entre 0 et 5m
+Table1_hydro$Profondeur.metre <- as.numeric(Table1_hydro$Profondeur.metre)
+Table1_hydro <- Table1_hydro |> filter(Profondeur.metre <= 5 | is.na(Profondeur.metre)) |> #Profondeur pas toujours indiquee
+  filter(Year >= 1995) 
+Table1_hydro_b <- Table1_hydro
+# Garder la chlorophylle qu'on veut
+Table1_hydro <- filter(Table1_hydro, Code.parametre != "CHLOROA")
+Table1_hydro_chloro <- Table1_hydro_b |>
+  filter(Code.parametre == "CHLOROA") |>
+  filter(Résultat...Libellé.méthode == "Chromatographie liquide - pigments phytoplanctoniques (Van Heukelem et Thomas 2001)" |
+           Résultat...Libellé.méthode == "Chromatographie liquide - pigments phytoplanctoniques (Zapata et al. 2000)" |
+           Résultat...Libellé.méthode == "Fluorimétrie (Aminot A. Kérouel R. 2004 - Chlorophylle)" |
+           Résultat...Libellé.méthode == "Fluorimétrie (Neveux J. et Panouse M. 1987  - Chlorophylle)" |
+           Résultat...Libellé.méthode == "Spectrophotométrie monochromatique (Aminot A. Kérouel R. 2004 - Chlorophylle)" |
+           Résultat...Libellé.méthode == "Spectrophotométrie monochromatique (Aminot et Chaussepied 1983 - Chlorophylle)" )
+
+Table1_hydro_chloro <- dplyr::select(Table1_hydro_chloro, Date, ID.interne.passage,
+                                     Prelevement.niveau,Valeur_mesure,Résultat...Libellé.méthode)
+
+colnames(Table1_hydro_chloro)[4:5] <- c("CHLOROA","Methode_CHLOROA")
+
+# Regler le probleme des doublons a cause de double mesure de chloro avec des methodes differentes
+doublons_chloro <- Table1_hydro_chloro[duplicated(Table1_hydro_chloro$ID.interne.passage) |
+                                         duplicated(Table1_hydro_chloro$ID.interne.passage, fromLast = TRUE), ]
+# Filtre des doublons hydro :
+resultat_filtre_chloro <- doublons_chloro %>%
+  filter(Methode_CHLOROA %in% levels(as.factor(doublons_chloro$Methode_CHLOROA))) %>%
+  group_by(ID.interne.passage) %>%
+  mutate(Ordre = match(Methode_CHLOROA, c("Spectrophotométrie monochromatique (Aminot A. Kérouel R. 2004 - Chlorophylle)",
+                                          "Fluorimétrie (Aminot A. Kérouel R. 2004 - Chlorophylle)",
+                                          "Chromatographie liquide - pigments phytoplanctoniques (Van Heukelem et Thomas 2001)",
+                                          "Spectrophotométrie monochromatique (Aminot et Chaussepied 1983 - Chlorophylle)",
+                                          "Fluorimétrie (Neveux J. et Panouse M. 1987  - Chlorophylle)",
+                                          "Chromatographie liquide - pigments phytoplanctoniques (Zapata et al. 2000)"))) %>%
+  arrange(desc(Ordre)) %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+Table1_hydro_chloro_unique <- subset(Table1_hydro_chloro, !(ID.interne.passage %in% unique(doublons_chloro$ID.interne.passage)))
+# On les remets ces doublons filtres
+Table1_hydro_chloro <- bind_rows(Table1_hydro_chloro_unique,resultat_filtre_chloro)
+
+
+Table1_hydro <- Table1_hydro |>
+  filter(Code.Region != 0) %>%
+  filter(Prelevement.niveau == "Surface (0-1m)" |Prelevement.niveau == "2 mètres" |Prelevement.niveau == "de 3 à 5 mètres" |Prelevement.niveau == "Mi-profondeur" ) |>
+  #filter(Qualite.resultat == 'Bon') %>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau, Profondeur.metre, Code.parametre) %>%
+  # There is probably something shifty here, regarding multiple CHLOROA measurements at certain stations,
+  # made with different methods. For now we average everything but this is quite bad.
+  summarise(Valeur_mesure = mean(Valeur_mesure), .groups = 'keep') %>%
+  pivot_wider(names_from = Code.parametre, values_from = Valeur_mesure)
+
+# Choix niveaux par ordre
+#detection des doublons
+doublons_hydro <- Table1_hydro[duplicated(Table1_hydro$ID.interne.passage) |
+                                 duplicated(Table1_hydro$ID.interne.passage, fromLast = TRUE), ]
+
+# Filtre des doublons hydro :
+resultat_filtre <- doublons_hydro %>%
+  filter(Prelevement.niveau %in% c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur")) %>%
+  group_by(ID.interne.passage) %>%
+  mutate(Ordre = match(Prelevement.niveau, c("Surface (0-1m)", "2 mètres", "de 3 à 5 mètres","Mi-profondeur"))) %>%
+  arrange(desc(Ordre)) %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+Table1_unique <- subset(Table1_hydro, !(ID.interne.passage %in% unique(doublons_hydro$ID.interne.passage)))
+# On les remets ces doublons filtres
+Table1_hydro <- bind_rows(Table1_unique,resultat_filtre)
+# On remet au propre
+Table1_hydro <- Table1_hydro |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Profondeur.metre)
+
+
+# S'occuper du jeu de donnees phyto
+# Selection de la profondeur entre 0 et 5m
+Table1_phyto$Profondeur.metre <- as.numeric(Table1_phyto$Profondeur.metre)
+Table1_phyto <- Table1_phyto |> filter(Profondeur.metre <= 5 | is.na(Profondeur.metre)) |> #Profondeur pas toujours indiquee
+  filter(Year >= 1995) |>
+  filter(Code.parametre == "FLORTOT")
+
+Table1_phyto <- Table1_phyto |>
+  filter(Code.Region != 0) %>%
+  filter(Prelevement.niveau == "Surface (0-1m)" |Prelevement.niveau == "2 mètres" |Prelevement.niveau == "de 3 à 5 mètres" |Prelevement.niveau == "Mi-profondeur" ) |>
+  #filter(Qualite.resultat == 'Bon') %>%
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau,Profondeur.metre, Code.parametre)
+
+### Manipulating the phyto table ###
+# Associate the Phylum/Class to the taxon
+Table1_phyto <- left_join(Table1_phyto, PhyClasse, by='Taxon', suffix=c('',''))
+
+# Compute genus from Taxon
+# We find the genus by selecting only the first word in the string 'Taxon'
+Table1_phyto <- Table1_phyto %>%
+  mutate(Genus = str_extract(Taxon, 'Pseudo-nitzschia|[:alnum:]+'))
+
+Table1_phyto_class <- Table1_phyto[Table1_phyto$Phylum.Classe != "", ]
+
+Table1_hydro <- dplyr::select(ungroup(Table1_hydro),Date:Prelevement.niveau,SALI:PCYAN )
+
+data_hp <- left_join(Table1_phyto_class,Table1_hydro,by = join_by(Date, ID.interne.passage,
+                                                                  Prelevement.niveau))
+
+
+data_hpc <- dplyr::select(data_hp, Code.Region,Code_point_Libelle,lon,lat,Prelevement.niveau,Profondeur.metre,
+                          ID.interne.passage,Date,Day,Month,Year,SALI:`NO3+NO2`,`TURB-FNU`,Phylum.Classe,Genus,Taxon,Valeur_mesure)
+
+# Les profondeurs manquantes correspondent uniquement a de la "Surface (0-1m)" donc on dis que correspond 
+# a une profondeur de 0.5 les Profondeur en NA
+data_hpc$Profondeur.metre <- ifelse(is.na(data_hpc$Profondeur.metre),0.5,data_hpc$Profondeur.metre) 
+
+data_hpc <- data_hpc |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
+
+
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+data <- select(data,Code.Region:CHLOROA,Shannon:Outlier)
+data$ID.interne.passage <- as.character(data$ID.interne.passage)
+
+
+data_new <- left_join(data,data_hpc)
+data_outlier_v2 <- filter(data_new,Outlier == "OUI") 
+write.csv2(data_outlier_v2,file="data_modif/Table_outliers_Phylumclasse_Genus_taxon.csv", row.names = FALSE,dec = ".")

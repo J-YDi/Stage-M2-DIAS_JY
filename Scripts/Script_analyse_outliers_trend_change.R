@@ -194,7 +194,7 @@ data_Teychan <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 data_outliers_change <- rbind( data_Ansecarteau  ,    data_Antifer        ,  data_Atso       ,      data_Auger     ,     
                                data_Barcares     ,    data_Boisdelachaise ,  data_Boulogne   ,      data_Cabourg   ,       data_Calvi,          
                                 data_Cornard     ,     data_Dianacentre   ,   data_Géfosse   ,       data_Hebihens ,        data_Loguivy  ,      
-                                data_MenerRoue   ,     data_OuestLoscolo  ,   data_Setemer   ,       data_Teychan  ,data_Toulon)
+                                data_MenerRoue   ,     data_OuestLoscolo  ,   data_Setemer   ,       data_Teychan  ,data_Toulon, data_ParcLeucate, data_Bouzigues)
 
 
 datagraph <- data_Calvi
@@ -212,7 +212,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
     labs(title = "Serie temporelle de Chlorophylle Calvi",
          subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),"                              Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-         pval changement",round(datagraph$pvalchange[1],digits = 4)),
+         pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Calvi_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -233,7 +233,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Anse de Carteau",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Ansecarteau_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -254,7 +254,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Antifer ponton pétrolier",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Antifer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -274,7 +274,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Atso",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Atso_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -294,7 +294,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Auger",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Auger_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -314,7 +314,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Barcares",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Barcares_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -334,7 +334,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Bois de la chaise large",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Boisdelachaise_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -354,7 +354,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Point 1 Boulogne",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Boulogne_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -374,7 +374,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Cabourg",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Cabourg_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -394,7 +394,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Le Cornard",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Cornard_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -414,7 +414,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Diana centre",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Dianacentre_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -434,7 +434,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Géfosse",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Gefosse_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -454,7 +454,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle les Hébihens",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Hebihens_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -474,7 +474,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Loguivy",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Loguivy_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -494,7 +494,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Men er Roue",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('MenerRoue_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -514,7 +514,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Ouest Loscolo",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('OuestLoscolo_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -535,7 +535,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Sète mer",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Setemer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -555,7 +555,7 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Teychan bis",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Teychan_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
@@ -575,16 +575,58 @@ ggplot()+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle 22B - Toulon gde rade",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
-       pval changement",round(datagraph$pvalchange[1],digits = 4)),
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
 ggsave('Toulon_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+
+datagraph <- data_ParcLeucate
+ggplot()+
+  geom_line(aes(x=as.data.frame(filter(data,Code_point_Libelle == "Parc Leucate 2"))$Date,y=as.data.frame(filter(data,Code_point_Libelle == "Parc Leucate 2"))$CHLOROA),col="green",size=1)+
+  geom_line(data =  datagraph,aes(x=Date,y=CHLOROA),col="blue",size=1)+
+  geom_line(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier),col="red",size=1)+
+  geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
+  geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
+  scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
+  scale_colour_manual(values = c("red","orange"))+
+  scale_size_manual(values = c(1,5))+
+  geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
+  labs(title = "Serie temporelle de Chlorophylle Parc Leucate 2",
+       subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
+       x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+ggsave('ParcLeucate_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+
+datagraph <- data_Bouzigues
+ggplot()+
+  geom_line(aes(x=as.data.frame(filter(data,Code_point_Libelle == "Bouzigues (a)"))$Date,y=as.data.frame(filter(data,Code_point_Libelle == "Bouzigues (a)"))$CHLOROA),col="green",size=1)+
+  geom_line(data =  datagraph,aes(x=Date,y=CHLOROA),col="blue",size=1)+
+  geom_line(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier),col="red",size=1)+
+  geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
+  geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
+  scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
+  scale_colour_manual(values = c("red","orange"))+
+  scale_size_manual(values = c(1,5))+
+  geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
+  labs(title = "Serie temporelle de Chlorophylle Bouzigues (a)",
+       subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
+       pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
+       x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+ggsave('Bouzigues_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+
+
 
 
 
 # Trouver la date qui correspond aux outliers : c'est la date la plus proche du point logiquement 
 data_outliers <- filter(data_outliers_change, Outlier =="OUI")
-for (k in 1:19){
+for (k in 1:21){
   data_Date_find <- c("","")
   data_Date_find <- as.data.frame(data_Date_find)
   
@@ -618,11 +660,11 @@ for (k in 1:19){
 
 # Version manuelle pour les changements abruptes :
 # Entrer la date de référence
-datagraph <- data_Calvi
+datagraph <- data_Toulon
 date_reference <- datagraph$Date[complete.cases( datagraph$Changepoint)]
 
 # Trouver la date la plus proche
-data_recherche <- filter(data, Code_point_Libelle == "Calvi")
+data_recherche <- filter(data, Code_point_Libelle == "22B - Toulon gde rade")
 date_proche <- data_recherche$Date[which.min(abs(data_recherche$Date - date_reference))]
 
 # Afficher la date la plus proche
@@ -687,3 +729,34 @@ data_withoutliers_ok <- data_withoutliers_ok |>
 
 write.csv2(data_withoutliers_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", row.names = FALSE,dec = ".")
 
+###### REPRESENTATION DES PENTES SUR LES DONNEES INITIALES ########
+
+
+ggplot(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo"))+
+  geom_line(aes(x=Date,y=CHLOROA_noseason))+
+  geom_abline(slope = filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1], 
+              intercept = median(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$CHLOROA_noseason,na.rm = T) - filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1] * as.numeric(median(as.numeric(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$Date))) )
+
+
+
+########### Analyse des outliers #######
+
+data <- read_delim("data_modif/Table_outliers.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                        grouping_mark = ""), trim_ws = TRUE)
+
+data$cluster <- as.factor(data$cluster)
+cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
+
+ggplot(data)+
+  geom_point(aes(x=CHLOROA,y=Pielou,colour=cluster),size=3)+
+  facet_wrap(~Code_point_Libelle,scale="free_x",nrow = 3)+
+  scale_colour_manual(values = cluster_col,guide="none")
+
+
+
+
+
+
+
+summary(lm(CHLOROA~BergerParker+Shannon+Pielou+TEMP+SALI+NH4 ,data))
