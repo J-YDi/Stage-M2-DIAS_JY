@@ -1992,28 +1992,33 @@ ggplot(data)+
   theme(axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1, size = 10))
 ggsave('BergerParker_Station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
-
-dataforbox_hydro <- pivot_longer(data, names_to = "Variable",cols = c(CHLOROA:`TURB-FNU`))
+data$`log(CHLOROA+1)` <- log(data$CHLOROA +1)
+dataforbox_hydro <- pivot_longer(data, names_to = "Variable",cols = c(SALI:`TURB-FNU`,`log(CHLOROA+1)`))
 dataforbox_hydro <- dplyr::select(dataforbox_hydro,Code.Region:Code.parametre,Variable,value)
+dataforbox_hydro <- filter(dataforbox_hydro,Variable != "TURB")
 
-dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Dinophysis,Noctiluca,Mesodinium,Lingulodinium,Lepidodinium,Alexandrium))
+dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora))
 dataforbox_phyto <- dplyr::select(dataforbox_phyto,Code.Region:Code.parametre,Variable,value)
 
 dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker))
 dataforbox_div <- dplyr::select(dataforbox_div,Code.Region:Code.parametre,Variable,value)
 
+
+
 ggplot(dataforbox_hydro)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(title = "Parametres hydrologiques",
-       x = "Mois", y = "Valeur",colour="Station")+
+  labs(x = "Mois", y = "Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
   scale_x_continuous(breaks = c(1:12))+
   facet_wrap(cluster ~ Variable, nrow = 4, scales="free")+
   theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))
-ggsave('Hydro_Mois_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+ggsave('Hydro_Mois_lgtermcluster_final.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 ggplot(dataforbox_hydro)+
   geom_boxplot(aes(y=value,x=Year,group = Year,fill= cluster,fill=cluster),linewidth = 0.5)+
@@ -2030,20 +2035,22 @@ ggsave('Hydro_Annee_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.so
 
 ggplot(dataforbox_phyto)+
   geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(title = "Phytoplancton",
-       x = "Mois", y = "Valeur",colour="Station")+
+  labs(       x = "Mois", y = "Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,20, by = 5),limits = c(0,20))+
   scale_x_continuous(breaks = c(1:12))+
-  facet_wrap(cluster ~ Variable, nrow = 4)+
+  facet_wrap(cluster ~ Variable, nrow = 4,scales="free_y")+
   theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))
-ggsave('Phyto_Mois_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+ggsave('Phyto_Mois_lgtermcluster_final.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 300, height = 280, units = 'mm')
 
 ggplot(dataforbox_phyto)+
   geom_boxplot(aes(y=log(value+1),x=Year,group = Year,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(title = "Phytoplancton",
+  labs(
        x = "Year", y = "Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
@@ -2056,7 +2063,7 @@ ggsave('Phyto_Annee_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.so
 
 ggplot(dataforbox_div)+
   geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(title = "Indices de diversite",
+  labs(
        x = "Mois", y = "Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
@@ -2064,8 +2071,11 @@ ggplot(dataforbox_div)+
   scale_x_continuous(breaks = c(1:12))+
   facet_wrap(cluster ~ Variable, nrow = 4)+
   theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 12))
-ggsave('Div_Mois_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 12))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+ggsave('Div_Mois_lgtermcluster_final.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 ggplot(dataforbox_div)+
   geom_boxplot(aes(y=log(value+1),x=Year,group = Year,fill= cluster,fill=cluster),linewidth = 0.5)+

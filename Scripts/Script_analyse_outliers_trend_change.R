@@ -6,7 +6,7 @@ data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro
 i=1
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Toulon <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -15,7 +15,7 @@ data_Toulon <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",no
 i=2
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Ansecarteau <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -24,7 +24,7 @@ data_Ansecarteau <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé
 i=3
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Antifer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -33,7 +33,7 @@ data_Antifer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 i=4
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Atso <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -42,7 +42,7 @@ data_Atso <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_
 i=5
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Auger <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -51,7 +51,7 @@ data_Auger <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom
 i=6
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Barcares <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -60,7 +60,7 @@ data_Barcares <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",
 i=7
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Boisdelachaise <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -69,7 +69,7 @@ data_Boisdelachaise <- read_delim(paste0("data_outliers/Regularisé&Desaisonnali
 i=8
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Bouzigues <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -78,7 +78,7 @@ data_Bouzigues <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/"
 i=9
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Cabourg <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -87,7 +87,7 @@ data_Cabourg <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 i=10
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Calvi <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -96,7 +96,7 @@ data_Calvi <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom
 i=11
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Dianacentre <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -104,7 +104,7 @@ data_Dianacentre <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé
 i=12
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Géfosse <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -113,7 +113,7 @@ data_Géfosse <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",
 i=13
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Cornard <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -122,7 +122,7 @@ data_Cornard <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 i=14
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Hebihens <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -131,7 +131,7 @@ data_Hebihens <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",
 i=15
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Loguivy <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -140,7 +140,7 @@ data_Loguivy <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 i=16
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_MenerRoue <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -149,7 +149,7 @@ data_MenerRoue <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/"
 i=17
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_OuestLoscolo <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -158,7 +158,7 @@ data_OuestLoscolo <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalis�
 i=18
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_ParcLeucate <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -167,7 +167,7 @@ data_ParcLeucate <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé
 i=19
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Boulogne <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -176,7 +176,7 @@ data_Boulogne <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",
 i=20
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Setemer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -185,7 +185,7 @@ data_Setemer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",n
 i=21
 station <- levels(as.factor(data$Code_point_Libelle))[i]
 print(station)
-nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA",station)
 nom_fichier <- paste0(nom_fichier)
 
 data_Teychan <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), 
@@ -195,6 +195,7 @@ data_outliers_change <- rbind( data_Ansecarteau  ,    data_Antifer        ,  dat
                                data_Barcares     ,    data_Boisdelachaise ,  data_Boulogne   ,      data_Cabourg   ,       data_Calvi,          
                                 data_Cornard     ,     data_Dianacentre   ,   data_Géfosse   ,       data_Hebihens ,        data_Loguivy  ,      
                                 data_MenerRoue   ,     data_OuestLoscolo  ,   data_Setemer   ,       data_Teychan  ,data_Toulon, data_ParcLeucate, data_Bouzigues)
+
 
 
 datagraph <- data_Calvi
@@ -622,6 +623,22 @@ ggsave('Bouzigues_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-un
 
 
 
+for (i in (1:21)){
+  data <- data_outliers_change
+  station <- levels(as.factor(data$Code_point_Libelle))[i]
+  Table <- filter(data, Code_point_Libelle == station)
+  
+  m_cop3 <- lm(CHLOROA_noseason ~ Date, data=filter(data_outliers_change,Code_point_Libelle == station))
+  regline_cop3 <- predict(m_cop3)
+  # plot the linear trend
+  plot(filter(data_outliers_change,Code_point_Libelle == station)$CHLOROA_noseason,type="o",
+       main = paste0("Tendance pour ",station))
+  lines(regline_cop3, col="red",lwd=3)
+  
+  test_lm <- summary(m_cop3)
+  test_res <- trend.test(residuals(m_cop3))
+  print(paste("pente:",test_lm$coefficients[2,1],"pval:",test_lm$coefficients[2,4],"residuals :",test_res$p.value,station))
+}
 
 
 # Trouver la date qui correspond aux outliers : c'est la date la plus proche du point logiquement 
@@ -729,14 +746,6 @@ data_withoutliers_ok <- data_withoutliers_ok |>
 
 write.csv2(data_withoutliers_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", row.names = FALSE,dec = ".")
 
-###### REPRESENTATION DES PENTES SUR LES DONNEES INITIALES ########
-
-
-ggplot(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo"))+
-  geom_line(aes(x=Date,y=CHLOROA_noseason))+
-  geom_abline(slope = filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1], 
-              intercept = median(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$CHLOROA_noseason,na.rm = T) - filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1] * as.numeric(median(as.numeric(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$Date))) )
-
 
 
 ########### Analyse des outliers #######
@@ -760,3 +769,227 @@ ggplot(data)+
 
 
 summary(lm(CHLOROA~BergerParker+Shannon+Pielou+TEMP+SALI+NH4 ,data))
+
+
+
+
+# En retirant les outliers pour avoir la tendance : 
+
+i=1
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Toulon <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                          delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=2
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Ansecarteau <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                               delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=3
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Antifer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=4
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Atso <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=5
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Auger <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                         delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=6
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Barcares <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                            delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=7
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Boisdelachaise <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                                  delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=8
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Bouzigues <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                             delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=9
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Cabourg <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=10
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Calvi <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                         delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=11
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Dianacentre <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                               delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+i=12
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Géfosse <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=13
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Cornard <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=14
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Hebihens <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                            delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=15
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Loguivy <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=16
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_MenerRoue <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                             delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=17
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_OuestLoscolo <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                                delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=18
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_ParcLeucate <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                               delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=19
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Boulogne <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                            delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=20
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Setemer <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+i=21
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+print(station)
+nom_fichier <- paste0("Outliers_regularise_desaisonalise_CHLOROA_sansoutliers",station)
+nom_fichier <- paste0(nom_fichier)
+
+data_Teychan <- read_delim(paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), 
+                           delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",",grouping_mark = ""), trim_ws = TRUE)
+
+data_outliers_change <- rbind( data_Ansecarteau  ,    data_Antifer        ,  data_Atso       ,      data_Auger     ,     
+                               data_Barcares     ,    data_Boisdelachaise ,  data_Boulogne   ,      data_Cabourg   ,       data_Calvi,          
+                               data_Cornard     ,     data_Dianacentre   ,   data_Géfosse   ,       data_Hebihens ,        data_Loguivy  ,      
+                               data_MenerRoue   ,     data_OuestLoscolo  ,   data_Setemer   ,       data_Teychan  ,data_Toulon, data_ParcLeucate, data_Bouzigues)
+
+
+###### REPRESENTATION DES PENTES SUR LES DONNEES INITIALES ########
+
+for (i in (1:21)){
+station <- levels(as.factor(data$Code_point_Libelle))[i]
+Table <- filter(data, Code_point_Libelle == station)
+
+m_cop3 <- lm(CHLOROA_noseason ~ Date, data=filter(data_outliers_change,Code_point_Libelle == station))
+regline_cop3 <- predict(m_cop3)
+# plot the linear trend
+plot(filter(data_outliers_change,Code_point_Libelle == station)$CHLOROA_noseason,type="o",
+     main = paste0("Tendance pour ",station))
+lines(regline_cop3, col="red",lwd=3)
+
+test_lm <- summary(m_cop3)
+test_res <- trend.test(residuals(m_cop3))
+print(paste("pente:",test_lm$coefficients[2,1],"pval:",test_lm$coefficients[2,4],"residuals :",test_res$p.value,station))
+}
+
+ggplot(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo"))+
+  geom_line(aes(x=Date,y=SALI_noseason))+
+  geom_abline(slope = filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1], 
+              intercept = median(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$SALI_noseason,na.rm = T) - filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$slopesens[1] * as.numeric(median(as.numeric(filter(data_outliers_change, Code_point_Libelle == "Ouest Loscolo")$Date))) )
+
+
