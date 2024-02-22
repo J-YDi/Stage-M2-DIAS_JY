@@ -1997,7 +1997,7 @@ dataforbox_hydro <- pivot_longer(data, names_to = "Variable",cols = c(SALI:`TURB
 dataforbox_hydro <- dplyr::select(dataforbox_hydro,Code.Region:Code.parametre,Variable,value)
 dataforbox_hydro <- filter(dataforbox_hydro,Variable != "TURB")
 
-dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora))
+dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Cryptophyceae,Haptophyta))
 dataforbox_phyto <- dplyr::select(dataforbox_phyto,Code.Region:Code.parametre,Variable,value)
 
 dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker))
@@ -2035,10 +2035,10 @@ ggsave('Hydro_Annee_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.so
 
 ggplot(dataforbox_phyto)+
   geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(       x = "Mois", y = "Valeur",colour="Station")+
+  labs(       x = "Mois", y = "log(Comptage+1)",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
-  scale_y_continuous(breaks = seq(0,20, by = 5),limits = c(0,20))+
+  #scale_y_continuous(breaks = seq(0,20, by = 5),limits = c(0,20))+
   scale_x_continuous(breaks = c(1:12))+
   facet_wrap(cluster ~ Variable, nrow = 4,scales="free_y")+
   theme_bw()+

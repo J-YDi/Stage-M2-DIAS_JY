@@ -1885,3 +1885,22 @@ data$ID.interne.passage <- as.character(data$ID.interne.passage)
 data_new <- left_join(data,data_hpc)
 data_outlier_v2 <- filter(data_new,Outlier == "OUI") 
 write.csv2(data_outlier_v2,file="data_modif/Table_outliers_Phylumclasse_Genus_taxon.csv", row.names = FALSE,dec = ".")
+
+
+
+### Associer les especes bloomantes à l'info de bloom ###
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+Table_bloom_R <- read_delim("data_modif/Table_bloom_R.csv", 
+                            delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), 
+                            trim_ws = TRUE)
+
+Table_bloom_R <- Table_bloom_R[complete.cases(Table_bloom_R$Code_point_Libelle),] 
+Table_bloom_R <- select(Table_bloom_R, -CHLOROA, - BergerParker, -cluster)
+
+
+data_ok <- left_join(data,Table_bloom_R, join_by(Code_point_Libelle, Date))
+
+write.csv2(data_ok,file="data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers_bloomid.csv", row.names = FALSE,dec = ".")
