@@ -2090,6 +2090,268 @@ ggplot(dataforbox_div)+
   theme(axis.text.x = element_text(angle = 90, vjust = 1, hjust = 1, size = 9))
 ggsave('Div_Annee_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
+
+# Avec memes ordonnées 
+
+temp <- ggplot(filter(dataforbox_hydro, Variable == "TEMP"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Température (°C)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+sali <- ggplot(filter(dataforbox_hydro, Variable == "SALI"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Salinité (PSU)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+turb <- ggplot(filter(dataforbox_hydro, Variable == "TURB-FNU"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Turbidité (NTU)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,90, by = 30),limits = c(0,90))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+NH4 <- ggplot(filter(dataforbox_hydro, Variable == "NH4"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en ammonium (µmol.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+NO3NO2 <- ggplot(filter(dataforbox_hydro, Variable == "NO3+NO2"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en nitrate + nitrite (µmol.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+
+PO4 <- ggplot(filter(dataforbox_hydro, Variable == "PO4"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en phosphate (µmol.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+SIOH <- ggplot(filter(dataforbox_hydro, Variable == "SIOH"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en silicate (µmol.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+OXYGENE <- ggplot(filter(dataforbox_hydro, Variable == "OXYGENE"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en oxygene (mg.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+CHLOROA <- ggplot(filter(dataforbox_hydro, Variable == "log(CHLOROA+1)"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Concentration en chlorophylle a (µg.L-1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4, scales="free_x")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+plot_grid(temp , sali , NH4 , NO3NO2 , PO4 , SIOH , turb , OXYGENE , CHLOROA, ncol = 9)
+ggsave('Hydro_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+
+dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Cryptophyceae,Haptophyta))
+dataforbox_phyto <- dplyr::select(dataforbox_phyto,Code.Region:Code.parametre,Variable,value)
+
+
+Bacilla <- ggplot(filter(dataforbox_phyto, Variable == "Bacillariophyceae"))+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "log(Abondance en Bacillariophyceae +1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+Dino <- ggplot(filter(dataforbox_phyto, Variable == "Dinophyceae"))+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "log(Abondance en Dinophyceae +1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+Cilio <- ggplot(filter(dataforbox_phyto, Variable == "Ciliophora"))+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "log(Abondance en Ciliophora +1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+Hapto <- ggplot(filter(dataforbox_phyto, Variable == "Haptophyta"))+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "log(Abondance en Haptophyta +1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+Crypto <- ggplot(filter(dataforbox_phyto, Variable == "Cryptophyceae"))+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "log(Abondance en Cryptophyceae +1)",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+plot_grid(Bacilla , Dino , Cilio  , Hapto , Crypto, ncol = 5)
+ggsave('Phyto_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 300, height = 280, units = 'mm')
+
+dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker))
+dataforbox_div <- dplyr::select(dataforbox_div,Code.Region:Code.parametre,Variable,value)
+
+shannon <- ggplot(filter(dataforbox_div, Variable == "Shannon"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Indice de Shannon",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+pielou <- ggplot(filter(dataforbox_div, Variable == "Pielou"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Indice de Pielou",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,1, by = 0.2),limits = c(0,1))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+bergerparker <- ggplot(filter(dataforbox_div, Variable == "BergerParker"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Indice de Berger-Parker",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,1, by = 0.2),limits = c(0,1))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+plot_grid(shannon , pielou , bergerparker, ncol =3)
+ggsave('Div_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+
+
 ## Travailler sur les moyennes directement
 # Mois 
 data_clus_month <- group_by(data, cluster,Month)
@@ -2328,6 +2590,1989 @@ DunnTest(data$Pielou~data$cluster,method="BH")
 
 kruskal.test(data$BergerParker~data$cluster)
 DunnTest(data$BergerParker~data$cluster,method="BH") 
+
+kruskal.test(data$Haptophyta~data$cluster)
+DunnTest(data$Haptophyta~data$cluster,method="BH") 
+
+kruskal.test(data$Cryptophyceae~data$cluster)
+DunnTest(data$Cryptophyceae~data$cluster,method="BH") 
+
+# Test stats difference entre les clusters et par saison
+
+data <- data |>
+  mutate(season = case_when(Month %in% c(12, 01, 02) ~ "Winter",
+                            Month %in% c(03, 04, 05) ~ "Spring",
+                            Month %in% c(06, 07, 08) ~ "Summer",
+                            Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
+
+data <- filter(data, season == "Fall")
+kruskal.test(data$TEMP~data$cluster)
+DunnTest(data$TEMP~data$cluster,method="BH") 
+
+kruskal.test(data$SALI~data$cluster)
+DunnTest(data$SALI~data$cluster,method="BH") 
+
+kruskal.test(data$TURB~data$cluster)
+DunnTest(data$TURB~data$cluster,method="BH") 
+
+kruskal.test(data$NH4~data$cluster)
+DunnTest(data$NH4~data$cluster,method="BH") 
+
+kruskal.test(data$PO4~data$cluster)
+DunnTest(data$PO4~data$cluster,method="BH") 
+
+kruskal.test(data$SIOH~data$cluster)
+DunnTest(data$SIOH~data$cluster,method="BH") 
+
+kruskal.test(data$OXYGENE~data$cluster)
+DunnTest(data$OXYGENE~data$cluster,method="BH") 
+
+kruskal.test(data$CHLOROA~data$cluster)
+DunnTest(data$CHLOROA~data$cluster,method="BH") 
+
+kruskal.test(data$`NO3+NO2`~data$cluster)
+DunnTest(data$`NO3+NO2`~data$cluster,method="BH") 
+
+kruskal.test(data$`TURB-FNU`~data$cluster)
+DunnTest(data$`TURB-FNU`~data$cluster,method="BH") 
+
+kruskal.test(data$Bacillariophyceae~data$cluster)
+DunnTest(data$Bacillariophyceae~data$cluster,method="BH") 
+
+kruskal.test(data$Dinophyceae~data$cluster)
+DunnTest(data$Dinophyceae~data$cluster,method="BH") 
+
+kruskal.test(data$Ciliophora~data$cluster)
+DunnTest(data$Ciliophora~data$cluster,method="BH") 
+
+kruskal.test(data$Dinophysis~data$cluster)
+DunnTest(data$Dinophysis~data$cluster,method="BH") 
+
+kruskal.test(data$Alexandrium~data$cluster)
+DunnTest(data$Alexandrium~data$cluster,method="BH") 
+
+kruskal.test(data$Noctiluca~data$cluster)
+DunnTest(data$Noctiluca~data$cluster,method="BH") 
+
+kruskal.test(data$Mesodinium~data$cluster)
+DunnTest(data$Mesodinium~data$cluster,method="BH") 
+
+kruskal.test(data$Lingulodinium~data$cluster)
+DunnTest(data$Lingulodinium~data$cluster,method="BH") 
+
+kruskal.test(data$Lepidodinium~data$cluster)
+DunnTest(data$Lepidodinium~data$cluster,method="BH") 
+
+kruskal.test(data$Shannon~data$cluster)
+DunnTest(data$Shannon~data$cluster,method="BH") 
+
+kruskal.test(data$Pielou~data$cluster)
+DunnTest(data$Pielou~data$cluster,method="BH") 
+
+kruskal.test(data$BergerParker~data$cluster)
+DunnTest(data$BergerParker~data$cluster,method="BH") 
+
+kruskal.test(data$Cryptophyceae~data$cluster)
+DunnTest(data$Cryptophyceae~data$cluster,method="BH") 
+
+kruskal.test(data$Haptophyta~data$cluster)
+DunnTest(data$Haptophyta~data$cluster,method="BH") 
+##
+
+
+datam <- data |>
+  arrange(cluster, Date)
+
+
+ggplot(datam)+
+  geom_point(aes(x=Month,y=TEMP,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(SALI,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(PO4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(`TURB-FNU`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(`NO3+NO2`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(SIOH,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(OXYGENE,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(log(CHLOROA+1),na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Dinophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Bacillariophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Ciliophora,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Noctiluca,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Dinophysis,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Mesodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Lingulodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Alexandrium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Lepidodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Pielou,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Shannon,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(BergerParker,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Haptophyta,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Cryptophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+wilcox.test()
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(TEMP,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(SALI,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(PO4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(`TURB-FNU`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(`NO3+NO2`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(SIOH,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(OXYGENE,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(log(CHLOROA+1),na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Dinophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Bacillariophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Ciliophora,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Noctiluca,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Dinophysis,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Mesodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Lingulodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Alexandrium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Lepidodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Pielou,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Shannon,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(BergerParker,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Haptophyta,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(data,Month,cluster), var=median(Cryptophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Month,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+# Autre méthode pour regarder la saisonnalité basé sur le jour julien 
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(TEMP,na.rm=T))
+
+ggplot(datam)+
+  geom_point(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(SALI,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(PO4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(`TURB-FNU`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(`NO3+NO2`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(SIOH,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(OXYGENE,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(log(CHLOROA+1),na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Dinophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Bacillariophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Ciliophora,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Noctiluca,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Dinophysis,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Mesodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Lingulodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Alexandrium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Lepidodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Pielou,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Shannon,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(BergerParker,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Haptophyta,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Cryptophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
+wilcox.test()
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(TEMP,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(SALI,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(PO4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(`TURB-FNU`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(`NO3+NO2`,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(NH4,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(SIOH,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(OXYGENE,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(log(CHLOROA+1),na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Dinophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Bacillariophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Ciliophora,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Noctiluca,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Dinophysis,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Mesodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Lingulodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Alexandrium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Lepidodinium,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Pielou,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Shannon,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(BergerParker,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Haptophyta,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
+datam <- data |>
+  arrange(cluster, Date) |>
+  mutate(Dayj = as.numeric(yday(Date)))
+datam <- summarise(group_by(datam,Dayj,cluster), var=median(Cryptophyceae,na.rm=T))
+
+ggplot(datam)+
+  geom_line(aes(x=Dayj,y=var,colour=cluster))
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+wilcox.test(data_ks$var~data_ks$cluster)
+
 
 
 # Difference de saisonnalite

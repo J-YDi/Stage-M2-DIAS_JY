@@ -88,6 +88,10 @@ for (i in c(1:7,9:17,19:21)){
 }
 
 # REGULARISE ET EN ENLEVANT LA SAISONNALITE
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+data <- data[is.na(data$Outlier),]
 
 for (i in c(1:21)){
   station <- levels(as.factor(data$Code_point_Libelle))[i]
@@ -152,7 +156,7 @@ for (i in c(1:21)){
     y=Table_regul$CHLOROA_noseason[outliers_CHLOROA],
     # make points solid and red
     pch=16, col="red")
-  nom_fichier <- paste0("Outliers_regularise_desaisonalise",station)
+  nom_fichier <- paste0("Outliers_regularise_desaisonalise_sansoutliers",station)
   nom_fichier <- paste0(nom_fichier)
   Table_regul$Code_point_Libelle <- station
   Table_regul$Outlier <- "NON"
@@ -167,7 +171,7 @@ for (i in c(1:21)){
   Sensslope <- sens.slope(Table_regul$CHLOROA_noseason[complete.cases(Table_regul$CHLOROA_noseason)])
   Table_regul$psens <- Sensslope$p.value
   Table_regul$slopesens <- as.numeric(Sensslope$estimates)
-  write.csv2(Table_regul,file=paste0("data_outliers/Regularisé&Desaisonnalisé/",nom_fichier,".csv"), row.names = FALSE,dec = ".")
+  write.csv2(Table_regul,file=paste0("data_outliers/Regularisé&Desaisonnalisé_sansoutliers/",nom_fichier,".csv"), row.names = FALSE,dec = ".")
 
 }
 
