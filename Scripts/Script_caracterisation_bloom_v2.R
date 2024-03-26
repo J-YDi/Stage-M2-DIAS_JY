@@ -1,33 +1,6 @@
-bloom <- read_delim("data_modif/Table_bloom_R_v2.csv", 
+data_bloom <- read_delim("data_modif/Table_bloom_R_v3c.csv", 
                                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), locale = locale(encoding = "ISO-8859-1"),
                                   trim_ws = TRUE)
-
-data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
-                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
-                                                                       grouping_mark = ""), trim_ws = TRUE)
-
-data$Abdtot <- apply(data[,248:265],1,sum,na.rm=T)
-
-
-data_bloom <- left_join(bloom,dplyr::select(data, -c(cluster,CHLOROA,BergerParker))
-, join_by(Date,Code_point_Libelle))
-
-data_bloom <- data_bloom |>
-  mutate(Month = month(Date, label = F))
-data_bloom <- data_bloom |>
-  mutate(Year = lubridate::year(Date))
-
-data_bloom <- 
-  data_bloom %>% 
-  mutate(season = case_when(Month %in% c(12, 01, 02) ~ "Winter",
-                            Month %in% c(03, 04, 05) ~ "Spring",
-                            Month %in% c(06, 07, 08) ~ "Summer", 
-                            Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
-
-data_bloom <- dplyr::select(data_bloom,Code_point_Libelle, cluster, Date,Year, Month,season,  Shannon, Pielou, BergerParker,CHLOROA,Abdtot,P_dominance,Bloom,Bloom_Phylum, Bloom_Genre)
-data_bloom <- data_bloom[c(1:156),]
-data_bloom[2,8] <- 0
-
 
 # Correlation tout cluster 
 Table.corr_all <- dplyr::select(data_bloom,-c(Code_point_Libelle,cluster,Date,Year,Bloom:Bloom_Genre,Month,season))
@@ -591,11 +564,30 @@ ggplot(data_bloom)+
        y = "Pourcentage de dominance")
 ggsave('Boxplot_dominance.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Correlations",dpi = 600, width = 400, height = 380, units = 'mm')
 
+ggplot(data_bloom)+
+  geom_boxplot(aes(y=P_dominance))+
+  facet_wrap(~Bloom_Phylum,nrow = 4)+
+  labs(title = "",
+       y = "Pourcentage de dominance", x = "cluster")
+ggsave('Boxplot_dominance_classe.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Correlations",dpi = 600, width = 400, height = 380, units = 'mm')
 
-write.csv2(data_bloom,file="data_modif/Table_bloom_Excel_v2.csv", row.names = FALSE,dec = ".")
+
+mean(data_bloom$P_dominance)
+median(data_bloom$P_dominance)
+
+#### Definition de bloom dominé par une spe ####
+data_bloom$Monodominance <- "NON"
+data_bloom$Monodominance <- ifelse(data_bloom$P_dominance >= 63.11, "OUI",data_bloom$Monodominance) 
+
+write.csv2(data_bloom,file="data_modif/Table_bloom_VF.csv", row.names = FALSE,dec = ".")
+
 
 # Description des blooms
-descript <- filter(data_bloom, Bloom_Phylum == "Cryptophyceae" & cluster == 1)
+data_bloom <- read_delim("data_modif/Table_bloom_VF.csv", 
+                         delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), locale = locale(encoding = "ISO-8859-1"),
+                         trim_ws = TRUE)
+
+descript <- filter(data_bloom, Bloom_Phylum == "Hapt" & cluster == 2)
 
 for (i in 1:length(levels(as.factor(descript$Bloom_Genre)))){
   levels(as.factor(descript$Bloom_Genre))[i]
@@ -610,7 +602,7 @@ for (i in 1:length(levels(as.factor(descript$Bloom_Genre)))){
   cat(P,E,A,W,"\n")
 }
 
-descript <- filter(data_bloom, Bloom_Phylum == "Cryptophyceae")
+descript <- filter(data_bloom, Bloom_Phylum == "Cilio")
 
 for (i in 1:length(levels(as.factor(descript$Bloom_Genre)))){
   levels(as.factor(descript$Bloom_Genre))[i]
@@ -642,6 +634,99 @@ for (i in 1:length(levels(as.factor(descript$Year)))){
   cat(H,B,D,C,CI,"\n")
 }
 
+
+descript <- filter(data_bloom, Monodominance == "OUI" & cluster == "1")
+
+for (i in 1:length(levels(as.factor(descript$Bloom_Genre)))){
+  levels(as.factor(descript$Bloom_Genre))[i]
+  descript2 <- filter(descript,Bloom_Genre == levels(as.factor(descript$Bloom_Genre))[i])
+  nrow(descript2)
+  cat("Taxon:",levels(as.factor(descript$Bloom_Genre))[i],nrow(descript2),"\n")
+}
+
+descript <- filter(data_bloom, Monodominance == "OUI")
+for (i in 1:length(levels(as.factor(descript$Year)))){
+  levels(as.factor(descript$Year))[i]
+  descript2 <- filter(descript,Year == levels(as.factor(descript$Year))[i])
+  nrow(descript2)
+  cat("Taxon:",levels(as.factor(descript$Year))[i],nrow(descript2),"\n")
+  }
+
+
+descript <- filter(data_bloom, cluster == 4)
+
+for (i in 1:length(levels(as.factor(descript$Code_point_Libelle)))){
+  levels(as.factor(descript$Code_point_Libelle))[i]
+  descript2 <- filter(descript,Code_point_Libelle == levels(as.factor(descript$Code_point_Libelle))[i])
+  nrow(descript2)
+  B <- nrow(filter(descript2, Bloom_Phylum == "Bac"))
+  D <- nrow(filter(descript2, Bloom_Phylum == "Dino"))
+  C <- nrow(filter(descript2, Bloom_Phylum == "Cryptophyceae"))
+  H <- nrow(filter(descript2, Bloom_Phylum == "Hapt"))
+  CI <- nrow(filter(descript2, Bloom_Phylum == "Cilio"))
+  MD <- nrow(filter(descript2, Monodominance == "OUI"))
+  cat("Taxon:",levels(as.factor(descript$Code_point_Libelle))[i],nrow(descript2),"\n")
+  cat(B,D,C,H,CI,"\n")
+}
+
+descript <- filter(data_bloom, cluster == 1)
+for (i in 1:length(levels(as.factor(descript$Code_point_Libelle)))){
+  levels(as.factor(descript$Code_point_Libelle))[i]
+  descript2 <- filter(descript,Code_point_Libelle == levels(as.factor(descript$Code_point_Libelle))[i])
+  nrow(descript2)
+  P <- nrow(filter(descript2, season == "Spring"))
+  E <- nrow(filter(descript2, season == "Summer"))
+  A <- nrow(filter(descript2, season == "Fall"))
+  W <- nrow(filter(descript2, season == "Winter"))
+  MD <- (nrow(filter(descript2, Monodominance == "OUI"))/nrow(descript2))*100
+  cat("Taxon:",levels(as.factor(descript$Code_point_Libelle))[i],nrow(descript2),"\n")
+  cat(P,E,A,W,MD,"\n")
+}
+
+
+
+descript <- filter(data_bloom, cluster == 3)
+for (i in 1:length(levels(as.factor(descript$Code_point_Libelle)))){
+  levels(as.factor(descript$Code_point_Libelle))[i]
+  descript2 <- filter(descript,Code_point_Libelle == levels(as.factor(descript$Code_point_Libelle))[i])
+  nrow(descript2)
+  P <- nrow(filter(descript2, Bloom_Phylum == "Hapt" & season == "Spring"))
+  E <- nrow(filter(descript2, Bloom_Phylum == "Hapt" & season == "Summer"))
+  A <- nrow(filter(descript2, Bloom_Phylum == "Hapt" & season == "Fall"))
+  W <- nrow(filter(descript2, Bloom_Phylum == "Hapt" & season == "Winter"))
+  MD <- (nrow(filter(descript2, Bloom_Phylum == "Hapt" & Monodominance == "OUI"))/nrow(filter(descript2, Bloom_Phylum == "Hapt")))*100
+  cat("Taxon:",levels(as.factor(descript$Code_point_Libelle))[i],nrow(descript2),"\n")
+  cat(P,E,A,W,MD,"\n")
+}
+
+
+# Tendance nombre de bloom au cours du temps
+data_bloom_trend <- read_delim("data_modif/Trend_bloom_md.csv", 
+                         delim = ";", escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"),
+                         trim_ws = TRUE)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "1")$N_bloom)
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "1")$P_MD)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "2")$N_bloom) #SIGN
+sens.slope(dplyr::filter(data_bloom_trend, Cluster == "2")$N_bloom)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "2")$P_MD)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "3")$N_bloom)
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "3")$P_MD)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "4")$N_bloom) #SIGN
+sens.slope(dplyr::filter(data_bloom_trend, Cluster == "4")$N_bloom)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "4")$P_MD) #SIGN
+sens.slope(dplyr::filter(data_bloom_trend, Cluster == "4")$P_MD)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "Tous")$N_bloom) #SIGN
+sens.slope(dplyr::filter(data_bloom_trend, Cluster == "Tous")$N_bloom)
+
+mk.test(dplyr::filter(data_bloom_trend, Cluster == "Tous")$P_MD)
+
 # Date du bloom en fonction des années 
 data_bloom <- data_bloom |>
   arrange(cluster, Date) |>
@@ -664,3 +749,152 @@ ggplot(data_bloom)+
   scale_y_continuous(breaks = seq(0,365, by = 50),limits = c(0,365))+
   facet_wrap(~cluster)
 
+# Histogramme ou violin plot pour la chlorophylle par bloom
+data_bloom <- read_delim("data_modif/Table_bloom_R_v3c.csv", 
+                         delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), locale = locale(encoding = "ISO-8859-1"),
+                         trim_ws = TRUE)
+
+cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
+
+ggplot(data_bloom)+
+  geom_histogram(aes(x=CHLOROA,group=Bloom_Phylum,fill=Bloom_Phylum))+
+  scale_x_continuous(breaks= seq(0,120, by = 5))
+ggsave('CHLOROA_Phylum.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(data_bloom)+
+  geom_histogram(aes(x=CHLOROA,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(name = 'Cluster', values = cluster_col)+
+  scale_x_continuous(breaks= seq(0,120, by = 5))
+ggsave('CHLOROA_Cluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(filter(data_bloom, cluster == 1))+
+         geom_histogram(aes(x=CHLOROA,group=Bloom_Phylum,fill=Bloom_Phylum))+
+         scale_x_continuous(breaks= seq(0,35, by = 5),limits = c(0,35))
+ggsave('CHLOROA_Phylum_Cluster1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(filter(data_bloom, cluster == 2))+
+  geom_histogram(aes(x=CHLOROA,group=Bloom_Phylum,fill=Bloom_Phylum))+
+  scale_x_continuous(breaks= seq(0,35, by = 5),limits = c(0,35))
+ggsave('CHLOROA_Phylum_Cluster2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(filter(data_bloom, cluster == 3))+
+  geom_histogram(aes(x=CHLOROA,group=Bloom_Phylum,fill=Bloom_Phylum))+
+  scale_x_continuous(breaks= seq(0,35, by = 5),limits = c(0,35))
+ggsave('CHLOROA_Phylum_Cluster3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(filter(data_bloom, cluster == 4))+
+  geom_histogram(aes(x=CHLOROA,group=Bloom_Phylum,fill=Bloom_Phylum))+
+  scale_x_continuous(breaks= seq(0,35, by = 5),limits = c(0,35))
+ggsave('CHLOROA_Phylum_Cluster4.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+ggplot(data_bloom,aes(y = CHLOROA,x=as.factor(cluster)))+
+  geom_violin(aes(fill=as.character(cluster)))+
+    scale_color_viridis_d()+
+  scale_fill_manual(name = 'Cluster', values = cluster_col)+
+  scale_y_continuous(breaks= seq(0,120, by = 5),limits = c(0,120))
+ggsave('CHLOROA_Cluster_Violin.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+ggplot(data_bloom,aes(y = CHLOROA,x=as.factor(Bloom_Phylum)))+
+  geom_violin(aes(fill=as.character(Bloom_Phylum)))+
+  scale_color_viridis_d()+
+  scale_y_continuous(breaks= seq(0,120, by = 5),limits = c(0,120))
+ggsave('CHLOROA_Phylum_Violin.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+
+ggplot(data_bloom,aes(y = CHLOROA,x=as.factor(cluster)))+
+  geom_violin(aes(fill=as.character(cluster)))+
+  scale_color_viridis_d()+
+  scale_fill_manual(name = 'Cluster', values = cluster_col)+
+  #scale_y_continuous(breaks= seq(0,120, by = 5),limits = c(0,120))+
+  facet_wrap(~Bloom_Phylum, scales = "free_y")
+ggsave('CHLOROA_Phylum_Cluster_Violin.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Hist",dpi = 600, width = 400, height = 380, units = 'mm')
+
+# Pourcentage de dominance lors de bloom et non.
+
+data_bloom <- read_delim("data_modif/Table_bloom_R_v3c.csv", 
+                         delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), locale = locale(encoding = "ISO-8859-1"),
+                         trim_ws = TRUE)
+data_bloom[grep("Antifer",x = data_bloom$Code_point_Libelle),"Code_point_Libelle"] <- "Antifer ponton pétrolier"
+
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data$Abdtot <- apply(data[,24:247],1,sum,na.rm=T)
+
+data$Abdmax <- apply(data[,24:247],1,max,na.rm=T)
+
+data$P_dominance <- data$Abdmax/data$Abdtot 
+
+data <- dplyr::select(data, Code_point_Libelle,cluster, Date, P_dominance)
+
+data_bloom <- dplyr::select(data_bloom, -cluster)
+
+data_combo <- left_join(data,data_bloom, by = join_by(Code_point_Libelle, Date))
+
+median(filter(data_combo, Month >= 0)$P_dominance.x,na.rm=T)
+
+
+
+ggplot(filter(data_combo, is.na(Bloom_Phylum)))+
+  geom_boxplot(aes(x=cluster,y=P_dominance.x,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #facet_wrap(~Bloom_Phylum,nrow = 4,scales = "free_y")+
+  labs(title = "",
+       y = "Pourcentage de dominance", x = "cluster")+
+  ggplot(filter(data_combo, is.na(Bloom_Phylum)))+
+  geom_boxplot(aes(y=P_dominance.x),fill="grey")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_x_continuous(breaks = 0)+
+  labs(title = "",
+       y = "Pourcentage de dominance")
+ggsave('Boxplot_dominance_NONBLOOM.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Correlations",dpi = 600, width = 400, height = 380, units = 'mm')
+
+wilcox.test(filter(data_combo, is.na(Bloom_Phylum))$P_dominance.x,
+            filter(data_combo, Month >= 0)$P_dominance.x)
+
+x <- (filter(data_combo, Month >= 0)$P_dominance.x)*100
+x <- as.data.frame(x)
+x$Bloom <- "OUI"
+y <- (filter(data_combo, is.na(Bloom_Phylum))$P_dominance.x)*100
+y <- as.data.frame(y)
+y$Bloom <- "NON"
+
+median(x$P_dominance,na.rm = T)
+colnames(x)[1] <- c("P_dominance")
+colnames(y)[1] <- c("P_dominance")
+
+data_viz <- rbind(x,y)
+data_viz$Bloom <- as.factor(data_viz$Bloom)
+
+ggplot(data_viz)+
+  geom_boxplot(aes(y=P_dominance,x=Bloom,group=Bloom),fill="grey")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,100,20),limits =c(0,120))+
+  labs(title = "",
+       y = "Pourcentage de dominance",x="Episode de bloom")
+ggsave('Boxplot_dominance_Comparaison.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Bloom_description/Correlations",dpi = 600, width = 200, height = 180, units = 'mm')
+
+
+# Relation abondance totale et chlorophylle a 
+
+
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data$Abdtot <- apply(data[,24:247],1,sum,na.rm=T)
+data$Bloom <- NA
+data_bloom <- read_delim("data_modif/Table_bloom_R_v3c.csv", 
+                         delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), locale = locale(encoding = "ISO-8859-1"),
+                         trim_ws = TRUE)
+data_bloom$Bloom <- "OUI"
+
+data <- dplyr::select(data,Code_point_Libelle,Date, CHLOROA, Abdtot)
+data_bloom$Bloom <- "OUI"
+data_bloom <- dplyr::select(data_bloom,Code_point_Libelle,Date,Bloom)
+
+t <- left_join(data,data_bloom, by = join_by(Code_point_Libelle,Date))
+ggplot(t)+
+  geom_point(aes(x=Abdtot,y=log(CHLOROA+1),colour=Bloom))

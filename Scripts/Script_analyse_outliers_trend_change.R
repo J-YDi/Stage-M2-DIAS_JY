@@ -206,16 +206,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI" & CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI" & CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
-  scale_size_manual(values = c(1,5))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
+    scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
     labs(title = "Serie temporelle de Chlorophylle Calvi",
          subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),"                              Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
          pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original
+       Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Calvi_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
@@ -227,16 +232,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Anse de Carteau",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Ansecarteau_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
@@ -248,16 +258,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Antifer ponton pétrolier",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Antifer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Atso
@@ -268,16 +283,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
-  labs(title = "Serie temporelle de Chlorophylle Atso",
+  labs(title = "Serie temporelle de Chlorophylle At so",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Atso_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Auger
@@ -288,16 +308,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Auger",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Auger_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Barcares
@@ -308,16 +333,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Barcares",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Barcares_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Boisdelachaise
@@ -328,16 +358,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
-  labs(title = "Serie temporelle de Chlorophylle Bois de la chaise large",
+  labs(title = "Serie temporelle de Chlorophylle Bois de la Chaise large",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Boisdelachaise_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Boulogne
@@ -348,16 +383,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Point 1 Boulogne",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Boulogne_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Cabourg
@@ -368,16 +408,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Cabourg",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Cabourg_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Cornard
@@ -388,16 +433,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Le Cornard",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Cornard_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Dianacentre
@@ -408,16 +458,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Diana centre",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Dianacentre_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Géfosse
@@ -428,16 +483,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Géfosse",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Gefosse_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Hebihens
@@ -448,16 +508,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle les Hébihens",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Hebihens_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Loguivy
@@ -468,16 +533,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Loguivy",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Loguivy_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_MenerRoue
@@ -488,16 +558,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Men er Roue",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('MenerRoue_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_OuestLoscolo
@@ -508,16 +583,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Ouest Loscolo",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('OuestLoscolo_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
@@ -529,16 +609,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Sète mer",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Setemer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Teychan
@@ -549,16 +634,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+  
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Teychan bis",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Teychan_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Toulon
@@ -569,16 +659,21 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+               
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle 22B - Toulon gde rade",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Toulon_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_ParcLeucate
@@ -589,16 +684,20 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
-  scale_size_manual(values = c(1,5))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
+    scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
-  labs(title = "Serie temporelle de Chlorophylle Parc Leucate 2",
+  labs(title = "Serie temporelle de Chlorophylle Parc Leucate",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('ParcLeucate_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Bouzigues
@@ -609,16 +708,20 @@ ggplot()+
   geom_point(data =  datagraph,aes(x=Date,y=CHLOROA_noseason,colour=Outlier,size=Outlier))+
   geom_vline(xintercept =  datagraph$Date[complete.cases( datagraph$Changepoint)],size=2)+
   scale_x_date(breaks = seq( datagraph$Date[1], datagraph$Date[nrow( datagraph)],by=100))+
-  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange")+
+  geom_hline(yintercept = min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),col="orange",size=1)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10))+
   scale_colour_manual(values = c("red","orange"))+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.95,na.rm = T), col = "violet", size = 1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.99,na.rm = T), col = "maroon3", size =1)+
+  geom_hline(yintercept = quantile(datagraph$CHLOROA_noseason, 0.90,na.rm = T), col = "red3", size =1)+
   scale_size_manual(values = c(1,5))+
   geom_text(aes(x= datagraph$Date[complete.cases( datagraph$Changepoint)]-180,y=4,label= datagraph$Date[complete.cases( datagraph$Changepoint)]))+
   labs(title = "Serie temporelle de Chlorophylle Bouzigues (a)",
        subtitle = paste("Trend :", round(datagraph$Trend[1],digits = 2),"pval:",round(datagraph$pvaltrend[1],digits = 4),                              "Seuil:",round(min(filter(datagraph,Outlier=="OUI"& CHLOROA_noseason >=0)$CHLOROA_noseason),digits = 3),"
        pval changement",round(datagraph$pvalchange[1],digits = 4), paste("Sen's slope:",round(datagraph$slopesens[1],digits=5), "pval:",round(datagraph$psens[1],digits=4))),
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
-       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original")
+       caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
+              Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
 ggsave('Bouzigues_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
@@ -643,6 +746,7 @@ for (i in (1:21)){
 
 # Trouver la date qui correspond aux outliers : c'est la date la plus proche du point logiquement 
 data_outliers <- filter(data_outliers_change, Outlier =="OUI")
+
 for (k in 1:21){
   data_Date_find <- c("","")
   data_Date_find <- as.data.frame(data_Date_find)
@@ -707,7 +811,7 @@ for ( i in 1:length(files) ) {
   realdate <- bind_rows(realdate, temp)
 }
 realdate$Outlier <- "OUI"
-realdate_forfusion <- select(realdate,Code_point_Libelle,Datefind,Outlier)
+realdate_forfusion <- dplyr::select(realdate,Code_point_Libelle,Datefind,Outlier)
 colnames(realdate_forfusion) <- c("Code_point_Libelle","Date","Outlier")
 
 data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
@@ -733,6 +837,19 @@ data_withoutliers_ok <- bind_rows(data_withoutliers_unique,resultat_filtre_final
 
 doublons_final <- data_withoutliers_ok[duplicated(data_withoutliers_ok$ID.interne.passage) |
                                       duplicated(data_withoutliers_ok$ID.interne.passage, fromLast = TRUE), ]
+
+resultat_filtre_final <- doublons_final %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+data_withoutliers_unique <- subset(data_withoutliers_ok, !(ID.interne.passage %in% unique(doublons_final$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_withoutliers_ok <- bind_rows(data_withoutliers_unique,resultat_filtre_final)
+# la c'est ok
+data_withoutliers_ok <- data_withoutliers_ok |>
+  group_by(Code.Region, Code_point_Libelle, lon, lat, Year, Month, Date, ID.interne.passage, Prelevement.niveau)
+
+doublons_final <- data_withoutliers_ok[duplicated(data_withoutliers_ok$ID.interne.passage) |
+                                         duplicated(data_withoutliers_ok$ID.interne.passage, fromLast = TRUE), ]
 
 resultat_filtre_final <- doublons_final %>%
   filter(duplicated(ID.interne.passage) | n()==1)

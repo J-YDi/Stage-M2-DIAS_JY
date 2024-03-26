@@ -1878,13 +1878,14 @@ data_hpc <- data_hpc |>
 data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers.csv", 
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
-data <- select(data,Code.Region:CHLOROA,Shannon:Outlier)
+data <- dplyr::select(data,Code.Region:CHLOROA,Shannon:Outlier)
 data$ID.interne.passage <- as.character(data$ID.interne.passage)
 
 
 data_new <- left_join(data,data_hpc)
 data_outlier_v2 <- filter(data_new,Outlier == "OUI") 
-write.csv2(data_outlier_v2,file="data_modif/Table_outliers_Phylumclasse_Genus_taxon.csv", row.names = FALSE,dec = ".")
+data_outlier_v2 <- filter(data_outlier_v2, CHLOROA >= 0)
+write.csv2(data_outlier_v2,file="data_modif/Table_outliers_Phylumclasse_Genus_taxon_V2.csv", row.names = FALSE,dec = ".")
 
 
 
