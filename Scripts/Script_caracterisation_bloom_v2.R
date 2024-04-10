@@ -644,7 +644,7 @@ for (i in 1:length(levels(as.factor(descript$Bloom_Genre)))){
   cat("Taxon:",levels(as.factor(descript$Bloom_Genre))[i],nrow(descript2),"\n")
 }
 
-descript <- filter(data_bloom, Monodominance == "OUI")
+descript <- filter(data_bloom, Code_point_Libelle == "Diana centre")
 for (i in 1:length(levels(as.factor(descript$Year)))){
   levels(as.factor(descript$Year))[i]
   descript2 <- filter(descript,Year == levels(as.factor(descript$Year))[i])
@@ -898,3 +898,89 @@ data_bloom <- dplyr::select(data_bloom,Code_point_Libelle,Date,Bloom)
 t <- left_join(data,data_bloom, by = join_by(Code_point_Libelle,Date))
 ggplot(t)+
   geom_point(aes(x=Abdtot,y=log(CHLOROA+1),colour=Bloom))
+
+
+# LDA Parametres environnementaux
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data$EpBloom <- ifelse(data$P_dominance > 0, "Oui","Non")
+data[is.na(data$EpBloom),277] <- "Non"
+
+data[,c("TEMP","SALI","PO4","NO3+NO2","TURB-FNU","SIOH","NH4","OXYGENE")] <- scale(data[,c("TEMP","SALI","PO4","NO3+NO2","TURB-FNU","SIOH","NH4","OXYGENE")])
+
+lda_model <- lda(EpBloom ~ TEMP+SALI+PO4+`NO3+NO2`+`TURB-FNU`+SIOH+NH4+OXYGENE, data = data)
+
+# Résumé du modèle
+print(lda_model)
+
+coefficients <- lda_model$scaling
+coefficients <- as.data.frame(coefficients)
+coefficients$Var <- rownames(coefficients)
+coefficients <- coefficients[order(-abs(coefficients$LD1)), ]
+coefficients$Var <- as.factor(coefficients$Var)
+
+ggplot(coefficients, aes(x = reorder(Var, -abs(LD1)), y = abs(LD1))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Importance des coefficients linéaires",
+       x = "Facteurs environnementaux",
+       y = "Coefficient linéaire") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes sur l'axe x pour une meilleure lisibilité
+
+BacDino <- filter(data, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino")
+
+lda_model <- lda(Bloom_Phylum ~ TEMP+SALI+PO4+`NO3+NO2`+`TURB-FNU`+SIOH+NH4+OXYGENE, data = BacDino)
+
+# Résumé du modèle
+print(lda_model)
+
+coefficients <- lda_model$scaling
+coefficients <- as.data.frame(coefficients)
+coefficients$Var <- rownames(coefficients)
+coefficients <- coefficients[order(-abs(coefficients$LD1)), ]
+coefficients$Var <- as.factor(coefficients$Var)
+
+ggplot(coefficients, aes(x = reorder(Var, -abs(LD1)), y = abs(LD1))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Importance des coefficients linéaires",
+       x = "Facteurs environnementaux",
+       y = "Coefficient linéaire") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes sur l'axe x pour une meilleure lisibilité
+
+bloom <- filter(data, P_dominance > 0)
+
+lda_model <- lda(Bloom_Phylum ~ TEMP+SALI+PO4+`NO3+NO2`+`TURB-FNU`+SIOH+NH4+OXYGENE, data = bloom)
+
+# Résumé du modèle
+print(lda_model)
+
+coefficients <- lda_model$scaling
+coefficients <- as.data.frame(coefficients)
+coefficients$Var <- rownames(coefficients)
+coefficients <- coefficients[order(-abs(coefficients$LD1)), ]
+coefficients$Var <- as.factor(coefficients$Var)
+
+ggplot(coefficients, aes(x = reorder(Var, -abs(LD1)), y = abs(LD1))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Importance des coefficients linéaires - LD1 (0.79)",
+       x = "Facteurs environnementaux",
+       y = "Coefficient linéaire") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ # Rotation des étiquettes sur l'axe x pour une meilleure lisibilité
+ggplot(coefficients, aes(x = reorder(Var, -abs(LD2)), y = abs(LD2))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Importance des coefficients linéaires - LD2 (0.17)",
+       x = "Facteurs environnementaux",
+       y = "Coefficient linéaire") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+  # Rotation des étiquettes sur l'axe x pour une meilleure lisibilité
+ggplot(coefficients, aes(x = reorder(Var, -abs(LD3)), y = abs(LD3))) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Importance des coefficients linéaires - LD3 (0.03)",
+       x = "Facteurs environnementaux",
+       y = "Coefficient linéaire") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes sur l'axe x pour une meilleure lisibilité

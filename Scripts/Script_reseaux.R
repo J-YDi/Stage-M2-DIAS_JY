@@ -3,300 +3,6 @@ data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv"
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
-### Ouest Loscolo ####
-OL <- filter(data,Code_point_Libelle == "Ouest Loscolo" )
-rownames(OL) <- OL$Date
-OL <- dplyr::select(OL,Actinoptychus:Coscinodiscophycidae)
-OL[is.na(OL)]<- 0
-
-OL <- as.matrix(OL)
-
-net <- netConstruct(data = OL, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 35),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed",weighted = T)
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-     layout = "spring",
-     nodeColor = "cluster", 
-     nodeSize = "degree",
-     nodeTrans = 0,
-     title1 = "Ouest Loscolo",
-     shortenLabels = "none",
-     labelScale = F,
-     labelFont = 1,
-     nodeFilter = "none",
-     rmSingles = "none",
-     highlightHubs = T,
-     edgeFilter = "none",
-     negDiffCol = T,
-     posCol = "green4",
-     negCol = "red3",
-     showTitle = TRUE,
-     cexTitle = 1.3,
-     cexLabels = 1,
-     cexNodes = 1)
-
-### Bois de la Chaise large ####
-BCL <- filter(data,Code_point_Libelle == "Bois de la Chaise large" )
-rownames(BCL) <- BCL$Date
-BCL <- dplyr::select(BCL,Actinoptychus:Coscinodiscophycidae)
-BCL[is.na(BCL)]<- 0
-
-BCL <- as.matrix(BCL)
-
-net <- netConstruct(data = BCL, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 34),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Bois de la Chaise large",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Teychan Bis ####
-TEB <- filter(data,Code_point_Libelle == "Teychan bis" )
-rownames(TEB) <- TEB$Date
-TEB <- dplyr::select(TEB,Actinoptychus:Coscinodiscophycidae)
-TEB[is.na(TEB)]<- 0
-
-TEB <- as.matrix(TEB)
-
-net <- netConstruct(data = TEB, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 36),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Teychan bis",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Men er Roue ####
-MER <- filter(data,Code_point_Libelle == "Men er Roue" )
-rownames(MER) <- MER$Date
-MER <- dplyr::select(MER,Actinoptychus:Coscinodiscophycidae)
-MER[is.na(MER)]<- 0
-
-MER <- as.matrix(MER)
-
-net <- netConstruct(data = MER, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 36),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Men er Roue",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Loguivy ####
-LOG <- filter(data,Code_point_Libelle == "Loguivy" )
-rownames(LOG) <- LOG$Date
-LOG <- dplyr::select(LOG,Actinoptychus:Coscinodiscophycidae)
-LOG[is.na(LOG)]<- 0
-
-LOG <- as.matrix(LOG)
-
-net <- netConstruct(data = LOG, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 36),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Loguivy",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### les Hébihens ####
-LH <- filter(data,Code_point_Libelle == "les Hébihens" )
-rownames(LH) <- LH$Date
-LH <- dplyr::select(LH,Actinoptychus:Coscinodiscophycidae)
-LH[is.na(LH)]<- 0
-
-LH <- as.matrix(LH)
-
-net <- netConstruct(data = LH, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 35),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "les Hébihens",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Géfosse ####
-GEF <- filter(data,Code_point_Libelle == "Géfosse" )
-rownames(GEF) <- GEF$Date
-GEF <- dplyr::select(GEF,Actinoptychus:Coscinodiscophycidae)
-GEF[is.na(GEF)]<- 0
-
-GEF <- as.matrix(GEF)
-
-net <- netConstruct(data = GEF, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 27),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Géfosse",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
 ### Cluster 3 ####
 CL3 <- filter(data, cluster == 3 )
 #rownames(CL1) <- CL1$Date
@@ -338,175 +44,6 @@ plt <- plot(net_props,
             cexTitle = 1.3,
             cexLabels = 1,
             cexNodes = 1)
-
-### Cabourg ####
-CAB <- filter(data,Code_point_Libelle == "Cabourg" )
-rownames(CAB) <- CAB$Date
-CAB <- dplyr::select(CAB,Actinoptychus:Coscinodiscophycidae)
-CAB[is.na(CAB)]<- 0
-
-CAB <- as.matrix(CAB)
-
-net <- netConstruct(data = CAB, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 36),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Cabourg",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Antifer ponton pétrolier ####
-APP <- filter(data,Code_point_Libelle == "Antifer ponton pétrolier" )
-rownames(APP) <- APP$Date
-APP <- dplyr::select(APP,Actinoptychus:Coscinodiscophycidae)
-APP[is.na(APP)]<- 0
-
-APP <- as.matrix(APP)
-
-net <- netConstruct(data = APP, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 27),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Antifer ponton pétrolier",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### At so ####
-ATS <- filter(data,Code_point_Libelle == "At so" )
-rownames(ATS) <- ATS$Date
-ATS <- dplyr::select(ATS,Actinoptychus:Coscinodiscophycidae)
-ATS[is.na(ATS)]<- 0
-
-ATS <- as.matrix(ATS)
-
-net <- netConstruct(data = ATS, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 25),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "At so",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Point 1 Boulogne ####
-P1B <- filter(data,Code_point_Libelle == "Point 1 Boulogne" )
-rownames(P1B) <- P1B$Date
-P1B <- dplyr::select(P1B,Actinoptychus:Coscinodiscophycidae)
-P1B[is.na(P1B)]<- 0
-
-P1B <- as.matrix(P1B)
-
-net <- netConstruct(data = P1B, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 28),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Point 1 Boulogne",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
 
 ### Cluster 2 ####
 CL2 <- filter(data, cluster == 2 )
@@ -550,91 +87,6 @@ plt <- plot(net_props,
             cexLabels = 1,
             cexNodes = 1)
 
-### Le Cornard ####
-LCO <- filter(data,Code_point_Libelle == "Le Cornard" )
-rownames(LCO) <- LCO$Date
-LCO <- dplyr::select(LCO,Actinoptychus:Coscinodiscophycidae)
-LCO[is.na(LCO)]<- 0
-
-LCO <- as.matrix(LCO)
-
-net <- netConstruct(data = LCO, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 39),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Le Cornard",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Auger ####
-AUG <- filter(data,Code_point_Libelle == "Auger" )
-rownames(AUG) <- AUG$Date
-AUG <- dplyr::select(AUG,Actinoptychus:Coscinodiscophycidae)
-AUG[is.na(AUG)]<- 0
-
-AUG <- as.matrix(AUG)
-
-net <- netConstruct(data = AUG, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 39),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Auger",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-
 ### Cluster 4 ####
 CL4 <- filter(data, cluster == 4 )
 #rownames(CL1) <- CL1$Date
@@ -662,345 +114,6 @@ plt <- plot(net_props,
             nodeSize = "degree",
             nodeTrans = 0,
             title1 = "Cluster 4",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Parc Leucate 2 ####
-PL2 <- filter(data,Code_point_Libelle == "Parc Leucate 2")
-rownames(PL2) <- PL2$Date
-PL2 <- dplyr::select(PL2,Actinoptychus:Coscinodiscophycidae)
-PL2[is.na(PL2)]<- 0
-
-PL2 <- as.matrix(PL2)
-
-net <- netConstruct(data = PL2, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 36),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Parc Leucate 2",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Barcares ####
-BAR <- filter(data,Code_point_Libelle == "Barcares")
-rownames(BAR) <- BAR$Date
-BAR <- dplyr::select(BAR,Actinoptychus:Coscinodiscophycidae)
-BAR[is.na(BAR)]<- 0
-
-BAR <- as.matrix(BAR)
-
-net <- netConstruct(data = BAR, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 35),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Barcares",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Sète mer ####
-SM <- filter(data,Code_point_Libelle == "Sète mer")
-rownames(SM) <- SM$Date
-SM <- dplyr::select(SM,Actinoptychus:Coscinodiscophycidae)
-SM[is.na(SM)]<- 0
-
-SM <- as.matrix(SM)
-
-net <- netConstruct(data = SM, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 39),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Sète mer",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-
-### Bouzigues (a) ####
-BZG <- filter(data,Code_point_Libelle == "Bouzigues (a)")
-rownames(BZG) <- BZG$Date
-BZG <- dplyr::select(BZG,Actinoptychus:Coscinodiscophycidae)
-BZG[is.na(BZG)]<- 0
-
-BZG <- as.matrix(BZG)
-
-net <- netConstruct(data = BZG, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 42),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Bouzigues (a)",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Anse de Carteau 2 ####
-ADC2 <- filter(data,Code_point_Libelle == "Anse de Carteau 2")
-rownames(ADC2) <- ADC2$Date
-ADC2 <- dplyr::select(ADC2,Actinoptychus:Coscinodiscophycidae)
-ADC2[is.na(ADC2)]<- 0
-
-ADC2 <- as.matrix(ADC2)
-
-net <- netConstruct(data = ADC2, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 40),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Anse de Carteau 2",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-
-### 22B - Toulon gde rade ####
-TLN <- filter(data,Code_point_Libelle == "22B - Toulon gde rade")
-rownames(TLN) <- TLN$Date
-TLN <- dplyr::select(TLN,Actinoptychus:Coscinodiscophycidae)
-TLN[is.na(TLN)]<- 0
-
-TLN <- as.matrix(TLN)
-
-net <- netConstruct(data = TLN, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 38),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "22B - Toulon gde rade",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-### Calvi ####
-CAL <- filter(data,Code_point_Libelle == "Calvi")
-rownames(CAL) <- CAL$Date
-CAL <- dplyr::select(CAL,Actinoptychus:Coscinodiscophycidae)
-CAL[is.na(CAL)]<- 0
-
-CAL <- as.matrix(CAL)
-
-net <- netConstruct(data = CAL, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 47),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Calvi",
-            shortenLabels = "none",
-            labelScale = F,
-            labelFont = 1,
-            nodeFilter = "none",
-            rmSingles = "none",
-            highlightHubs = T,
-            edgeFilter = "none",
-            negDiffCol = T,
-            posCol = "green4",
-            negCol = "red3",
-            showTitle = TRUE,
-            cexTitle = 1.3,
-            cexLabels = 1,
-            cexNodes = 1)
-
-
-### Diana centre ####
-DIC <- filter(data,Code_point_Libelle == "Diana centre")
-rownames(DIC) <- DIC$Date
-DIC <- dplyr::select(DIC,Actinoptychus:Coscinodiscophycidae)
-DIC[is.na(DIC)]<- 0
-
-DIC <- as.matrix(DIC)
-
-net <- netConstruct(data = DIC, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 40),
-                    filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
-                    normMethod = "none", dissFunc = "signed")
-
-net_props <- netAnalyze(net,
-                        clustMethod = "cluster_fast_greedy",
-                        hubPar = c("eigenvector"),
-                        graphlet = F,
-                        connectivity = T)
-
-resume <- summary(net_props)
-resume
-plt <- plot(net_props,
-            layout = "spring",
-            nodeColor = "cluster", 
-            nodeSize = "degree",
-            nodeTrans = 0,
-            title1 = "Diana centre",
             shortenLabels = "none",
             labelScale = F,
             labelFont = 1,
@@ -1550,6 +663,18 @@ adj <- as.matrix(as_adjacency_matrix(cluster3, attr = "weight",)) # OK
 diag(adj) <- 1
 nat_connect_notgood <- natural.connectivity(as.matrix(adj)) # Connectivite naturel
 
+hubs <- eigen_centrality(
+  cluster3,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3.csv", row.names = FALSE,dec = ".")
+
 # Preparation sous réseau 
 # Index des espèces = noeuds
 nodes_net <- V(cluster3)
@@ -1566,7 +691,6 @@ data_results_reseaux <- as.data.frame(data_results_reseaux)
 
 # Sous réseau
 for (i in 1:nrow(CL3)){ 
-  i = 1
 spe <- as.data.frame(CL3[i,])
 colnames(spe) <- "Count" 
 spe$phyto <- rownames(spe)
@@ -1642,7 +766,7 @@ dev.off()
 htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/",station,date,".html"))
 print(i/nrow(CL3)*100)
 }
-write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster3.csv", row.names = FALSE,dec = ".")
+write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster3_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
 {chemin_repertoire <- "output/graphs/Reseaux/HTML/"
@@ -1704,6 +828,13 @@ ggplot(data_reseaux)+
   facet_wrap(~Code_point_Libelle)+
   labs(title="Longueur moyen des liens",x="Date",y="Longueur moyen des liens")
 ggsave('Avg_p_length_station.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(data_reseaux)+
+  geom_line(aes(x=Date,y=N_clust))+
+  geom_point(aes(x=Date,y=N_clust,colour=Bloom_Phylum))+
+  facet_wrap(~Code_point_Libelle)+
+  labs(title="Nombre de cluster",x="Date",y="Longueur moyen des liens")
+ggsave('N_clust_station.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(data_reseaux)+
@@ -1769,7 +900,8 @@ ggsave('Nat_connect_station.png', path = "output/graphs/Reseaux/TS_CLUST3/Metric
 
 # Correlation
 
-Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance)
+Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance,-Month,-Year)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -1810,7 +942,7 @@ datam <- summarise(group_by(data_reseaux,Code_point_Libelle,Month,Year), N_noeud
                    D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                    Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                    Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 # Au niveau des stations
 ggplot(datam)+
@@ -1893,6 +1025,13 @@ ggplot(datam)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('Nat_connect_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  facet_wrap(~Code_point_Libelle)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_mois.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+
 # Annee
 ggplot(datam)+
   geom_boxplot(aes(x=Year,y=N_liens,group=Year),size = 1)+
@@ -1960,6 +1099,11 @@ ggplot(datam)+
   geom_boxplot(aes(x=Year,y=Nat_connect,group=Year),size = 1)+
   facet_wrap(~Code_point_Libelle)
 ggsave('Nat_connect_station_annee.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(datam)+
+  geom_boxplot(aes(x=Year,y=N_clust,group=Year),size = 1)+
+  facet_wrap(~Code_point_Libelle)
+ggsave('N_clust_station_annee.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 # Au niveau du cluster
 ggplot(datam)+
@@ -2029,6 +1173,19 @@ ggplot(datam)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('Nat_connect_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+datal <- pivot_longer(datam,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal)+
+  geom_boxplot(aes(x=Month,y=value,group=Month),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))+
+  labs(title = "Metriques réseau cluster 3 (+)")
+ggsave('Metriques_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
+
 # Annee
 ggplot(datam)+
   geom_boxplot(aes(x=Year,y=N_liens,group=Year),size = 1)
@@ -2097,6 +1254,11 @@ ggplot(datam)+
   
 ggsave('Nat_connect_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datal)+
+  geom_boxplot(aes(x=Year,y=value,group=Year),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 3 (+)")
+ggsave('Metriques_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 
@@ -2104,7 +1266,7 @@ CL3_Mmetrics <- summarise(group_by(data_reseaux,Code_point_Libelle,Date2),N_noeu
                           D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                           Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                           Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 ggplot(CL3_Mmetrics)+
   geom_boxplot(aes(x=Date2,y=N_liens,group=Date2),fill="#00BE67")+
@@ -2113,7 +1275,12 @@ ggplot(CL3_Mmetrics)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
 ggsave('N_liens_cluster.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
-
+ggplot(CL3_Mmetrics)+
+  geom_boxplot(aes(x=Date2,y=N_clust,group=Date2),fill="#00BE67")+
+  labs(title="Nombre de liens",x="Date2",y="Nombre de liens")+
+  scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
+ggsave('N_clust_cluster.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(CL3_Mmetrics)+
   geom_boxplot(aes(x=Date2,y=N_noeuds,group=Date2),fill="#00BE67")+
@@ -2207,8 +1374,12 @@ ggplot(CL3_Mmetrics)+
 ggsave('Nat_connect_cluster.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
-
-
+datal2 <- pivot_longer(CL3_Mmetrics,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal2)+
+  geom_boxplot(aes(x=Date2,y=value,group=Date2),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 3 (+)")
+ggsave('Metriques_cluster_ts.png', path = "output/graphs/Reseaux/TS_CLUST3/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 
@@ -2234,7 +1405,7 @@ V(cluster1)$size <- V(cluster1)$degree
 V(cluster1)$comm <- membership(wc)
 V(cluster1)$color <- colorize(membership(wc))
 E(cluster1)$width <- E(cluster1)$weight*6
-E(cluster3)$color <- "black"
+E(cluster1)$color <- "black"
 
 viz1 <- hchart(cluster1, layout = layout_with_fr)
 # Enregistrement de la visualisation globale
@@ -2276,6 +1447,19 @@ mean_edge_bet <- mean(edge_betweenness(cluster1)) # Mean edge betweeness
 adj <- as.matrix(as_adjacency_matrix(cluster1, attr = "weight",)) # OK
 diag(adj) <- 1
 nat_connect_notgood <- natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  cluster1,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1.csv", row.names = FALSE,dec = ".")
+
 
 # Preparation sous réseau 
 # Index des espèces = noeuds
@@ -2390,7 +1574,7 @@ for (i in 1:nrow(CL1)){
   htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL1/",station,date,".html"))
   print(i/nrow(CL1)*100)
 }
-write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster1.csv", row.names = FALSE,dec = ".")
+write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster1_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
 {chemin_repertoire <- "output/graphs/Reseaux/HTML/CL1/"
@@ -2404,7 +1588,7 @@ write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster
   # Affichez les noms de fichiers
   cat("[", paste("'", noms_fichiers, "'", collapse = ", "), "]", "\n")}
 
-# Analyse des résultats cluster 3
+# Analyse des résultats cluster 1
 data_results_reseaux_copy <- data_results_reseaux
 
 bloom <- dplyr::select(CL1df,Code_point_Libelle,Date,Bloom_Phylum,P_dominance)
@@ -2421,6 +1605,13 @@ ggplot(data_reseaux)+
   facet_wrap(~Code_point_Libelle)+
   labs(title="Nombre de noeuds",x="Date",y="Nombre de noeuds")
 ggsave('N_noeuds_station.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(data_reseaux)+
+  geom_line(aes(x=Date,y=N_clust))+
+  geom_point(aes(x=Date,y=N_clust,colour=Bloom_Phylum))+
+  facet_wrap(~Code_point_Libelle)+
+  labs(title="Nombre de noeuds",x="Date",y="Nombre de noeuds")
+ggsave('N_clust_station.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(data_reseaux)+
@@ -2517,7 +1708,8 @@ ggsave('Nat_connect_station.png', path = "output/graphs/Reseaux/TS_CLUST1/Metric
 
 # Correlation
 
-Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance,-Month,-Year,-Date2)
+Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance,-Month,-Year)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -2558,7 +1750,7 @@ datam <- summarise(group_by(data_reseaux,Code_point_Libelle,Month,Year), N_noeud
                    D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                    Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                    Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 # Au niveau des stations
 ggplot(datam)+
@@ -2567,6 +1759,11 @@ ggplot(datam)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('N_liens_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  facet_wrap(~Code_point_Libelle)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(datam)+
   geom_boxplot(aes(x=Month,y=N_noeuds,group=Month),size = 1)+
@@ -2646,6 +1843,11 @@ ggplot(datam)+
   geom_boxplot(aes(x=Year,y=N_liens,group=Year),size = 1)+
   facet_wrap(~Code_point_Libelle)
 ggsave('N_liens_station_annee.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(datam)+
+  geom_boxplot(aes(x=Year,y=N_clust,group=Year),size = 1)+
+  facet_wrap(~Code_point_Libelle)
+ggsave('N_clust_station_annee.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(datam)+
@@ -2777,6 +1979,11 @@ ggplot(datam)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('Nat_connect_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
 # Annee
 ggplot(datam)+
   geom_boxplot(aes(x=Year,y=N_liens,group=Year),size = 1)
@@ -2845,6 +2052,24 @@ ggplot(datam)+
 
 ggsave('Nat_connect_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Year,y=N_clust,group=Year),size = 1)
+
+ggsave('N_clust_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+datal <- pivot_longer(datam,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal)+
+  geom_boxplot(aes(x=Month,y=value,group=Month),fill="#F8766D",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))+
+  labs(title = "Metriques réseau cluster 1 (+)")
+ggsave('Metriques_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
+
+ggplot(datal)+
+  geom_boxplot(aes(x=Year,y=value,group=Year),fill="#F8766D",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 1 (+)")
+ggsave('Metriques_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 
@@ -2852,7 +2077,14 @@ CL1_Mmetrics <- summarise(group_by(data_reseaux,Code_point_Libelle,Date2),N_noeu
                           D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                           Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                           Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
+
+datal2 <- pivot_longer(CL1_Mmetrics,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal2)+
+  geom_boxplot(aes(x=Date2,y=value,group=Date2),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 1 (+)")
+ggsave('Metriques_cluster_ts.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 ggplot(CL1_Mmetrics)+
   geom_boxplot(aes(x=Date2,y=N_liens,group=Date2),fill="#00BE67")+
@@ -2861,6 +2093,12 @@ ggplot(CL1_Mmetrics)+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
 ggsave('N_liens_cluster.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(CL1_Mmetrics)+
+  geom_boxplot(aes(x=Date2,y=N_clust,group=Date2),fill="#00BE67")+
+  labs(title="Nombre de cluster",x="Date2",y="Nombre de liens")+
+  scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
+ggsave('N_clust_cluster.png', path = "output/graphs/Reseaux/TS_CLUST1/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(CL1_Mmetrics)+
@@ -2975,7 +2213,7 @@ plot(cluster2)
 wc <- cluster_fast_greedy(cluster2)
 
 V(cluster2)$label <- V(cluster2)$name
-V(cluster2)$name <- paste("I'm #", net$edgelist1$v1)
+#V(cluster2)$name <- paste("I'm #", net$edgelist1$v1)
 V(cluster2)$page_rank <- round(page.rank(cluster2)$vector, 2)
 V(cluster2)$betweenness <- round(betweenness(cluster2), 2)
 V(cluster2)$degree <- degree(cluster2)
@@ -2983,7 +2221,7 @@ V(cluster2)$size <- V(cluster2)$degree
 V(cluster2)$comm <- membership(wc)
 V(cluster2)$color <- colorize(membership(wc))
 E(cluster2)$width <- E(cluster2)$weight*6
-E(cluster3)$color <- "black"
+E(cluster2)$color <- "black"
 
 viz2 <- hchart(cluster2, layout = layout_with_fr)
 # Enregistrement de la visualisation globale
@@ -3025,6 +2263,18 @@ mean_edge_bet <- mean(edge_betweenness(cluster2)) # Mean edge betweeness
 adj <- as.matrix(as_adjacency_matrix(cluster2, attr = "weight",)) # OK
 diag(adj) <- 1
 nat_connect_notgood <- natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  cluster2,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2.csv", row.names = FALSE,dec = ".")
 
 # Preparation sous réseau 
 # Index des espèces = noeuds
@@ -3138,7 +2388,7 @@ for (i in 1:nrow(CL2)){
   htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL2/",station,date,".html"))
   print(i/nrow(CL2)*100)
 }
-write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster2.csv", row.names = FALSE,dec = ".")
+write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster2_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
 {chemin_repertoire <- "output/graphs/Reseaux/HTML/CL2/"
@@ -3187,6 +2437,15 @@ ggplot(data_reseaux)+
   facet_wrap(~Code_point_Libelle)+
   labs(title="Densité des liens",x="Date",y="Densité des liens")
 ggsave('D_liens_station.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+
+ggplot(data_reseaux)+
+  geom_line(aes(x=Date,y=N_clust))+
+  geom_point(aes(x=Date,y=N_clust,colour=Bloom_Phylum))+
+  facet_wrap(~Code_point_Libelle)+
+  labs(title="Densité des liens",x="Date",y="Densité des liens")
+ggsave('N_clust_station.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
 
 ggplot(data_reseaux)+
   geom_line(aes(x=Date,y=C_tance))+
@@ -3268,6 +2527,7 @@ ggsave('Nat_connect_station.png', path = "output/graphs/Reseaux/TS_CLUST2/Metric
 # Correlation
 
 Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance,-Month,-Year)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -3308,7 +2568,7 @@ datam <- summarise(group_by(data_reseaux,Code_point_Libelle,Month,Year), N_noeud
                    D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                    Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                    Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 # Au niveau des stations
 ggplot(datam)+
@@ -3316,6 +2576,12 @@ ggplot(datam)+
   facet_wrap(~Code_point_Libelle)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('N_liens_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  facet_wrap(~Code_point_Libelle)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(datam)+
@@ -3596,25 +2862,44 @@ ggplot(datam)+
 ggsave('Nat_connect_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
+datal <- pivot_longer(datam,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal)+
+  geom_boxplot(aes(x=Month,y=value,group=Month),fill="#CD9600",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))+
+  labs(title = "Metriques réseau cluster 2 (+)")
+ggsave('Metriques_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
+
+ggplot(datal)+
+  geom_boxplot(aes(x=Year,y=value,group=Year),fill="#CD9600",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 2 (+)")
+ggsave('Metriques_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 CL2_Mmetrics <- summarise(group_by(data_reseaux,Code_point_Libelle,Date2),N_noeuds=mean(N_noeuds,na.rm=T),N_liens=mean(N_liens,na.rm=T),
                           D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                           Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                           Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=N_liens,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=N_liens,group=Date2),fill="#CD9600")+
   labs(title="Nombre de liens",x="Date2",y="Nombre de liens")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
 ggsave('N_liens_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(CL2_Mmetrics)+
+  geom_boxplot(aes(x=Date2,y=N_clust,group=Date2),fill="#CD9600")+
+  labs(title="Nombre de cluster",x="Date2",y="Nombre de liens")+
+  scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
+ggsave('N_clust_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=N_noeuds,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=N_noeuds,group=Date2),fill="#CD9600")+
   labs(title="Nombre de noeuds",x="Date2",y="Nombre de noeuds")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))
@@ -3622,14 +2907,14 @@ ggsave('N_noeuds_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=D_liens,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=D_liens,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Densité des liens",x="Date2",y="Densité des liens")
 ggsave('D_liens_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=C_tance,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=C_tance,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Connectance",x="Date2",y="Connectance")
@@ -3637,7 +2922,7 @@ ggsave('C_tance_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",d
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Avg_p_length,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Avg_p_length,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Longueur moyen des liens",x="Date2",y="Longueur moyen des liens")
@@ -3645,14 +2930,14 @@ ggsave('Avg_p_length_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metri
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Adhes,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Adhes,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Adhesion",x="Date2",y="Adhesion")
 ggsave('Adhes_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Mod,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Mod,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Modularite",x="Date2",y="Modularite")
@@ -3660,7 +2945,7 @@ ggsave('Mod_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi =
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=meanN_liens,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=meanN_liens,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Nombre moyen de liens",x="Date2",y="Nombre moyen de liens")
@@ -3668,7 +2953,7 @@ ggsave('meanN_liens_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metric
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Assort,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Assort,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Assortativite",x="Date2",y="Assortativite")
@@ -3676,14 +2961,14 @@ ggsave('Assort_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dp
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Diss,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Diss,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Dissimilarite",x="Date2",y="Dissimilarite")
 ggsave('Diss_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Trans,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Trans,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Transitivite",x="Date2",y="Transitivite")
@@ -3691,18 +2976,25 @@ ggsave('Trans_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi
 
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=meanN_voisins,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=meanN_voisins,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Nombre moyen de voisins",x="Date2",y="Nombre moyen de voisins")
 ggsave('meanN_voisins_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 ggplot(CL2_Mmetrics)+
-  geom_boxplot(aes(x=Date2,y=Nat_connect,group=Date2),fill="#00BE67")+
+  geom_boxplot(aes(x=Date2,y=Nat_connect,group=Date2),fill="#CD9600")+
   scale_x_date(date_labels = "%Y-%m",date_breaks = "2 month")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 6))+
   labs(title="Connectivite naturelle",x="Date2",y="Connectivite naturelle")
 ggsave('Nat_connect_cluster.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+datal2 <- pivot_longer(CL2_Mmetrics,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal2)+
+  geom_boxplot(aes(x=Date2,y=value,group=Date2),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 2 (+)")
+ggsave('Metriques_cluster_ts.png', path = "output/graphs/Reseaux/TS_CLUST2/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 
@@ -3730,7 +3022,7 @@ V(cluster4)$size <- V(cluster4)$degree
 V(cluster4)$comm <- membership(wc)
 V(cluster4)$color <- colorize(membership(wc))
 E(cluster4)$width <- E(cluster4)$weight*6
-E(cluster3)$color <- "black"
+E(cluster4)$color <- "black"
 
 viz4 <- hchart(cluster4, layout = layout_with_fr)
 # Enregistrement de la visualisation globale
@@ -3772,6 +3064,18 @@ mean_edge_bet <- mean(edge_betweenness(cluster4)) # Mean edge betweeness
 adj <- as.matrix(as_adjacency_matrix(cluster4, attr = "weight",)) # OK
 diag(adj) <- 1
 nat_connect_notgood <- natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  cluster4,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4.csv", row.names = FALSE,dec = ".")
 
 # Preparation sous réseau 
 # Index des espèces = noeuds
@@ -3885,7 +3189,7 @@ for (i in 1:nrow(CL4)){
   htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL4/",station,date,".html"))
   print(i/nrow(CL4)*100)
 }
-write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster4.csv", row.names = FALSE,dec = ".")
+write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster4_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
 {chemin_repertoire <- "output/graphs/Reseaux/HTML/CL4/"
@@ -3902,7 +3206,7 @@ write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster
 # Analyse des résultats cluster 2
 data_results_reseaux_copy <- data_results_reseaux
 
-data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster4.csv", 
+data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster4_pos.csv", 
                                                delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
                                                locale = locale(decimal_mark = ",", grouping_mark = "."), 
                                                trim_ws = TRUE)
@@ -3944,6 +3248,13 @@ ggplot(data_reseaux)+
   facet_wrap(~Code_point_Libelle)+
   labs(title="Connectance",x="Date",y="Connectance")
 ggsave('C_tance_station.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(data_reseaux)+
+  geom_line(aes(x=Date,y=N_clust))+
+  geom_point(aes(x=Date,y=N_clust,colour=Bloom_Phylum))+
+  facet_wrap(~Code_point_Libelle)+
+  labs(title="Nombre de cluster",x="Date",y="Connectance")
+ggsave('N_clust_station.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(data_reseaux)+
@@ -4018,6 +3329,7 @@ ggsave('Nat_connect_station.png', path = "output/graphs/Reseaux/TS_CLUST4/Metric
 # Correlation
 
 Table.corr_all <- dplyr::select(data_reseaux,-Code_point_Libelle,-Date,-Bloom_Phylum,-P_dominance,-Month,-Year)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -4058,7 +3370,7 @@ datam <- summarise(group_by(data_reseaux,Code_point_Libelle,Month,Year), N_noeud
                    D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                    Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                    Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                   meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 # Au niveau des stations
 ggplot(datam)+
@@ -4066,6 +3378,12 @@ ggplot(datam)+
   facet_wrap(~Code_point_Libelle)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('N_liens_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  facet_wrap(~Code_point_Libelle)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_station_mois.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(datam)+
@@ -4277,11 +3595,22 @@ ggplot(datam)+
   scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
 ggsave('Nat_connect_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+ggplot(datam)+
+  geom_boxplot(aes(x=Month,y=N_clust,group=Month),size = 1)+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))
+ggsave('N_clust_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+
 # Annee
 ggplot(datam)+
   geom_boxplot(aes(x=Year,y=N_liens,group=Year),size = 1)
 
 ggsave('N_liens_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
+
+ggplot(datam)+
+  geom_boxplot(aes(x=Year,y=N_clust,group=Year),size = 1)
+
+ggsave('N_clust_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 ggplot(datam)+
@@ -4345,6 +3674,20 @@ ggplot(datam)+
 
 ggsave('Nat_connect_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
+datal <- pivot_longer(datam,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal)+
+  geom_boxplot(aes(x=Month,y=value,group=Month),fill="#00A9FF",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  scale_x_continuous(breaks = seq(1,12,1),limits = c(0.5,12.5))+
+  labs(title = "Metriques réseau cluster 4 (+)")
+ggsave('Metriques_cluster_mois.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
+
+
+ggplot(datal)+
+  geom_boxplot(aes(x=Year,y=value,group=Year),fill="#00A9FF",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 4 (+)")
+ggsave('Metriques_cluster_annee.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
 
 
 
@@ -4352,7 +3695,7 @@ CL4_Mmetrics <- summarise(group_by(data_reseaux,Code_point_Libelle,Date2),N_noeu
                           D_liens=mean(D_liens,na.rm=T),C_tance=mean(C_tance,na.rm=T),Avg_p_length=mean(Avg_p_length,na.rm=T),
                           Adhes=mean(Adhes,na.rm=T),Mod=mean(Mod,na.rm=T),meanN_liens=mean(meanN_liens,na.rm=T),
                           Assort=mean(Assort,na.rm=T),Diss=mean(Diss,na.rm=T),Trans=mean(Trans,na.rm=T),
-                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T))
+                          meanN_voisins=mean(meanN_voisins,na.rm=T),Nat_connect=mean(Nat_connect,na.rm=T),N_clust=mean(N_clust,na.rm=T))
 
 ggplot(CL4_Mmetrics)+
   geom_boxplot(aes(x=Date2,y=N_liens,group=Date2),fill="#00BE67")+
@@ -4454,8 +3797,17 @@ ggplot(CL4_Mmetrics)+
   labs(title="Connectivite naturelle",x="Date2",y="Connectivite naturelle")
 ggsave('Nat_connect_cluster.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 400, height = 280, units = 'mm')
 
-#### Correlation avec autres parametres 
-data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster4.csv", 
+
+datal2 <- pivot_longer(CL4_Mmetrics,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal2)+
+  geom_boxplot(aes(x=Date2,y=value,group=Date2),fill="#00BE67",size = 1)+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques réseau cluster 4 (+)")
+ggsave('Metriques_cluster_ts.png', path = "output/graphs/Reseaux/TS_CLUST4/Metrics",dpi = 600, width = 600, height = 480, units = 'mm')
+
+
+#### Correlation avec indice de diversité #####
+data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster4_pos.csv", 
                                    delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
                                    locale = locale(decimal_mark = ",", grouping_mark = "."), 
                                    trim_ws = TRUE)
@@ -4465,6 +3817,7 @@ data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
 met <- dplyr::select(data,Code_point_Libelle, Date, Shannon, Pielou, BergerParker, Abdtot,Rspe)
 datacorr <- left_join(data_results_reseaux,met)
 Table.corr_all <- dplyr::select(datacorr,-Code_point_Libelle,-Date)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -4510,6 +3863,7 @@ data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
 met <- dplyr::select(data,Code_point_Libelle, Date, Shannon, Pielou, BergerParker, Abdtot,Rspe)
 datacorr <- left_join(data_results_reseaux,met)
 Table.corr_all <- dplyr::select(datacorr,-Code_point_Libelle,-Date)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -4544,7 +3898,7 @@ corrplot(r, method="color", col=col(200),
          title = "Correlation entre métriques et diversité Cluster 1"
 )
 
-data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster2.csv", 
+data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster2_pos.csv", 
                                    delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
                                    locale = locale(decimal_mark = ",", grouping_mark = "."), 
                                    trim_ws = TRUE)
@@ -4554,6 +3908,7 @@ data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
 met <- dplyr::select(data,Code_point_Libelle, Date, Shannon, Pielou, BergerParker, Abdtot,Rspe)
 datacorr <- left_join(data_results_reseaux,met)
 Table.corr_all <- dplyr::select(datacorr,-Code_point_Libelle,-Date)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -4588,7 +3943,7 @@ corrplot(r, method="color", col=col(200),
          title = "Correlation entre métriques et diversité Cluster 2"
 )
 
-data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster3.csv", 
+data_results_reseaux <- read_delim("data_modif/results_metrics_reseaux_cluster3_pos.csv", 
                                    delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
                                    locale = locale(decimal_mark = ",", grouping_mark = "."), 
                                    trim_ws = TRUE)
@@ -4598,6 +3953,7 @@ data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
 met <- dplyr::select(data,Code_point_Libelle, Date, Shannon, Pielou, BergerParker, Abdtot,Rspe)
 datacorr <- left_join(data_results_reseaux,met)
 Table.corr_all <- dplyr::select(datacorr,-Code_point_Libelle,-Date)
+Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
 
 r <- cor(Table.corr_all.comp)
@@ -4635,6 +3991,1271 @@ corrplot(r, method="color", col=col(200),
 
 
 
+### Sous graphe par saison pour chaque cluster ####
+data<- data |>
+  mutate(season = case_when(Month %in% c(12, 01, 02) ~ "Winter",
+                            Month %in% c(03, 04, 05) ~ "Spring",
+                            Month %in% c(06, 07, 08) ~ "Summer",
+                            Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
+
+####Cluster 3##### 
+# Hiver #
+CL3 <- filter(data, cluster == 3,season == "Winter" )
+#rownames(CL1) <- CL1$Date
+CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL3)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster3)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster3, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+  vcount(sub) # nombre de noeuds
+ ecount(sub) # nombre de liens
+ ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+ edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+ mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+ edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+ modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+ mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+# Automne
+CL3 <- filter(data, cluster == 3,season == "Fall" )
+#rownames(CL1) <- CL1$Date
+CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL3)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster3)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster3, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_automne.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Printemps
+CL3 <- filter(data, cluster == 3,season == "Spring" )
+#rownames(CL1) <- CL1$Date
+CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL3)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster3)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster3, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Ete
+CL3 <- filter(data, cluster == 3,season == "Summer" )
+#rownames(CL1) <- CL1$Date
+CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL3)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster3)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster3, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+
+####Cluster 1##### 
+# Hiver #
+CL1 <- filter(data, cluster == 1,season == "Winter" )
+#rownames(CL1) <- CL1$Date
+CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL1)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster1)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster1, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+# Automne
+CL1 <- filter(data, cluster == 1,season == "Fall" )
+#rownames(CL1) <- CL1$Date
+CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL1)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster1)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster1, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_automne.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Printemps
+CL1 <- filter(data, cluster == 1,season == "Spring" )
+#rownames(CL1) <- CL1$Date
+CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL1)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster1)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster1, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Ete
+CL1 <- filter(data, cluster == 1,season == "Summer" )
+#rownames(CL1) <- CL1$Date
+CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL1)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster1)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster1, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+
+####Cluster 2##### 
+# Hiver #
+CL2 <- filter(data, cluster == 2,season == "Winter" )
+#rownames(CL1) <- CL1$Date
+CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL2)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster2)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster2, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_hiver.csv", row.names = FALSE,dec = ".")
+
+# Automne
+CL2 <- filter(data, cluster == 2,season == "Fall" )
+#rownames(CL1) <- CL1$Date
+CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL2)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster2)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster2, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_automne.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Printemps
+CL2 <- filter(data, cluster == 2,season == "Spring" )
+#rownames(CL1) <- CL1$Date
+CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL2)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster2)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster2, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_hiver.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Ete
+CL2 <- filter(data, cluster == 2,season == "Summer" )
+#rownames(CL1) <- CL1$Date
+CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL2)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster2)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster2, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_hiver.csv", row.names = FALSE,dec = ".")
+
+####Cluster 4##### 
+# Hiver #
+CL4 <- filter(data, cluster == 4,season == "Winter" )
+#rownames(CL1) <- CL1$Date
+CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL4)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster4)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster4, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
+
+# Automne
+CL4 <- filter(data, cluster == 4,season == "Fall" )
+#rownames(CL1) <- CL1$Date
+CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL4)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster4)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster4, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_automne.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Printemps
+CL4 <- filter(data, cluster == 4,season == "Spring" )
+#rownames(CL1) <- CL1$Date
+CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL4)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster4)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster4, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
+
+
+
+
+# Ete
+CL4 <- filter(data, cluster == 4,season == "Summer" )
+#rownames(CL1) <- CL1$Date
+CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
+Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+Spe_w$Phyto <- colnames(CL4)
+Spe_w$V1 <- as.numeric(Spe_w$V1)
+Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
+Spe_w <- filter(Spe_w,V1 > 0)
+rownames(Spe_w) <- NULL
+Spe_w$IndexTab <- rownames(Spe_w)
+
+# Index des espèces = noeuds
+nodes_net <- V(cluster4)
+phyto_index <- as.data.frame(nodes_net)
+phyto_index$phyto <- rownames(phyto_index)
+colnames(phyto_index)[1] <- "Pindex"
+
+colnames(Spe_w) <- c("Count","phyto","IndexTab")
+Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
+Spe$Pindex <- as.numeric(Spe$Pindex)
+
+vids <- Spe$Pindex
+sub <- igraph::subgraph(cluster4, vids)
+viz_sub <- hchart(sub, layout = layout_with_fr)
+plot(sub)
+
+vcount(sub) # nombre de noeuds
+ecount(sub) # nombre de liens
+ecount(sub) / vcount(sub) # linkage density or average number of links per nodes
+edge_density(sub, loops = FALSE) #connectance
+
+# Average path length
+mean_distance(
+  sub,
+  directed = FALSE,
+  unconnected = FALSE # if the graphs is disconnected, only the existing paths are considered
+)
+edge.connectivity(sub) # Edge connectivity = adhesion
+
+wc <- cluster_fast_greedy(sub)
+modularity(sub,membership = membership(wc)) # Modularity
+
+vertex.connectivity(sub) # Vertex connectivity = adhesion
+mean(degree(sub)) #Nombre de liens moyen
+assortativity_degree(sub,directed = F) #assortativite
+mean(1 - E(sub)$weight) # Dissilarite as defined in NetCoMi
+transitivity(sub,type = "global") #Transitivity
+mean(edge_betweenness(sub)) # Mean edge betweeness
+
+adj <- as.matrix(as_adjacency_matrix(sub, attr = "weight",)) # OK
+diag(adj) <- 1
+natural.connectivity(as.matrix(adj)) # Connectivite naturel
+
+hubs <- eigen_centrality(
+  sub,
+  directed = FALSE,
+  scale = TRUE,
+  weights = NULL
+)
+Hubs <- as.data.frame(hubs$vector)
+Hubs$Phyto <- rownames(Hubs)
+
+Spe_hubs <- Hubs[order(desc(hubs$vector)),]
+Spe_hubs
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
+
+
+#### Comparaison des réseaux ####
+metric1 <- read_delim("data_modif/results_metrics_reseaux_cluster1_pos.csv", 
+                                                              delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                                                              locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                                                              trim_ws = TRUE)
+metric1$cluster <- 1
+
+metric2 <- read_delim("data_modif/results_metrics_reseaux_cluster2_pos.csv", 
+                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                      trim_ws = TRUE)
+metric2$cluster <- 2
+
+metric3 <- read_delim("data_modif/results_metrics_reseaux_cluster3_pos.csv", 
+                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                      trim_ws = TRUE)
+metric3$cluster <- 3
+
+metric4 <- read_delim("data_modif/results_metrics_reseaux_cluster4_pos.csv", 
+                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                      trim_ws = TRUE)
+metric4$cluster <- 4
+
+metric <- bind_rows(metric1,metric2,metric3,metric4)
+write.csv2(metric,file="data_modif/metrics.csv", row.names = FALSE,dec = ".")
+
+
+cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
+
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=N_noeuds,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$N_noeuds~metric$cluster)
+DunnTest(metric$N_noeuds~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=N_liens,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$N_liens~metric$cluster)
+DunnTest(metric$N_liens~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=D_liens,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$D_liens~metric$cluster)
+DunnTest(metric$D_liens~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=C_tance,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$C_tance~metric$cluster)
+DunnTest(metric$C_tance~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Avg_p_length,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Avg_p_length~metric$cluster)
+DunnTest(metric$Avg_p_length~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Adhes,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Adhes~metric$cluster)
+DunnTest(metric$Adhes~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Mod,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Mod~metric$cluster)
+DunnTest(metric$Mod~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=meanN_liens,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$meanN_liens~metric$cluster)
+DunnTest(metric$meanN_liens~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Assort,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Assort~metric$cluster)
+DunnTest(metric$Assort~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Diss,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Diss~metric$cluster)
+DunnTest(metric$Diss~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Trans,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Trans~metric$cluster)
+DunnTest(metric$Trans~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=meanN_voisins,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$meanN_voisins~metric$cluster)
+DunnTest(metric$meanN_voisins~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=Nat_connect,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$Nat_connect~metric$cluster)
+DunnTest(metric$Nat_connect~metric$cluster,method="BH")
+
+ggplot(metric)+
+  geom_boxplot(aes(x=cluster,y=N_clust,group=cluster,fill=as.character(cluster)))+
+  scale_fill_manual(values=cluster_col,guide="none")
+kruskal.test(metric$N_clust~metric$cluster)
+DunnTest(metric$N_clust~metric$cluster,method="BH")
+
+# Choix des métriques #
+metric_PCA <- dplyr::select(metric,-Code_point_Libelle,-Date,-cluster)
+metric_PCA[metric_PCA == Inf] <- NA
+
+PCA_metric <- PCA(metric_PCA,scale.unit = T)
+fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
+fviz_pca_var(PCA_metric, col.var = "black")
+
+fviz_cos2(PCA_metric, choice = "var", axes = 1:2)
+fviz_contrib(PCA_metric, choice = "var", axes = 1:2, top = 10)
+
+
+metric_PCA <- dplyr::select(metric1,-Code_point_Libelle,-Date,-cluster)
+metric_PCA[metric_PCA == Inf] <- NA
+
+PCA_metric <- PCA(metric_PCA,scale.unit = T)
+fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
+fviz_pca_var(PCA_metric, col.var = "black",title="Cluster1")
+
+metric_PCA <- dplyr::select(metric2,-Code_point_Libelle,-Date,-cluster)
+metric_PCA[metric_PCA == Inf] <- NA
+
+PCA_metric <- PCA(metric_PCA,scale.unit = T)
+fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
+fviz_pca_var(PCA_metric, col.var = "black",title="Cluster2")
+
+metric_PCA <- dplyr::select(metric3,-Code_point_Libelle,-Date,-cluster)
+metric_PCA[metric_PCA == Inf] <- NA
+
+PCA_metric <- PCA(metric_PCA,scale.unit = T)
+fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
+fviz_pca_var(PCA_metric, col.var = "black",title="Cluster3")
+
+metric_PCA <- dplyr::select(metric4,-Code_point_Libelle,-Date,-cluster)
+metric_PCA[metric_PCA == Inf] <- NA
+
+PCA_metric <- PCA(metric_PCA,scale.unit = T)
+fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
+fviz_pca_var(PCA_metric, col.var = "black",title="Cluster4")
 
 
 

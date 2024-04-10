@@ -794,6 +794,7 @@ ggplot(data)+
 ggsave('BergerParker_Station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 data$`log(CHLOROA+1)` <- log(data$CHLOROA +1)
+data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
 dataforbox_hydro <- pivot_longer(data, names_to = "Variable",cols = c(SALI:`TURB-FNU`,`log(CHLOROA+1)`))
 dataforbox_hydro <- dplyr::select(dataforbox_hydro,Code.Region:Code.parametre,Variable,value)
 dataforbox_hydro <- filter(dataforbox_hydro,Variable != "TURB")
@@ -801,7 +802,7 @@ dataforbox_hydro <- filter(dataforbox_hydro,Variable != "TURB")
 dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Cryptophyceae,Haptophyta))
 dataforbox_phyto <- dplyr::select(dataforbox_phyto,Code.Region:Code.parametre,Variable,value)
 
-dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker))
+dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker,Rspe))
 dataforbox_div <- dplyr::select(dataforbox_div,Code.Region:Code.parametre,Variable,value)
 
 
@@ -1147,7 +1148,22 @@ bergerparker <- ggplot(filter(dataforbox_div, Variable == "BergerParker"))+
                                   hjust = 0, size = 10),
         strip.background = element_rect(fill = "grey"))
 
-plot_grid(shannon , pielou , bergerparker, ncol =3)
+Rspe <- 
+  ggplot(filter(dataforbox_div, Variable == "Rspe"))+
+  geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = "Richesse spécifique",colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  #scale_y_continuous(breaks = seq(0,10, by = 2),limits = c(0,10))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0, size = 10),
+        strip.background = element_rect(fill = "grey"))
+
+plot_grid(shannon , pielou , bergerparker,Rspe, ncol =4)
 ggsave('Div_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 
@@ -1398,6 +1414,9 @@ DunnTest(data$Haptophyta~data$cluster,method="BH")
 kruskal.test(data$Cryptophyceae~data$cluster)
 DunnTest(data$Cryptophyceae~data$cluster,method="BH") 
 
+kruskal.test(data$Rspe~data$cluster)
+DunnTest(data$Rspe~data$cluster,method="BH") 
+
 # Test stats difference entre les clusters et par saison
 
 data <- data |>
@@ -1407,6 +1426,9 @@ data <- data |>
                             Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
 
 data <- filter(data, season == "Fall")
+kruskal.test(data$Rspe~data$cluster)
+DunnTest(data$Rspe~data$cluster,method="BH") 
+
 kruskal.test(data$TEMP~data$cluster)
 DunnTest(data$TEMP~data$cluster,method="BH") 
 
@@ -3408,6 +3430,26 @@ data_ks <- filter(datam, cluster == 2 | cluster == 4)
 ks.test(data_ks$var~data_ks$cluster)
 data_ks <- filter(datam, cluster == 3 | cluster == 4)
 ks.test(data_ks$var~data_ks$cluster)
+
+datam <- summarise(group_by(Table,Fortnight,cluster), var=mean(Rspe,na.rm=T))
+ggplot(datam)+
+  geom_line(aes(x=Fortnight,y=var,colour=cluster),size = 1)+
+  scale_colour_manual(name = 'Cluster', values = cluster_col)
+ggsave('Rspe_15.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description/KS_15aine",dpi = 300, width = 200, height = 160, units = 'mm')
+
+data_ks <- filter(datam, cluster == 1 | cluster == 2)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 1 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 3)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 2 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+data_ks <- filter(datam, cluster == 3 | cluster == 4)
+ks.test(data_ks$var~data_ks$cluster)
+
 
 datam <- summarise(group_by(Table,Fortnight,cluster), var=mean(SALI,na.rm=T))
 ggplot(datam)+
