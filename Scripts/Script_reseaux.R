@@ -12,7 +12,7 @@ CL3[is.na(CL3)]<- 0
 CL3 <- as.matrix(CL3)
 
 net <- netConstruct(data = CL3, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 242),
+                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 121),
                     filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
                     normMethod = "none", dissFunc = "signed")
 
@@ -54,7 +54,7 @@ CL2[is.na(CL2)]<- 0
 CL2 <- as.matrix(CL2)
 
 net <- netConstruct(data = CL2, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 117),
+                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 58),
                     filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
                     normMethod = "none", dissFunc = "signed")
 
@@ -96,7 +96,7 @@ CL4[is.na(CL4)]<- 0
 CL4 <- as.matrix(CL4)
 
 net <- netConstruct(data = CL4, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 78),
+                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 39),
                     filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
                     normMethod = "none", dissFunc = "signed")
 
@@ -138,7 +138,7 @@ CL1[is.na(CL1)]<- 0
 CL1 <- as.matrix(CL1)
 
 net <- netConstruct(data = CL1, dataType = "counts",measure = "spearman", 
-                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 320),
+                    filtTax = "numbSamp",filtTaxPar = list(numbSamp = 160),
                     filtSamp = "none",sparsMethod = "t-test",alpha = 0.05, zeroMethod = "none",adjust = "adaptBH",
                     normMethod = "none", dissFunc = "signed")
 
@@ -172,7 +172,7 @@ plt <- plot(net_props,
             cexNodes = 1)
 
 # Creer un sous réseau bloom vs non bloom
-{
+#{
   data$EpBloom <- ifelse(data$P_dominance >=0, "yes", NA)
 group_vec <- filter(data,Code_point_Libelle == "Ouest Loscolo" )$EpBloom
 sel <- which(group_vec %in% c(NA, "yes"))
@@ -759,17 +759,17 @@ colnames(data_results_reseaux) <- c("Code_point_Libelle","Date","N_noeuds","N_li
                                     "Avg_p_length","Adhes","Mod","meanN_liens","Assort","Diss","Trans","meanN_voisins",
                                     "Nat_connect","N_clust")
 
-plot(sub,main = paste0(station,date),layout = layout_with_fr)
-png(paste0("output/graphs/Reseaux/TS_CLUST3/",station,date,".png"))
-plot(sub,main = paste0(station,date),layout = layout_with_fr)
-dev.off()
-htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/",station,date,".html"))
+#plot(sub,main = paste0(station,date),layout = layout_with_fr)
+#png(paste0("output/graphs/Reseaux/TS_CLUST3/",station,date,".png"))
+#plot(sub,main = paste0(station,date),layout = layout_with_fr)
+#dev.off()
+#htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/",station,date,".html"))
 print(i/nrow(CL3)*100)
 }
 write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster3_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
-{chemin_repertoire <- "output/graphs/Reseaux/HTML/"
+#{chemin_repertoire <- "output/graphs/Reseaux/HTML/"
 
 # Récupérez les noms de fichiers dans le répertoire
 noms_fichiers_complets <- list.files(chemin_repertoire, pattern = "\\.html$", full.names = TRUE)
@@ -1567,17 +1567,17 @@ for (i in 1:nrow(CL1)){
                                       "Avg_p_length","Adhes","Mod","meanN_liens","Assort","Diss","Trans","meanN_voisins",
                                       "Nat_connect","N_clust")
   
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  png(paste0("output/graphs/Reseaux/TS_CLUST1/",station,date,".png"))
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  dev.off()
-  htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL1/",station,date,".html"))
+ #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+ #png(paste0("output/graphs/Reseaux/TS_CLUST1/",station,date,".png"))
+ #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+ #dev.off()
+ #htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL1/",station,date,".html"))
   print(i/nrow(CL1)*100)
 }
 write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster1_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
-{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL1/"
+#{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL1/"
   
   # Récupérez les noms de fichiers dans le répertoire
   noms_fichiers_complets <- list.files(chemin_repertoire, pattern = "\\.html$", full.names = TRUE)
@@ -2381,17 +2381,17 @@ for (i in 1:nrow(CL2)){
                                       "Avg_p_length","Adhes","Mod","meanN_liens","Assort","Diss","Trans","meanN_voisins",
                                       "Nat_connect","N_clust")
   
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  png(paste0("output/graphs/Reseaux/TS_CLUST2/",station,date,".png"))
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  dev.off()
-  htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL2/",station,date,".html"))
-  print(i/nrow(CL2)*100)
+ #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+ #png(paste0("output/graphs/Reseaux/TS_CLUST2/",station,date,".png"))
+ #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+ #dev.off()
+ #htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL2/",station,date,".html"))
+ print(i/nrow(CL2)*100)
 }
 write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster2_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
-{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL2/"
+#{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL2/"
   
   # Récupérez les noms de fichiers dans le répertoire
   noms_fichiers_complets <- list.files(chemin_repertoire, pattern = "\\.html$", full.names = TRUE)
@@ -3182,17 +3182,17 @@ for (i in 1:nrow(CL4)){
                                       "Avg_p_length","Adhes","Mod","meanN_liens","Assort","Diss","Trans","meanN_voisins",
                                       "Nat_connect","N_clust")
   
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  png(paste0("output/graphs/Reseaux/TS_CLUST4/",station,date,".png"))
-  plot(sub,main = paste0(station,date),layout = layout_with_fr)
-  dev.off()
-  htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL4/",station,date,".html"))
+  #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+  #png(paste0("output/graphs/Reseaux/TS_CLUST4/",station,date,".png"))
+  #plot(sub,main = paste0(station,date),layout = layout_with_fr)
+  #dev.off()
+  #htmlwidgets::saveWidget(viz_sub, paste0("output/graphs/Reseaux/HTML/CL4/",station,date,".html"))
   print(i/nrow(CL4)*100)
 }
 write.csv2(data_results_reseaux,file="data_modif/results_metrics_reseaux_cluster4_pos.csv", row.names = FALSE,dec = ".")
 
 # Pour visualisation dynamique :
-{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL4/"
+#{chemin_repertoire <- "output/graphs/Reseaux/HTML/CL4/"
   
   # Récupérez les noms de fichiers dans le répertoire
   noms_fichiers_complets <- list.files(chemin_repertoire, pattern = "\\.html$", full.names = TRUE)
@@ -5028,7 +5028,7 @@ Hubs$Phyto <- rownames(Hubs)
 
 Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
-write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
+write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_printemps.csv", row.names = FALSE,dec = ".")
 
 
 
@@ -5217,6 +5217,20 @@ ggplot(metric)+
 kruskal.test(metric$N_clust~metric$cluster)
 DunnTest(metric$N_clust~metric$cluster,method="BH")
 
+datal <- pivot_longer(metric,names_to = "Var",cols = N_noeuds:N_clust)
+ggplot(datal)+
+  geom_boxplot(aes(x=cluster,y=value,group=cluster,fill=as.character(cluster)),size = 1)+
+  scale_fill_manual(values=cluster_col,guide = "none")+
+  facet_wrap(~Var,scales = "free_y")+
+  labs(title = "Metriques (+)")
+
+datal2 <- filter(datal, Var %in% c("Assort","Avg_p_length","C_tance","D_liens","Mod","Nat_connect","N_noeuds","Adhes"))
+ggplot(datal2)+
+  geom_boxplot(aes(x=cluster,y=value,group=cluster,fill=as.character(cluster)),size = 1)+
+  scale_fill_manual(values=cluster_col,guide = "none")+
+  facet_wrap(~Var,scales = "free_y",ncol=4)+
+  labs(title = "Metriques (+)")
+
 # Choix des métriques #
 metric_PCA <- dplyr::select(metric,-Code_point_Libelle,-Date,-cluster)
 metric_PCA[metric_PCA == Inf] <- NA
@@ -5227,7 +5241,6 @@ fviz_pca_var(PCA_metric, col.var = "black")
 
 fviz_cos2(PCA_metric, choice = "var", axes = 1:2)
 fviz_contrib(PCA_metric, choice = "var", axes = 1:2, top = 10)
-
 
 metric_PCA <- dplyr::select(metric1,-Code_point_Libelle,-Date,-cluster)
 metric_PCA[metric_PCA == Inf] <- NA
@@ -5258,4 +5271,2353 @@ fviz_eig(PCA_metric, addlabels = TRUE, ylim = c(0, 50))
 fviz_pca_var(PCA_metric, col.var = "black",title="Cluster4")
 
 
+# Comparaison type de bloom #####
+metric <- read_delim("data_modif/metrics.csv", 
+                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                      trim_ws = TRUE)
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
 
+data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage)
+
+data_met <- left_join(metric,data)
+
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                        duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+# Filtre des doublons hydro :
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_join <- bind_rows(data_unique,resultat_filtre)
+# On remet au propre
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
+
+data <- filter(data_met, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino" | is.na(Bloom_Phylum))
+data[is.na(data$Bloom_Phylum),]$Bloom_Phylum <- "Non"
+
+datal <- pivot_longer(data,cols = N_noeuds:N_clust,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum))+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+kruskal.test(data$N_noeuds~data$Bloom_Phylum)
+DunnTest(data$N_noeuds~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Adhes~data$Bloom_Phylum)
+DunnTest(data$Adhes~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Assort~data$Bloom_Phylum)
+DunnTest(data$Assort~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Avg_p_length~data$Bloom_Phylum)
+DunnTest(data$Avg_p_length~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$C_tance~data$Bloom_Phylum)
+DunnTest(data$C_tance~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$D_liens~data$Bloom_Phylum)
+DunnTest(data$D_liens~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Diss~data$Bloom_Phylum)
+DunnTest(data$Diss~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$meanN_liens~data$Bloom_Phylum)
+DunnTest(data$meanN_liens~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$meanN_voisins~data$Bloom_Phylum)
+DunnTest(data$meanN_voisins~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Mod~data$Bloom_Phylum)
+DunnTest(data$Mod~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$N_clust~data$Bloom_Phylum)
+DunnTest(data$N_clust~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$N_liens~data$Bloom_Phylum)
+DunnTest(data$N_liens~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Nat_connect~data$Bloom_Phylum)
+DunnTest(data$Nat_connect~data$Bloom_Phylum,method = "BH")
+
+kruskal.test(data$Trans~data$Bloom_Phylum)
+DunnTest(data$Trans~data$Bloom_Phylum,method = "BH")
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#F8766D")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data1 <- filter(data,cluster == 1)
+kruskal.test(data1$N_noeuds~data1$Bloom_Phylum)
+DunnTest(data1$N_noeuds~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Adhes~data1$Bloom_Phylum)
+DunnTest(data1$Adhes~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Assort~data1$Bloom_Phylum)
+DunnTest(data1$Assort~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Avg_p_length~data1$Bloom_Phylum)
+DunnTest(data1$Avg_p_length~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$C_tance~data1$Bloom_Phylum)
+DunnTest(data1$C_tance~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$D_liens~data1$Bloom_Phylum)
+DunnTest(data1$D_liens~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Diss~data1$Bloom_Phylum)
+DunnTest(data1$Diss~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$meanN_liens~data1$Bloom_Phylum)
+DunnTest(data1$meanN_liens~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$meanN_voisins~data1$Bloom_Phylum)
+DunnTest(data1$meanN_voisins~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Mod~data1$Bloom_Phylum)
+DunnTest(data1$Mod~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$N_clust~data1$Bloom_Phylum)
+DunnTest(data1$N_clust~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$N_liens~data1$Bloom_Phylum)
+DunnTest(data1$N_liens~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Nat_connect~data1$Bloom_Phylum)
+DunnTest(data1$Nat_connect~data1$Bloom_Phylum,method = "BH")
+
+kruskal.test(data1$Trans~data1$Bloom_Phylum)
+DunnTest(data1$Trans~data1$Bloom_Phylum,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#CD9600")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data2 <- filter(data,cluster == 2)
+kruskal.test(data2$N_noeuds~data2$Bloom_Phylum)
+DunnTest(data2$N_noeuds~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Adhes~data2$Bloom_Phylum)
+DunnTest(data2$Adhes~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Assort~data2$Bloom_Phylum)
+DunnTest(data2$Assort~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Avg_p_length~data2$Bloom_Phylum)
+DunnTest(data2$Avg_p_length~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$C_tance~data2$Bloom_Phylum)
+DunnTest(data2$C_tance~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$D_liens~data2$Bloom_Phylum)
+DunnTest(data2$D_liens~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Diss~data2$Bloom_Phylum)
+DunnTest(data2$Diss~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$meanN_liens~data2$Bloom_Phylum)
+DunnTest(data2$meanN_liens~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$meanN_voisins~data2$Bloom_Phylum)
+DunnTest(data2$meanN_voisins~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Mod~data2$Bloom_Phylum)
+DunnTest(data2$Mod~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$N_clust~data2$Bloom_Phylum)
+DunnTest(data2$N_clust~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$N_liens~data2$Bloom_Phylum)
+DunnTest(data2$N_liens~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Nat_connect~data2$Bloom_Phylum)
+DunnTest(data2$Nat_connect~data2$Bloom_Phylum,method = "BH")
+
+kruskal.test(data2$Trans~data2$Bloom_Phylum)
+DunnTest(data2$Trans~data2$Bloom_Phylum,method = "BH")
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#00BE67")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data3 <- filter(data,cluster == 3)
+kruskal.test(data3$N_noeuds~data3$Bloom_Phylum)
+DunnTest(data3$N_noeuds~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Adhes~data3$Bloom_Phylum)
+DunnTest(data3$Adhes~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Assort~data3$Bloom_Phylum)
+DunnTest(data3$Assort~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Avg_p_length~data3$Bloom_Phylum)
+DunnTest(data3$Avg_p_length~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$C_tance~data3$Bloom_Phylum)
+DunnTest(data3$C_tance~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$D_liens~data3$Bloom_Phylum)
+DunnTest(data3$D_liens~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Diss~data3$Bloom_Phylum)
+DunnTest(data3$Diss~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$meanN_liens~data3$Bloom_Phylum)
+DunnTest(data3$meanN_liens~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$meanN_voisins~data3$Bloom_Phylum)
+DunnTest(data3$meanN_voisins~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Mod~data3$Bloom_Phylum)
+DunnTest(data3$Mod~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$N_clust~data3$Bloom_Phylum)
+DunnTest(data3$N_clust~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$N_liens~data3$Bloom_Phylum)
+DunnTest(data3$N_liens~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Nat_connect~data3$Bloom_Phylum)
+DunnTest(data3$Nat_connect~data3$Bloom_Phylum,method = "BH")
+
+kruskal.test(data3$Trans~data3$Bloom_Phylum)
+DunnTest(data3$Trans~data3$Bloom_Phylum,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#00A9FF")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data4 <- filter(data,cluster == 4)
+kruskal.test(data4$N_noeuds~data4$Bloom_Phylum)
+DunnTest(data4$N_noeuds~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Adhes~data4$Bloom_Phylum)
+DunnTest(data4$Adhes~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Assort~data4$Bloom_Phylum)
+DunnTest(data4$Assort~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Avg_p_length~data4$Bloom_Phylum)
+DunnTest(data4$Avg_p_length~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$C_tance~data4$Bloom_Phylum)
+DunnTest(data4$C_tance~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$D_liens~data4$Bloom_Phylum)
+DunnTest(data4$D_liens~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Diss~data4$Bloom_Phylum)
+DunnTest(data4$Diss~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$meanN_liens~data4$Bloom_Phylum)
+DunnTest(data4$meanN_liens~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$meanN_voisins~data4$Bloom_Phylum)
+DunnTest(data4$meanN_voisins~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Mod~data4$Bloom_Phylum)
+DunnTest(data4$Mod~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$N_clust~data4$Bloom_Phylum)
+DunnTest(data4$N_clust~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$N_liens~data4$Bloom_Phylum)
+DunnTest(data4$N_liens~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Nat_connect~data4$Bloom_Phylum)
+DunnTest(data4$Nat_connect~data4$Bloom_Phylum,method = "BH")
+
+kruskal.test(data4$Trans~data4$Bloom_Phylum)
+DunnTest(data4$Trans~data4$Bloom_Phylum,method = "BH")
+
+# Comparaison bloom non bloom
+datal[datal$Bloom_Phylum == "Dino",]$Bloom_Phylum <- "Oui"
+datal[datal$Bloom_Phylum == "Bac",]$Bloom_Phylum <- "Oui"
+
+data[data$Bloom_Phylum == "Dino",]$Bloom_Phylum <- "Oui"
+data[data$Bloom_Phylum == "Bac",]$Bloom_Phylum <- "Oui"
+
+ggplot(datal)+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum))+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+wilcox.test(data$N_noeuds~data$Bloom_Phylum)
+wilcox.test(data$Adhes~data$Bloom_Phylum)
+wilcox.test(data$Assort~data$Bloom_Phylum)
+wilcox.test(data$Avg_p_length~data$Bloom_Phylum)
+wilcox.test(data$C_tance~data$Bloom_Phylum)
+wilcox.test(data$D_liens~data$Bloom_Phylum)
+wilcox.test(data$Diss~data$Bloom_Phylum)
+wilcox.test(data$meanN_liens~data$Bloom_Phylum)
+wilcox.test(data$meanN_voisins~data$Bloom_Phylum)
+wilcox.test(data$Mod~data$Bloom_Phylum)
+wilcox.test(data$N_clust~data$Bloom_Phylum)
+wilcox.test(data$N_liens~data$Bloom_Phylum)
+wilcox.test(data$N_noeuds~data$Bloom_Phylum)
+wilcox.test(data$Nat_connect~data$Bloom_Phylum)
+wilcox.test(data$Trans~data$Bloom_Phylum)
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#F8766D")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data1 <- filter(data,cluster == 1)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Adhes~data1$Bloom_Phylum)
+wilcox.test(data1$Assort~data1$Bloom_Phylum)
+wilcox.test(data1$Avg_p_length~data1$Bloom_Phylum)
+wilcox.test(data1$C_tance~data1$Bloom_Phylum)
+wilcox.test(data1$D_liens~data1$Bloom_Phylum)
+wilcox.test(data1$Diss~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_liens~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_voisins~data1$Bloom_Phylum)
+wilcox.test(data1$Mod~data1$Bloom_Phylum)
+wilcox.test(data1$N_clust~data1$Bloom_Phylum)
+wilcox.test(data1$N_liens~data1$Bloom_Phylum)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Nat_connect~data1$Bloom_Phylum)
+wilcox.test(data1$Trans~data1$Bloom_Phylum)
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#CD9600")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data1 <- filter(data,cluster == 2)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Adhes~data1$Bloom_Phylum)
+wilcox.test(data1$Assort~data1$Bloom_Phylum)
+wilcox.test(data1$Avg_p_length~data1$Bloom_Phylum)
+wilcox.test(data1$C_tance~data1$Bloom_Phylum)
+wilcox.test(data1$D_liens~data1$Bloom_Phylum)
+wilcox.test(data1$Diss~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_liens~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_voisins~data1$Bloom_Phylum)
+wilcox.test(data1$Mod~data1$Bloom_Phylum)
+wilcox.test(data1$N_clust~data1$Bloom_Phylum)
+wilcox.test(data1$N_liens~data1$Bloom_Phylum)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Nat_connect~data1$Bloom_Phylum)
+wilcox.test(data1$Trans~data1$Bloom_Phylum)
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#00BE67")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+
+data1 <- filter(data,cluster == 3)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Adhes~data1$Bloom_Phylum)
+wilcox.test(data1$Assort~data1$Bloom_Phylum)
+wilcox.test(data1$Avg_p_length~data1$Bloom_Phylum)
+wilcox.test(data1$C_tance~data1$Bloom_Phylum)
+wilcox.test(data1$D_liens~data1$Bloom_Phylum)
+wilcox.test(data1$Diss~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_liens~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_voisins~data1$Bloom_Phylum)
+wilcox.test(data1$Mod~data1$Bloom_Phylum)
+wilcox.test(data1$N_clust~data1$Bloom_Phylum)
+wilcox.test(data1$N_liens~data1$Bloom_Phylum)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Nat_connect~data1$Bloom_Phylum)
+wilcox.test(data1$Trans~data1$Bloom_Phylum)
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=Bloom_Phylum,y=value,group=Bloom_Phylum),fill="#00A9FF")+
+  facet_wrap(~var, scales = "free_y",ncol = 5)
+data1 <- filter(data,cluster == 4)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Adhes~data1$Bloom_Phylum)
+wilcox.test(data1$Assort~data1$Bloom_Phylum)
+wilcox.test(data1$Avg_p_length~data1$Bloom_Phylum)
+wilcox.test(data1$C_tance~data1$Bloom_Phylum)
+wilcox.test(data1$D_liens~data1$Bloom_Phylum)
+wilcox.test(data1$Diss~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_liens~data1$Bloom_Phylum)
+wilcox.test(data1$meanN_voisins~data1$Bloom_Phylum)
+wilcox.test(data1$Mod~data1$Bloom_Phylum)
+wilcox.test(data1$N_clust~data1$Bloom_Phylum)
+wilcox.test(data1$N_liens~data1$Bloom_Phylum)
+wilcox.test(data1$N_noeuds~data1$Bloom_Phylum)
+wilcox.test(data1$Nat_connect~data1$Bloom_Phylum)
+wilcox.test(data1$Trans~data1$Bloom_Phylum)
+
+
+# Comparaison avant / pendant #####
+
+beta <- read_delim("data_modif/data_div_beta_ok_N-1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI",]
+avant <- comp_metric[as.numeric(pendant$Nrow)-1,]
+pendant$Nrow <- NULL
+avant$Nrow <- NULL
+pendant$cat <- "Pendant"
+avant$cat <- "Avant"
+comp_metric_ok <- bind_rows(pendant,avant)
+
+beta <- read_delim("data_modif/data_div_beta_ok_N1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI",]
+apres <- comp_metric[as.numeric(pendant$Nrow)+1,]
+pendant$Nrow <- NULL
+apres$Nrow <- NULL
+pendant$cat <- "Pendant"
+apres$cat <- "Apres"
+comp_metric_ok <- bind_rows(comp_metric_ok,apres)
+
+pendant.succession <- comp_metric[comp_metric$EpBloom == "Sucession",]
+pendant.succession$Nrow <- NULL
+pendant.succession$cat <- "Pendant"
+
+comp_metric_ok <- bind_rows(comp_metric_ok,pendant.succession)
+
+
+comp_metric_ok$cat <- as.factor(comp_metric_ok$cat)
+levels(comp_metric_ok$cat)
+comp_metric_ok$cat <- fct_relevel(comp_metric_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_metric_ok,cols = N_noeuds:N_clust,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_metric_ok$N_noeuds~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_noeuds~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Adhes~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Adhes~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Assort~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Assort~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Avg_p_length~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Avg_p_length~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$C_tance~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$C_tance~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$D_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$D_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Diss~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Diss~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_voisins~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_voisins~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Mod~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Mod~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_clust~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_clust~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Nat_connect~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Nat_connect~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Trans~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Trans~comp_metric_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 1)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 2)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 3)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 4)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+# Avec indices de diversite
+data_idiv <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+data_idiv$Rspe <- data$Rspe
+data_idiv <- dplyr::select(data_idiv,ID.interne.passage,Shannon, Pielou, BergerParker,Rspe)
+
+comp_div_ok <- left_join(comp_metric_ok,data_idiv)
+comp_div_ok <- dplyr::select(comp_div_ok,-(N_noeuds:N_clust))
+
+comp_div_ok$cat <- as.factor(comp_div_ok$cat)
+levels(comp_div_ok$cat)
+comp_div_ok$cat <- fct_relevel(comp_div_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_div_ok,cols = Shannon:Rspe,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_div_ok$Rspe~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Rspe~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$BergerParker~comp_metric_ok$cat)
+DunnTest(comp_div_ok$BergerParker~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Pielou~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Pielou~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Shannon~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Shannon~comp_metric_ok$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 1)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 2)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 3)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 4)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+
+data_abio <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+data_abio <- dplyr::select(data_abio,ID.interne.passage,CHLOROA:`TURB-FNU`)
+
+comp_abio_ok <- left_join(comp_metric_ok,data_abio)
+comp_abio_ok <- dplyr::select(comp_abio_ok,-(N_noeuds:N_clust))
+
+comp_abio_ok$cat <- as.factor(comp_abio_ok$cat)
+levels(comp_abio_ok$cat)
+comp_abio_ok$cat <- fct_relevel(comp_abio_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_abio_ok,cols = CHLOROA:`TURB-FNU`,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_abio_ok$TEMP~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TEMP~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SALI~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SALI~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$CHLOROA~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$CHLOROA~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$NH4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$NH4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$OXYGENE~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$OXYGENE~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$PO4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$PO4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SIOH~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SIOH~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$TURB~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TURB~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 1)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 2)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 3)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 4)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+
+
+
+
+
+# Comparaison avant / pendant Dinophyceae #####
+metric <- read_delim("data_modif/metrics.csv", 
+                     delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                     locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                     trim_ws = TRUE)
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage)
+
+data_met <- left_join(metric,data)
+
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                       duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+# Filtre des doublons hydro :
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_join <- bind_rows(data_unique,resultat_filtre)
+# On remet au propre
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
+
+data <- filter(data_met, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino" | is.na(Bloom_Phylum))
+data[is.na(data$Bloom_Phylum),]$Bloom_Phylum <- "Non"
+
+beta <- read_delim("data_modif/data_div_beta_ok_N-1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI" & comp_metric$Bloom_Phylum == "Dino",]
+avant <- comp_metric[as.numeric(pendant$Nrow)-1,]
+pendant$Nrow <- NULL
+avant$Nrow <- NULL
+pendant$cat <- "Pendant"
+avant$cat <- "Avant"
+comp_metric_ok <- bind_rows(pendant,avant)
+
+beta <- read_delim("data_modif/data_div_beta_ok_N1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI" & comp_metric$Bloom_Phylum == "Dino",]
+apres <- comp_metric[as.numeric(pendant$Nrow)+1,]
+pendant$Nrow <- NULL
+apres$Nrow <- NULL
+pendant$cat <- "Pendant"
+apres$cat <- "Apres"
+comp_metric_ok <- bind_rows(comp_metric_ok,apres)
+
+pendant.succession <- comp_metric[comp_metric$EpBloom == "Sucession" & comp_metric$Bloom_Phylum == "Dino",]
+pendant.succession$Nrow <- NULL
+pendant.succession$cat <- "Pendant"
+
+comp_metric_ok <- bind_rows(comp_metric_ok,pendant.succession)
+
+
+comp_metric_ok$cat <- as.factor(comp_metric_ok$cat)
+levels(comp_metric_ok$cat)
+comp_metric_ok$cat <- fct_relevel(comp_metric_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_metric_ok,cols = N_noeuds:N_clust,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_metric_ok$N_noeuds~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_noeuds~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Adhes~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Adhes~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Assort~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Assort~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Avg_p_length~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Avg_p_length~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$C_tance~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$C_tance~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$D_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$D_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Diss~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Diss~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_voisins~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_voisins~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Mod~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Mod~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_clust~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_clust~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Nat_connect~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Nat_connect~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Trans~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Trans~comp_metric_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 1)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 2)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 3)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 4)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+# Avec indices de diversite
+data_idiv <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                            grouping_mark = ""), trim_ws = TRUE)
+data_idiv$Rspe <- data$Rspe
+data_idiv <- dplyr::select(data_idiv,ID.interne.passage,Shannon, Pielou, BergerParker,Rspe)
+
+comp_div_ok <- left_join(comp_metric_ok,data_idiv)
+comp_div_ok <- dplyr::select(comp_div_ok,-(N_noeuds:N_clust))
+
+comp_div_ok$cat <- as.factor(comp_div_ok$cat)
+levels(comp_div_ok$cat)
+comp_div_ok$cat <- fct_relevel(comp_div_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_div_ok,cols = Shannon:Rspe,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_div_ok$Rspe~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Rspe~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$BergerParker~comp_metric_ok$cat)
+DunnTest(comp_div_ok$BergerParker~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Pielou~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Pielou~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Shannon~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Shannon~comp_metric_ok$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 1)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 2)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 3)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 4)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+
+data_abio <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                            grouping_mark = ""), trim_ws = TRUE)
+data_abio <- dplyr::select(data_abio,ID.interne.passage,CHLOROA:`TURB-FNU`)
+
+comp_abio_ok <- left_join(comp_metric_ok,data_abio)
+comp_abio_ok <- dplyr::select(comp_abio_ok,-(N_noeuds:N_clust))
+
+comp_abio_ok$cat <- as.factor(comp_abio_ok$cat)
+levels(comp_abio_ok$cat)
+comp_abio_ok$cat <- fct_relevel(comp_abio_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_abio_ok,cols = CHLOROA:`TURB-FNU`,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_abio_ok$TEMP~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TEMP~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SALI~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SALI~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$CHLOROA~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$CHLOROA~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$NH4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$NH4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$OXYGENE~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$OXYGENE~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$PO4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$PO4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SIOH~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SIOH~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$TURB~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TURB~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 1)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 2)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 3)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 4)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+
+# Comparaison avant / pendant Bacillariophyceae #####
+metric <- read_delim("data_modif/metrics.csv", 
+                     delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                     locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                     trim_ws = TRUE)
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage)
+
+data_met <- left_join(metric,data)
+
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                       duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+# Filtre des doublons hydro :
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_join <- bind_rows(data_unique,resultat_filtre)
+# On remet au propre
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
+
+data <- filter(data_met, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino" | is.na(Bloom_Phylum))
+data[is.na(data$Bloom_Phylum),]$Bloom_Phylum <- "Non"
+
+beta <- read_delim("data_modif/data_div_beta_ok_N-1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI" & comp_metric$Bloom_Phylum == "Bac",]
+avant <- comp_metric[as.numeric(pendant$Nrow)-1,]
+pendant$Nrow <- NULL
+avant$Nrow <- NULL
+pendant$cat <- "Pendant"
+avant$cat <- "Avant"
+comp_metric_ok <- bind_rows(pendant,avant)
+
+beta <- read_delim("data_modif/data_div_beta_ok_N1.csv", 
+                   delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                   locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                   trim_ws = TRUE)
+
+comp_metric <- left_join(data,beta)
+comp_metric$Nrow <- rownames(comp_metric)
+pendant <- comp_metric[comp_metric$EpBloom == "OUI" & comp_metric$Bloom_Phylum == "Bac",]
+apres <- comp_metric[as.numeric(pendant$Nrow)+1,]
+pendant$Nrow <- NULL
+apres$Nrow <- NULL
+pendant$cat <- "Pendant"
+apres$cat <- "Apres"
+comp_metric_ok <- bind_rows(comp_metric_ok,apres)
+
+pendant.succession <- comp_metric[comp_metric$EpBloom == "Sucession" & comp_metric$Bloom_Phylum == "Bac",]
+pendant.succession$Nrow <- NULL
+pendant.succession$cat <- "Pendant"
+
+comp_metric_ok <- bind_rows(comp_metric_ok,pendant.succession)
+
+
+comp_metric_ok$cat <- as.factor(comp_metric_ok$cat)
+levels(comp_metric_ok$cat)
+comp_metric_ok$cat <- fct_relevel(comp_metric_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_metric_ok,cols = N_noeuds:N_clust,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_metric_ok$N_noeuds~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_noeuds~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Adhes~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Adhes~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Assort~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Assort~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Avg_p_length~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Avg_p_length~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$C_tance~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$C_tance~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$D_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$D_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Diss~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Diss~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$meanN_voisins~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$meanN_voisins~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Mod~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Mod~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_clust~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_clust~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$N_liens~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$N_liens~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Nat_connect~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Nat_connect~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_metric_ok$Trans~comp_metric_ok$cat)
+DunnTest(comp_metric_ok$Trans~comp_metric_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 1)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 2)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 3)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_metric_ok, cluster == 4)
+kruskal.test(comp_mt_cl$N_noeuds~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_noeuds~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Adhes~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Adhes~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Assort~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Assort~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Avg_p_length~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Avg_p_length~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$C_tance~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$C_tance~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$D_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$D_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Diss~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Diss~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$meanN_voisins~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$meanN_voisins~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Mod~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Mod~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_clust~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_clust~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$N_liens~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$N_liens~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Nat_connect~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Nat_connect~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Trans~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Trans~comp_mt_cl$cat,method = "BH")
+
+# Avec indices de diversite
+data_idiv <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                            grouping_mark = ""), trim_ws = TRUE)
+data_idiv$Rspe <- data$Rspe
+data_idiv <- dplyr::select(data_idiv,ID.interne.passage,Shannon, Pielou, BergerParker,Rspe)
+
+comp_div_ok <- left_join(comp_metric_ok,data_idiv)
+comp_div_ok <- dplyr::select(comp_div_ok,-(N_noeuds:N_clust))
+
+comp_div_ok$cat <- as.factor(comp_div_ok$cat)
+levels(comp_div_ok$cat)
+comp_div_ok$cat <- fct_relevel(comp_div_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_div_ok,cols = Shannon:Rspe,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_div_ok$Rspe~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Rspe~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$BergerParker~comp_metric_ok$cat)
+DunnTest(comp_div_ok$BergerParker~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Pielou~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Pielou~comp_metric_ok$cat,method = "BH")
+
+kruskal.test(comp_div_ok$Shannon~comp_metric_ok$cat)
+DunnTest(comp_div_ok$Shannon~comp_metric_ok$cat,method = "BH")
+
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 1)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 2)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 3)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_div_ok, cluster == 4)
+kruskal.test(comp_mt_cl$Rspe~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Rspe~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$BergerParker~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$BergerParker~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Pielou~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
+
+
+
+data_abio <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                            grouping_mark = ""), trim_ws = TRUE)
+data_abio <- dplyr::select(data_abio,ID.interne.passage,CHLOROA:`TURB-FNU`)
+
+comp_abio_ok <- left_join(comp_metric_ok,data_abio)
+comp_abio_ok <- dplyr::select(comp_abio_ok,-(N_noeuds:N_clust))
+
+comp_abio_ok$cat <- as.factor(comp_abio_ok$cat)
+levels(comp_abio_ok$cat)
+comp_abio_ok$cat <- fct_relevel(comp_abio_ok$cat,c("Avant","Pendant","Apres"))
+datal <- pivot_longer(comp_abio_ok,cols = CHLOROA:`TURB-FNU`,names_to = "var")
+
+ggplot(datal)+
+  geom_boxplot(aes(x=cat, y= value,group=cat))+
+  facet_wrap(~var,scales = "free_y")
+
+
+kruskal.test(comp_abio_ok$TEMP~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TEMP~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SALI~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SALI~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$CHLOROA~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$CHLOROA~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$NH4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$NH4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`NO3+NO2`~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$OXYGENE~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$OXYGENE~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$PO4~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$PO4~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$SIOH~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$SIOH~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$TURB~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$TURB~comp_abio_ok$cat,method = "BH")
+
+kruskal.test(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat)
+DunnTest(comp_abio_ok$`TURB-FNU`~comp_abio_ok$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 1))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#F8766D")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 1)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cluster == 2))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#CD9600")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 2)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 3))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00BE67")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 3)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+ggplot(filter(datal,cluster == 4))+
+  geom_boxplot(aes(x=cat, y= value,group=cat),fill = "#00A9FF")+
+  facet_wrap(~var,scales = "free_y")
+
+comp_mt_cl <- filter(comp_abio_ok, cluster == 4)
+kruskal.test(comp_mt_cl$TEMP~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TEMP~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SALI~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SALI~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$CHLOROA~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$CHLOROA~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$NH4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$NH4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`NO3+NO2`~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$OXYGENE~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$OXYGENE~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$PO4~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$PO4~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$SIOH~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$SIOH~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$TURB~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$TURB~comp_mt_cl$cat,method = "BH")
+
+kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
+DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
+
+
+ggplot(filter(datal,cat == "Pendant"))+
+  geom_boxplot(aes(x=cluster, y= value,group=cluster))+
+  facet_wrap(~var,scales = "free_y")
+
+
+#### Correlation métriques avec indices de diversité
+metric <- read_delim("data_modif/metrics.csv", 
+                     delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                     locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                     trim_ws = TRUE)
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage)
+
+data_met <- left_join(metric,data)
+
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                       duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+# Filtre des doublons hydro :
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+# On supprime les lignes en doublon dans le jeu de données initial
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+# On les remets ces doublons filtres
+data_join <- bind_rows(data_unique,resultat_filtre)
+# On remet au propre
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
+
+data_met <- filter(data_met, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino" | is.na(Bloom_Phylum))
+data_met[is.na(data_met$Bloom_Phylum),]$Bloom_Phylum <- "Non"
+
+# Avec indices de diversite
+data_idiv <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                            grouping_mark = ""), trim_ws = TRUE)
+HDGUBFHIA <- data$Rspe
+data_idiv$Rspe <- HDGUBFHIA
+data_idiv <- dplyr::select(data_idiv,ID.interne.passage,Shannon, Pielou, BergerParker,Rspe)
+
+comp_div_ok <- left_join(data_met,data_idiv)
+
+Table.corr_all <- dplyr::select(comp_div_ok,Shannon, Pielou, Rspe, BergerParker, Assort,Avg_p_length,C_tance,D_liens,
+                                Mod,Nat_connect,N_noeuds,Adhes)
+Table.corr_all[Table.corr_all == Inf] <- NA
+Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]
+
+r <- cor(Table.corr_all.comp)
+
+# ... : Arguments supplémentaire à passer à la fonction cor.test
+cor.mtest <- function(Table.corr_all.comp, ...) {
+  mat <- as.matrix(Table.corr_all.comp)
+  n <- ncol(Table.corr_all.comp)
+  p.mat<- matrix(NA, n, n)
+  diag(p.mat) <- 0
+  for (i in 1:(n - 1)) {
+    for (j in (i + 1):n) {
+      tmp <- cor.test(mat[, i], mat[, j], ...)
+      p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+    }
+  }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+# Matrice de p-value de la corrélation
+p.mat <- cor.mtest(Table.corr_all.comp)
+
+col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+corrplot(r, method="color", col=col(200),  
+         type="upper", order="alphabet",number.cex = 0.7,
+         addCoef.col = "black", # Ajout du coefficient de corrélation
+         tl.col="black", tl.srt=45, #Rotation des etiquettes de textes
+         # Combiner avec le niveau de significativité
+         p.mat = p.mat, sig.level = 0.05, insig = "blank", 
+         # Cacher les coefficients de corrélation sur la diagonale
+         diag=F, 
+         title = "Correlation entre métriques et diversité"
+)
+
+
+# RDA Var metriques en fonction de abio #####
+
+metric <- read_delim("data_modif/metrics.csv", 
+                     delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                     locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                     trim_ws = TRUE)
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+                   delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+                                                                       grouping_mark = ""), trim_ws = TRUE)
+
+abio <- dplyr::select(data,CHLOROA:`TURB-FNU`)
+metric <- dplyr::select(metric,N_noeuds:N_clust)
+metric[metric == Inf] <- NA
+
+ncomp <- estim_ncpPCA(abio)
+res.imp <- imputePCA(abio, ncp = ncomp$ncp,method = "EM")
+envi <- as.data.frame(res.imp$completeObs)
+
+ncomp <- estim_ncpPCA(metric)
+res.imp <- imputePCA(metric, ncp = ncomp$ncp,method = "EM")
+metric <- as.data.frame(res.imp$completeObs)
+
+metric_rda <- rda(metric ~., data=envi)
+plot(metric_rda)
+
+info <- data[, c("Code_point_Libelle","Date","cluster","Month","Year")]
+observations_coords <- scores(metric_rda, display = "sites")
+
+# Créez un dataframe pour stocker les coordonnées des observations
+observations_df <- as.data.frame(observations_coords)
+observations_df$cluster <- as.character(info$cluster)
+observations_df$Month <- info$Month
+observations_df$Year <- info$Year
+
+cluster_pos <- summarise(group_by(observations_df, cluster), RDA1=mean(RDA1,na.rm=T),
+                         RDA2=mean(RDA2,na.rm=T))
+
+cluster_pos$cluster <- as.character(cluster_pos$cluster)
+
+cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
+species_coords <- scores(metric_rda, display = "species")
+
+# Créez un dataframe pour stocker les coordonnées des espèces
+species_df <- as.data.frame(species_coords)
+species_df$name <- rownames(species_df)
+
+envcoord <- as.data.frame(metric_rda[["CCA"]][["biplot"]])
+envcoord$Var <- rownames(envcoord)
+
+ggplot(observations_df, aes(x = RDA1, y = RDA2)) +
+  geom_point(aes(colour=cluster),size=5) +
+  geom_text(aes(x=RDA1,y=RDA2,label=name),size=3,data=species_df)+
+  labs(x = "Dimension 1 (99.85%)", y = "Dimension 2 (0.001%)",colour="Cluster") +
+  geom_segment(aes(x = 0, y = 0, xend = RDA1, yend = RDA2), color = "black", size = 0.5,data=species_df,linetype="dashed")+
+  geom_segment(aes(x = 0, y = 0, xend = RDA1, yend = RDA2),
+               arrow = arrow(length = unit(0.08, "inches")), color = "red", size = 0.4,data=envcoord)+
+  geom_text(aes(x=RDA1,y=RDA2,label=Var),size=3,data=envcoord,color = "red")+
+  labs(x="CCA1 (99.85%)",y="CCA2 (0.001%)",colour="Cluster")+
+  scale_colour_manual(values=cluster_col)+
+  theme_minimal()
+
+
+acp <- bind_cols(envi,metric)
+PCA(acp,scale.unit = T)
