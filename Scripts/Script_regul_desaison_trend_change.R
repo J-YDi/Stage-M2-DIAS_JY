@@ -1,15 +1,24 @@
+# Loading packages
+library(readr)
+library(interp)
+library("pastecs")
+library("stlplus")
+library(trend)
+library(dplyr)
+
 # Import data
-data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_final.csv", 
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
+# Create the function to detect outliers
 outliers <- function(x) {
   median_dev <- abs(x - median(x,na.rm = T))
   indexes <- which(median_dev > (2.323561*1.486) * mad(x,na.rm = T))
   return(indexes)
 }
 
-# REGULARISE ET EN ENLEVANT LA SAISONNALITE
+# Loop to regularize, deseasonalize, detect shifts, trends and some
 
 for (i in c(1:21)){
   station <- levels(as.factor(data$Code_point_Libelle))[i]
