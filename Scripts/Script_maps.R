@@ -1,15 +1,25 @@
+# Load packages
+library(ggplot2)
+library(maps)
+library(mapdata)
+library(readr)
+library(ggthemes)
+library(dplyr)
+
+
 # Import data 
-data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div.csv", 
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_final.csv", 
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
 data$cluster <- as.factor(data$cluster)
 data$lon <- as.numeric(data$lon)
 data$lat <- as.numeric(data$lat)
-# On defini la couleur des clusters pour coherence partout
+
+# Color for each cluster
 cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
 
-# Carte des stations
+# Making the map
 Worldmap <- map_data('worldHires')
 
 
@@ -52,4 +62,5 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
         panel.background = element_rect(fill = 'lightblue1'))+
   guides(color = guide_legend(override.aes = list(size = 10)))
 
+# Save it as final version
 ggsave('maps_station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/final", dpi = 600, width = 200, height = 200, units = 'mm')
