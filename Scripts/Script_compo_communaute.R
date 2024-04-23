@@ -594,19 +594,19 @@ a <- ggplot(ca_ts)+
   geom_point(aes(x=Date,y=CA1),size=2.5,col="#00A9FF")+
   scale_x_date(breaks = seq( min(ca_ts$Date), max(ca_ts$Date),by=100),date_labels = "%Y-%m",limits = c(min(ca_ts$Date), max(ca_ts$Date)))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 5))+
-  labs(y= "CA1 (4.50%)",title = "Composition de la communauté au cours du temps")
+  labs(y= "CA1 (8.37%)",title = "Composition de la communauté au cours du temps")
 b <- ggplot(ca_ts)+
   geom_line(aes(x=Date,y=CA2),size=2,col="#00A9FF")+
   geom_point(aes(x=Date,y=CA2),size=2.5,col="#00A9FF")+
   scale_x_date(breaks = seq( min(ca_ts$Date), max(ca_ts$Date),by=100),date_labels = "%Y-%m",limits = c(min(ca_ts$Date), max(ca_ts$Date)))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 5))+
-  labs(y= "CA2 (4.48%)")
+  labs(y= "CA2 (8.00%)")
 c <- ggplot(ca_ts)+
   geom_line(aes(x=Date,y=CA3),size=2,col="#00A9FF")+
   geom_point(aes(x=Date,y=CA3),size=2.5,col="#00A9FF")+
   scale_x_date(breaks = seq( min(ca_ts$Date), max(ca_ts$Date),by=100),date_labels = "%Y-%m",limits = c(min(ca_ts$Date), max(ca_ts$Date)))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,size = 5))+
-  labs(y= "CA3 (4.38%)")
+  labs(y= "CA3 (7.23%)")
 
 Cluster4 <- plot_grid(a,b,c,ncol = 1)
 
