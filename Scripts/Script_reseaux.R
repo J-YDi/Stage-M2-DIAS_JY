@@ -470,15 +470,18 @@ data<- data |>
 
 # Winter #
 CL1 <- filter(data, cluster == 1,season == "Winter" )
+nbdate <- nrow(CL1)*0.33
 CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL1[is.na(CL1)]<- 0
+CL1 <- ifelse(CL1 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL1))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL1)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -491,6 +494,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -544,15 +548,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE
 
 # Fall #
 CL1 <- filter(data, cluster == 1,season == "Fall" )
+nbdate <- nrow(CL1)*0.33
 CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL1[is.na(CL1)]<- 0
+CL1 <- ifelse(CL1 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL1))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL1)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -565,6 +572,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -618,15 +626,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_automne.csv", row.names = FAL
 
 # Spring #
 CL1 <- filter(data, cluster == 1,season == "Spring" )
+nbdate <- nrow(CL1)*0.33
 CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL1[is.na(CL1)]<- 0
+CL1 <- ifelse(CL1 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL1))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL1)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -639,6 +650,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -692,15 +704,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_printemps.csv", row.names = F
 
 # Summer #
 CL1 <- filter(data, cluster == 1,season == "Summer" )
+nbdate <- nrow(CL1)*0.33
 CL1 <- dplyr::select(CL1,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL1,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL1[is.na(CL1)]<- 0
+CL1 <- ifelse(CL1 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL1))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL1)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -713,6 +728,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -763,6 +779,61 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_summer.csv", row.names = FALSE,dec = ".")
+
+# Compare the metrics between seasons
+metric1 <- read_delim("data_modif/results_metrics_reseaux_cluster1_pos.csv", 
+                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
+                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
+                      trim_ws = TRUE)
+
+metric1 <- metric1 %>%
+  mutate(Month = month(Date, label = F)) %>%
+  mutate(Year = year(Date)) |>
+  mutate(season = case_when(Month %in% c(12, 01, 02) ~ "Winter",
+                            Month %in% c(03, 04, 05) ~ "Spring",
+                            Month %in% c(06, 07, 08) ~ "Summer",
+                            Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
+
+
+datal <- pivot_longer(metric1,names_to = "Var",cols = N_noeuds:N_clust)
+datal2 <- filter(datal, Var %in% c("Assort","Avg_p_length","C_tance","D_liens","Mod","Nat_connect","N_noeuds","Adhes"))
+ggplot(datal2)+
+  geom_boxplot(aes(x=season,y=value,group=season),fill="#F8766D",size = 1)+
+  facet_wrap(~Var,scales = "free_y",ncol=4)+
+  labs(title = "Metriques (+)")
+
+datam <- filter(datal2, Var == "Adhes")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "Assort")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "Avg_p_length")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "C_tance")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "D_liens")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "Mod")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "N_noeuds")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
+datam <- filter(datal2, Var == "Nat_connect")
+kruskal.test(datam$value~datam$season)
+DunnTest(datam$value~datam$season)
+
 
 #### Working on the cluster 2 #####
 
@@ -1029,15 +1100,18 @@ data<- data |>
 
 # Winter #
 CL2 <- filter(data, cluster == 2,season == "Winter" )
+nbdate <- nrow(CL2)*0.33
 CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL2[is.na(CL2)]<- 0
+CL2 <- ifelse(CL2 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL2))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL2)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1050,6 +1124,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1103,15 +1178,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_hiver.csv", row.names = FALSE
 
 # Fall #
 CL2 <- filter(data, cluster == 2,season == "Fall" )
+nbdate <- nrow(CL2)*0.33
 CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL2[is.na(CL2)]<- 0
+CL2 <- ifelse(CL2 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL2))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL2)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1124,6 +1202,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1177,15 +1256,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_automne.csv", row.names = FAL
 
 # Spring #
 CL2 <- filter(data, cluster == 2,season == "Spring" )
+nbdate <- nrow(CL2)*0.33
 CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL2[is.na(CL2)]<- 0
+CL2 <- ifelse(CL2 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL2))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL2)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1198,6 +1280,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1249,17 +1332,20 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_printemps.csv", row.names = FALSE,dec = ".")
 
-# Summer #
+# Summer
 CL2 <- filter(data, cluster == 2,season == "Summer" )
+nbdate <- nrow(CL2)*0.33
 CL2 <- dplyr::select(CL2,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL2,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL2[is.na(CL2)]<- 0
+CL2 <- ifelse(CL2 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL2))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL2)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1272,6 +1358,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1322,8 +1409,6 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_summer.csv", row.names = FALSE,dec = ".")
-
-
 
 #### Working on the cluster 3 #####
 
@@ -1558,18 +1643,20 @@ data<- data |>
                             Month %in% c(03, 04, 05) ~ "Spring",
                             Month %in% c(06, 07, 08) ~ "Summer",
                             Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
-
-# Winter #
+# Winter
 CL3 <- filter(data, cluster == 3,season == "Winter" )
+nbdate <- nrow(CL3)*0.33
 CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL3[is.na(CL3)]<- 0
+CL3 <- ifelse(CL3 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL3))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL3)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1582,6 +1669,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1635,15 +1723,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_hiver.csv", row.names = FALSE
 
 # Fall #
 CL3 <- filter(data, cluster == 3,season == "Fall" )
+nbdate <- nrow(CL3)*0.33
 CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL3[is.na(CL3)]<- 0
+CL3 <- ifelse(CL3 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL3))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL3)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1656,6 +1747,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1709,15 +1801,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_automne.csv", row.names = FAL
 
 # Spring #
 CL3 <- filter(data, cluster == 3,season == "Spring" )
+nbdate <- nrow(CL3)*0.33
 CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL3[is.na(CL3)]<- 0
+CL3 <- ifelse(CL3 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL3))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL3)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1730,6 +1825,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1783,15 +1879,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_printemps.csv", row.names = F
 
 # Summer #
 CL3 <- filter(data, cluster == 3,season == "Summer" )
+nbdate <- nrow(CL3)*0.33
 CL3 <- dplyr::select(CL3,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL3,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL3[is.na(CL3)]<- 0
+CL3 <- ifelse(CL3 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL3))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL3)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -1804,6 +1903,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -1854,6 +1954,7 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_summer.csv", row.names = FALSE,dec = ".")
+
 #### Working on the cluster 4 #####
 
 # We keep only positive correlations
@@ -2114,17 +2215,20 @@ data<- data |>
                             Month %in% c(06, 07, 08) ~ "Summer",
                             Month %in% c(09, 10, 11) ~ "Fall", TRUE ~ NA_character_))
 
-# Winter #
+# Winter
 CL4 <- filter(data, cluster == 4,season == "Winter" )
+nbdate <- nrow(CL4)*0.33
 CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL4[is.na(CL4)]<- 0
+CL4 <- ifelse(CL4 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL4))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL4)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -2137,6 +2241,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -2188,17 +2293,20 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
 
-# Fall #
+# Fall
 CL4 <- filter(data, cluster == 4,season == "Fall" )
+nbdate <- nrow(CL4)*0.33
 CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL4[is.na(CL4)]<- 0
+CL4 <- ifelse(CL4 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL4))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL4)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -2211,6 +2319,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -2264,15 +2373,18 @@ write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_automne.csv", row.names = FAL
 
 # Spring #
 CL4 <- filter(data, cluster == 4,season == "Spring" )
+nbdate <- nrow(CL4)*0.33
 CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL4[is.na(CL4)]<- 0
+CL4 <- ifelse(CL4 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL4))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL4)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -2285,6 +2397,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
@@ -2336,17 +2449,20 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_printemps.csv", row.names = FALSE,dec = ".")
 
-# Summer #
-CL4 <- filter(data, cluster == 4,season == "Summer" )
+# Summer 
+CL4 <- filter(data, cluster == 4,season == "Summer")
+nbdate <- nrow(CL4)*0.33
 CL4 <- dplyr::select(CL4,Actinoptychus:Coscinodiscophycidae)
-# Compute the mean of all the genus
-Spe_w <- as.data.frame(t(summarise_all(CL4,.funs = list(mean = ~mean(., na.rm = TRUE)))))
+
+CL4[is.na(CL4)]<- 0
+CL4 <- ifelse(CL4 > 0, 1,0)
+Spe_w <- as.data.frame(colSums(CL4))
 
 # Prepare the list of the present genus
-Spe_w$Phyto <- colnames(CL4)
+Spe_w$Phyto <- rownames(Spe_w)
+colnames(Spe_w)[1] <- "V1"
 Spe_w$V1 <- as.numeric(Spe_w$V1)
-Spe_w <- Spe_w[complete.cases(Spe_w$V1),]
-Spe_w <- filter(Spe_w,V1 > 0)
+Spe_w <- filter(Spe_w,V1 > nbdate)
 rownames(Spe_w) <- NULL
 Spe_w$IndexTab <- rownames(Spe_w)
 
@@ -2359,6 +2475,7 @@ colnames(phyto_index)[1] <- "Pindex"
 colnames(Spe_w) <- c("Count","phyto","IndexTab")
 Spe <- left_join(phyto_index,Spe_w, by = join_by(phyto))
 Spe$Pindex <- as.numeric(Spe$Pindex)
+Spe <- filter(Spe,!is.na(Spe$Count))
 
 # Compute the subgraph
 vids <- Spe$Pindex
