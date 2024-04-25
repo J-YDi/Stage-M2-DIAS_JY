@@ -859,18 +859,18 @@ data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
-data <- select(data,-Outlier)
+data <- dplyr::select(data,-Outlier)
 
 ######################################
 # Table_bloom_R.csv was made by hand #
 ######################################
 # Loading information about the different blooms
-Table_bloom_R <- read_delim("data_modif/Table_bloom_R_v3.csv", 
+Table_bloom_R <- read_delim("data_modif/Table_bloom_R_v3c.csv", 
                             delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%d/%m/%Y")), 
                             trim_ws = TRUE)
 
 Table_bloom_R <- Table_bloom_R[complete.cases(Table_bloom_R$Code_point_Libelle),] 
-Table_bloom_R <- select(Table_bloom_R, -cluster)
+Table_bloom_R <- dplyr::select(Table_bloom_R, Code_point_Libelle, Date,Abdtot:Bloom_Genre)
 
 
 data_ok <- left_join(data,Table_bloom_R, join_by(Code_point_Libelle, Date))
