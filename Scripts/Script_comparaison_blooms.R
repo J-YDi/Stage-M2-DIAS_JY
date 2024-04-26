@@ -11,6 +11,7 @@ library(ggplot2)
 library(ggthemes)
 library(forcats)
 library(DescTools)
+library(corrplot)
 
 # Comparison before / during / after bloom of Dinophyceae #####
 # Import data
@@ -1057,8 +1058,9 @@ DunnTest(comp_mt_cl$Pielou~comp_mt_cl$cat,method = "BH")
 kruskal.test(comp_mt_cl$Shannon~comp_mt_cl$cat)
 DunnTest(comp_mt_cl$Shannon~comp_mt_cl$cat,method = "BH")
 
-######### STOP ######
+
 # Doing it with abiotic data
+# Import data
 data_abio <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers_bloomid_final.csv", 
                         delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                             grouping_mark = ""), trim_ws = TRUE)
@@ -1250,36 +1252,56 @@ kruskal.test(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat)
 DunnTest(comp_mt_cl$`TURB-FNU`~comp_mt_cl$cat,method = "BH")
 
 
-ggplot(filter(datal,cat == "Pendant"))+
-  geom_boxplot(aes(x=cluster, y= value,group=cluster))+
-  facet_wrap(~var,scales = "free_y")
-
-
-# Correlation métriques avec indices de diversité
-metric <- read_delim("data_modif/metrics.csv", 
+# Correlation between graph metrics and diversity indexes #####
+# Import data 
+metric <- read_delim("data_modif/metrics_final.csv", 
                      delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
                      locale = locale(decimal_mark = ",", grouping_mark = "."), 
                      trim_ws = TRUE)
-data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
+
+data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro_phyto_chloro_phylum_period15_chlafilter_cluster5_div_withoutliers_bloomid_final.csv", 
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
-
-data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage)
+data <- dplyr::select(data, Code_point_Libelle, Date, cluster, Bloom_Phylum,ID.interne.passage, Shannon:Rspe)
 
 data_met <- left_join(metric,data)
+
+# There are duplicates to delete
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                       duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+data_join <- bind_rows(data_unique,resultat_filtre)
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
 
 doublons <- data_met[duplicated(data_met$ID.interne.passage) |
                        duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
 
-# Filtre des doublons hydro :
 resultat_filtre <- doublons %>%
   filter(duplicated(ID.interne.passage) | n()==1)
 
-# On supprime les lignes en doublon dans le jeu de données initial
 data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
-# On les remets ces doublons filtres
 data_join <- bind_rows(data_unique,resultat_filtre)
-# On remet au propre
+data_join <- data_join |>
+  arrange(Code_point_Libelle, Date)
+
+data_met <- data_join
+
+
+doublons <- data_met[duplicated(data_met$ID.interne.passage) |
+                       duplicated(data_met$ID.interne.passage, fromLast = TRUE), ]
+
+resultat_filtre <- doublons %>%
+  filter(duplicated(ID.interne.passage) | n()==1)
+
+data_unique <- subset(data_met, !(ID.interne.passage %in% unique(doublons$ID.interne.passage)))
+data_join <- bind_rows(data_unique,resultat_filtre)
 data_join <- data_join |>
   arrange(Code_point_Libelle, Date)
 
@@ -1288,17 +1310,7 @@ data_met <- data_join
 data_met <- filter(data_met, Bloom_Phylum == "Bac" | Bloom_Phylum == "Dino" | is.na(Bloom_Phylum))
 data_met[is.na(data_met$Bloom_Phylum),]$Bloom_Phylum <- "Non"
 
-# Avec indices de diversite
-data_idiv <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_withbloom.csv", 
-                        delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
-                                                                            grouping_mark = ""), trim_ws = TRUE)
-HDGUBFHIA <- data$Rspe
-data_idiv$Rspe <- HDGUBFHIA
-data_idiv <- dplyr::select(data_idiv,ID.interne.passage,Shannon, Pielou, BergerParker,Rspe)
-
-comp_div_ok <- left_join(data_met,data_idiv)
-
-Table.corr_all <- dplyr::select(comp_div_ok,Shannon, Pielou, Rspe, BergerParker, Assort,Avg_p_length,C_tance,D_liens,
+Table.corr_all <- dplyr::select(data_met,Shannon, Pielou, Rspe, BergerParker, Assort,Avg_p_length,C_tance,D_liens,
                                 Mod,Nat_connect,N_noeuds,Adhes)
 Table.corr_all[Table.corr_all == Inf] <- NA
 Table.corr_all.comp <- Table.corr_all[complete.cases(Table.corr_all),]

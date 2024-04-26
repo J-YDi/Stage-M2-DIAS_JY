@@ -21,16 +21,17 @@ data <- data |>
 
 ### Graph to show phytoplankton composition by season and cluster #####
 # Prepare data for graph
+data$Autres <- rowSums(select(data,Raphidophyceae:`Autres protistes`,Dinoflagellata,Xanthophyceae),na.rm = T)
 datam <- summarise(group_by(data,cluster,season), Bacillariophyceae=mean(Bacillariophyceae,na.rm=T),
                    Dinophyceae=mean(Dinophyceae,na.rm=T),Cryptophyceae=mean(Cryptophyceae,na.rm=T),
-                   Haptophyta=mean(Haptophyta,na.rm=T),Ciliophora=mean(Ciliophora,na.rm=T))
+                   Haptophyta=mean(Haptophyta,na.rm=T),Ciliophora=mean(Ciliophora,na.rm=T),Autres=mean(Autres,na.rm=T))
 
 # Compute total abundances to have relative composition
-datam$Abdtot <- rowSums(datam[,c(3:7)],na.rm=T)
-datam[,c(3:7)] <- datam[,c(3:7)]/datam$Abdtot
+datam$Abdtot <- rowSums(datam[,c(3:8)],na.rm=T)
+datam[,c(3:8)] <- datam[,c(3:8)]/datam$Abdtot
 
 # Make it as the graph needs
-datag <- pivot_longer(data = datam,cols = Bacillariophyceae:Ciliophora,names_to = "Phylum")
+datag <- pivot_longer(data = datam,cols = Bacillariophyceae:Autres,names_to = "Phylum")
 datag$Abdtot <- NULL
 
 # Graph by phylum
@@ -40,18 +41,18 @@ ggplot()+
   labs(title="Composition moyenne de la communité par cluster",
        x="Saison",y="Abondance relative",fill="Phylum")+
   facet_grid(season~cluster)+
-scale_fill_manual(values=c("steelblue3","darkorchid2","tomato1","lightgreen","gold1"))+
+scale_fill_manual(values=c("grey","steelblue3","darkorchid2","tomato1","lightgreen","gold1"))+
   theme_test()
 
 # Make it without season consideration
 
 datam <- summarise(group_by(data,cluster), Bacillariophyceae=mean(Bacillariophyceae,na.rm=T),
                    Dinophyceae=mean(Dinophyceae,na.rm=T),Cryptophyceae=mean(Cryptophyceae,na.rm=T),
-                   Haptophyta=mean(Haptophyta,na.rm=T),Ciliophora=mean(Ciliophora,na.rm=T))
-datam$Abdtot <- rowSums(datam[,c(2:6)],na.rm=T)
-datam[,c(2:6)] <- datam[,c(2:6)]/datam$Abdtot
+                   Haptophyta=mean(Haptophyta,na.rm=T),Ciliophora=mean(Ciliophora,na.rm=T),Autres = mean(Autres,na.rm = T))
+datam$Abdtot <- rowSums(datam[,c(2:7)],na.rm=T)
+datam[,c(2:7)] <- datam[,c(2:7)]/datam$Abdtot
 
-datag <- pivot_longer(data = datam,cols = Bacillariophyceae:Ciliophora,names_to = "Phylum")
+datag <- pivot_longer(data = datam,cols = Bacillariophyceae:Autres,names_to = "Phylum")
 datag$Abdtot <- NULL
 ggplot()+
   geom_col(aes(x ="", y = value*100 , fill = Phylum ), width = 0.7, datag)+
@@ -59,7 +60,7 @@ ggplot()+
   labs(title="Composition moyenne de la communité par cluster",
        x="",y="Abondance relative",fill="Phylum")+
   facet_wrap(~cluster,ncol = 1)+
-  scale_fill_manual(values=c("steelblue3","darkorchid2","tomato1","lightgreen","gold1"))+
+  scale_fill_manual(values=c("grey","steelblue3","darkorchid2","tomato1","lightgreen","gold1"))+
   theme_test()
 
 # Make it by Genus

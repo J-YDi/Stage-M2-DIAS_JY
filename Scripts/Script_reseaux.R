@@ -213,7 +213,26 @@ assoMat[assoMat < 0] <- 0
 cluster1 <- graph_from_adjacency_matrix(assoMat,weighted = T,mode = "undirected",diag=F)
 
 # Compute clustering on the graph
-wc <- cluster_fast_greedy(cluster1)
+wcini <- cluster_fast_greedy(cluster1)
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster1.csv", row.names = FALSE,dec = ".")
+
 
 # Personalize the graph
 V(cluster1)$label <- V(cluster1)$name
@@ -222,8 +241,8 @@ V(cluster1)$page_rank <- round(page.rank(cluster1)$vector, 2)
 V(cluster1)$betweenness <- round(betweenness(cluster1), 2)
 V(cluster1)$degree <- degree(cluster1)
 V(cluster1)$size <- V(cluster1)$degree *0.3
-V(cluster1)$comm <- membership(wc)
-V(cluster1)$color <- colorize(membership(wc),colors = c("orange","olivedrab","turquoise"))
+V(cluster1)$comm <- membership(wcini)
+V(cluster1)$color <- colorize(membership(wcini),colors = c("orange","olivedrab","turquoise"))
 E(cluster1)$width <- E(cluster1)$weight*6
 E(cluster1)$color <- "black"
 
@@ -252,7 +271,7 @@ avg_path_length <- mean_distance(
 
 Edge_connect <- edge.connectivity(cluster1) # Edge connectivity = adhesion
 
-Modularity <- modularity(cluster1,membership = membership(wc)) # Modularity
+Modularity <- modularity(cluster1,membership = membership(wcini)) # Modularity
 
 m_degree <- mean(degree(cluster1)) #Mean number of links per node
 
@@ -546,6 +565,28 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_hiver.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster1_hiver.csv", row.names = FALSE,dec = ".")
+
+
+
 # Fall #
 CL1 <- filter(data, cluster == 1,season == "Fall" )
 nbdate <- nrow(CL1)*0.33
@@ -623,6 +664,26 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_automne.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster1_automne.csv", row.names = FALSE,dec = ".")
 
 # Spring #
 CL1 <- filter(data, cluster == 1,season == "Spring" )
@@ -702,6 +763,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_printemps.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster1_printemps.csv", row.names = FALSE,dec = ".")
+
 # Summer #
 CL1 <- filter(data, cluster == 1,season == "Summer" )
 nbdate <- nrow(CL1)*0.33
@@ -780,6 +861,27 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster1_summer.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster1_été.csv", row.names = FALSE,dec = ".")
+
+
 # Compare the metrics between seasons
 metric1 <- read_delim("data_modif/results_metrics_reseaux_cluster1_pos.csv", 
                       delim = ";", escape_double = FALSE, col_types = cols(Date = col_date(format = "%Y-%m-%d")), 
@@ -844,7 +946,7 @@ assoMat[assoMat < 0] <- 0
 cluster2 <- graph_from_adjacency_matrix(assoMat,weighted = T,mode = "undirected",diag=F)
 
 # Compute clustering on the graph
-wc <- cluster_fast_greedy(cluster2)
+wcini <- cluster_fast_greedy(cluster2)
 
 # Personalize the graph
 V(cluster2)$label <- V(cluster2)$name
@@ -853,8 +955,8 @@ V(cluster2)$page_rank <- round(page.rank(cluster2)$vector, 2)
 V(cluster2)$betweenness <- round(betweenness(cluster2), 2)
 V(cluster2)$degree <- degree(cluster2)
 V(cluster2)$size <- V(cluster2)$degree *0.3
-V(cluster2)$comm <- membership(wc)
-V(cluster2)$color <- colorize(membership(wc),colors = c("orange","olivedrab","turquoise"))
+V(cluster2)$comm <- membership(wcini)
+V(cluster2)$color <- colorize(membership(wcini),colors = c("orange","olivedrab","turquoise"))
 E(cluster2)$width <- E(cluster2)$weight*6
 E(cluster2)$color <- "black"
 
@@ -883,7 +985,7 @@ avg_path_length <- mean_distance(
 
 Edge_connect <- edge.connectivity(cluster2) # Edge connectivity = adhesion
 
-Modularity <- modularity(cluster2,membership = membership(wc)) # Modularity
+Modularity <- modularity(cluster2,membership = membership(wcini)) # Modularity
 
 m_degree <- mean(degree(cluster2)) #Mean number of links per node
 
@@ -913,6 +1015,26 @@ Hubs$Phyto <- rownames(Hubs)
 Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 # Store the result
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster2.csv", row.names = FALSE,dec = ".")
 
 ##### Compute subgraph by day #######
 # Preparation  
@@ -1176,6 +1298,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_hiver.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster2_hiver.csv", row.names = FALSE,dec = ".")
+
 # Fall #
 CL2 <- filter(data, cluster == 2,season == "Fall" )
 nbdate <- nrow(CL2)*0.33
@@ -1253,6 +1395,26 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_automne.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster2_automne.csv", row.names = FALSE,dec = ".")
 
 # Spring #
 CL2 <- filter(data, cluster == 2,season == "Spring" )
@@ -1332,6 +1494,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_printemps.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster2_printemps.csv", row.names = FALSE,dec = ".")
+
 # Summer
 CL2 <- filter(data, cluster == 2,season == "Summer" )
 nbdate <- nrow(CL2)*0.33
@@ -1410,6 +1592,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster2_summer.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster2_été.csv", row.names = FALSE,dec = ".")
+
 #### Working on the cluster 3 #####
 
 # We keep only positive correlations
@@ -1419,7 +1621,7 @@ assoMat[assoMat < 0] <- 0
 cluster3 <- graph_from_adjacency_matrix(assoMat,weighted = T,mode = "undirected",diag=F)
 
 # Compute clustering on the graph
-wc <- cluster_fast_greedy(cluster3)
+wcini <- cluster_fast_greedy(cluster3)
 
 # Personalize the graph
 V(cluster3)$label <- V(cluster3)$name
@@ -1428,8 +1630,8 @@ V(cluster3)$page_rank <- round(page.rank(cluster3)$vector, 2)
 V(cluster3)$betweenness <- round(betweenness(cluster3), 2)
 V(cluster3)$degree <- degree(cluster3)
 V(cluster3)$size <- V(cluster3)$degree *0.3
-V(cluster3)$comm <- membership(wc)
-V(cluster3)$color <- colorize(membership(wc),colors = c("orange","olivedrab","turquoise"))
+V(cluster3)$comm <- membership(wcini)
+V(cluster3)$color <- colorize(membership(wcini),colors = c("orange","olivedrab","turquoise"))
 E(cluster3)$width <- E(cluster3)$weight*6
 E(cluster3)$color <- "black"
 
@@ -1458,7 +1660,7 @@ avg_path_length <- mean_distance(
 
 Edge_connect <- edge.connectivity(cluster3) # Edge connectivity = adhesion
 
-Modularity <- modularity(cluster3,membership = membership(wc)) # Modularity
+Modularity <- modularity(cluster3,membership = membership(wcini)) # Modularity
 
 m_degree <- mean(degree(cluster3)) #Mean number of links per node
 
@@ -1488,6 +1690,28 @@ Hubs$Phyto <- rownames(Hubs)
 Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 # Store the result
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster3.csv", row.names = FALSE,dec = ".")
+
+
 
 ##### Compute subgraph by day #######
 # Preparation  
@@ -1721,6 +1945,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_hiver.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster3_hiver.csv", row.names = FALSE,dec = ".")
+
 # Fall #
 CL3 <- filter(data, cluster == 3,season == "Fall" )
 nbdate <- nrow(CL3)*0.33
@@ -1798,6 +2042,26 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_automne.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster3_automne.csv", row.names = FALSE,dec = ".")
 
 # Spring #
 CL3 <- filter(data, cluster == 3,season == "Spring" )
@@ -1877,6 +2141,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_printemps.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster3_printemps.csv", row.names = FALSE,dec = ".")
+
 # Summer #
 CL3 <- filter(data, cluster == 3,season == "Summer" )
 nbdate <- nrow(CL3)*0.33
@@ -1955,6 +2239,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster3_summer.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster3_ete.csv", row.names = FALSE,dec = ".")
+
 #### Working on the cluster 4 #####
 
 # We keep only positive correlations
@@ -1964,7 +2268,7 @@ assoMat[assoMat < 0] <- 0
 cluster4 <- graph_from_adjacency_matrix(assoMat,weighted = T,mode = "undirected",diag=F)
 
 # Compute clustering on the graph
-wc <- cluster_fast_greedy(cluster4)
+wcini <- cluster_fast_greedy(cluster4)
 
 # Personalize the graph
 V(cluster4)$label <- V(cluster4)$name
@@ -1973,8 +2277,8 @@ V(cluster4)$page_rank <- round(page.rank(cluster4)$vector, 2)
 V(cluster4)$betweenness <- round(betweenness(cluster4), 2)
 V(cluster4)$degree <- degree(cluster4)
 V(cluster4)$size <- V(cluster4)$degree *0.3
-V(cluster4)$comm <- membership(wc)
-V(cluster4)$color <- colorize(membership(wc),colors = c("orange","olivedrab","turquoise"))
+V(cluster4)$comm <- membership(wcini)
+V(cluster4)$color <- colorize(membership(wcini),colors = c("orange","olivedrab","turquoise"))
 E(cluster4)$width <- E(cluster4)$weight*6
 E(cluster4)$color <- "black"
 
@@ -2003,7 +2307,7 @@ avg_path_length <- mean_distance(
 
 Edge_connect <- edge.connectivity(cluster4) # Edge connectivity = adhesion
 
-Modularity <- modularity(cluster4,membership = membership(wc)) # Modularity
+Modularity <- modularity(cluster4,membership = membership(wcini)) # Modularity
 
 m_degree <- mean(degree(cluster4)) #Mean number of links per node
 
@@ -2033,6 +2337,26 @@ Hubs$Phyto <- rownames(Hubs)
 Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 # Store the result
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster4.csv", row.names = FALSE,dec = ".")
 
 ##### Compute subgraph by day #######
 # Preparation  
@@ -2293,6 +2617,27 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_hiver.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster4_hiver.csv", row.names = FALSE,dec = ".")
+
+
 # Fall
 CL4 <- filter(data, cluster == 4,season == "Fall" )
 nbdate <- nrow(CL4)*0.33
@@ -2370,6 +2715,26 @@ Spe_hubs <- Hubs[order(desc(hubs$vector)),]
 Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_automne.csv", row.names = FALSE,dec = ".")
+
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster4_automne.csv", row.names = FALSE,dec = ".")
 
 # Spring #
 CL4 <- filter(data, cluster == 4,season == "Spring" )
@@ -2449,6 +2814,26 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_printemps.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster4_printemps.csv", row.names = FALSE,dec = ".")
+
 # Summer 
 CL4 <- filter(data, cluster == 4,season == "Summer")
 nbdate <- nrow(CL4)*0.33
@@ -2527,6 +2912,25 @@ Spe_hubs
 # Store the results 
 write.csv2(Spe_hubs,file="data_modif/Hubs_cluster4_summer.csv", row.names = FALSE,dec = ".")
 
+# Manip to have the composition of the graph in term of phyla
+# Creating a df to store the results
+compo_reseau <- c("","")
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau <- wcini$names
+compo_reseau <- as.data.frame(compo_reseau)
+compo_reseau$cluster <- wcini$membership
+colnames(compo_reseau)[1] <- "Taxon"
+# Import the taxonomic information
+PhyClasse <- read.csv('data_modif/Liste_phylum.classe_REPHY_JYmodif.csv', sep =';', header = TRUE, fileEncoding = 'ISO-8859-1')
+compo_reseau <- left_join(compo_reseau,PhyClasse)
+compo_reseau$Nb <- 1
+colnames(Spe_hubs)[2] <- "Taxon"
+compo_reseau <- left_join(Spe_hubs,compo_reseau)
+
+compo_reseau <- compo_reseau |>
+  group_by(cluster,Phylum.Classe) |>
+  summarise(Nb = sum(Nb))
+write.csv2(compo_reseau,file="data_modif/compo_reseau_cluster4_été.csv", row.names = FALSE,dec = ".")
 
 # Networks test difference ####
 # Merge all the cluster's metrics
