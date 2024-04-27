@@ -239,6 +239,11 @@ obs_coord$cluster <- as.character(info$cluster)
 obs_coord$season <- info$season
 obs_coord$Month <- info$Month
 obs_coord$Year <- info$Year
+obs_coord$Code_point_Libelle <- info$Code_point_Libelle
+obs_coord$Date <- info$Date
+
+write.csv2(obs_coord,file="data_modif/CA_Cluster1_final.csv", row.names = FALSE,dec = ".")
+
 
 # Make the mean of the date coordinates by season
 obs_coord_mean <- summarise(group_by(obs_coord, cluster,season), CA1=mean(`Dim 1`,na.rm=T),
@@ -345,6 +350,10 @@ obs_coord$cluster <- as.character(info$cluster)
 obs_coord$season <- info$season
 obs_coord$Month <- info$Month
 obs_coord$Year <- info$Year
+obs_coord$Code_point_Libelle <- info$Code_point_Libelle
+obs_coord$Date <- info$Date
+
+write.csv2(obs_coord,file="data_modif/CA_Cluster2_final.csv", row.names = FALSE,dec = ".")
 
 # Make the mean of the date coordinates by season
 obs_coord_mean <- summarise(group_by(obs_coord, cluster,season), CA1=mean(`Dim 1`,na.rm=T),
@@ -455,6 +464,10 @@ obs_coord$cluster <- as.character(info$cluster)
 obs_coord$season <- info$season
 obs_coord$Month <- info$Month
 obs_coord$Year <- info$Year
+obs_coord$Code_point_Libelle <- info$Code_point_Libelle
+obs_coord$Date <- info$Date
+
+write.csv2(obs_coord,file="data_modif/CA_Cluster3_final.csv", row.names = FALSE,dec = ".")
 
 # Make the mean of the date coordinates by season
 obs_coord_mean <- summarise(group_by(obs_coord, cluster,season), CA1=mean(`Dim 1`,na.rm=T),
@@ -563,6 +576,10 @@ obs_coord$cluster <- as.character(info$cluster)
 obs_coord$season <- info$season
 obs_coord$Month <- info$Month
 obs_coord$Year <- info$Year
+obs_coord$Code_point_Libelle <- info$Code_point_Libelle
+obs_coord$Date <- info$Date
+
+write.csv2(obs_coord,file="data_modif/CA_Cluster4_final.csv", row.names = FALSE,dec = ".")
 
 # Make the mean of the date coordinates by season
 obs_coord_mean <- summarise(group_by(obs_coord, cluster,season), CA1=mean(`Dim 1`,na.rm=T),
