@@ -12,12 +12,18 @@ data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
+data$cluster[data$cluster == "1"] <- "1-Méditerranée"
+data$cluster[data$cluster == "2"] <- "2-Manche orientale - Mer du Nord"
+data$cluster[data$cluster == "3"] <- "3-Atlantique - Manche occidentale"
+data$cluster[data$cluster == "4"] <- "4-Mer des Pertuis"
 data$cluster <- as.factor(data$cluster)
 data$lon <- as.numeric(data$lon)
 data$lat <- as.numeric(data$lat)
 
+
 # Color for each cluster
-cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
+cluster_col <- c("1-Méditerranée" = "#F8766D","2-Manche orientale - Mer du Nord" = "#CD9600", 
+                 "3-Atlantique - Manche occidentale" = "#00BE67",  "4-Mer des Pertuis" = "#00A9FF")
 
 # Making the map
 Worldmap <- map_data('worldHires')
@@ -25,7 +31,7 @@ Worldmap <- map_data('worldHires')
 
 ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), fill = "gray", color = 'gray10', size = .25)+
   coord_fixed(xlim=c(-5.5,9.5), ylim=c(41,51.5), ratio=1.4)+
-  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)')+
+  labs(y = 'Latitude (degrés)', x = 'Longitude (degrés)',title = "Carte des stations REPHY")+
   theme_gdocs()+
   geom_point(data = data, aes(x = lon, y = lat,colour=cluster), size =8)+
   geom_text(data = filter(data,Code_point_Libelle == "Teychan bis") ,aes(x = lon + 1.17, y = lat,label = "Teychan bis" ), stat = 'unique', size = 3,color="black",fontface = "bold") +
@@ -53,14 +59,23 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
   geom_text(data = filter(data,Code_point_Libelle == "At so") ,aes(x = lon + .7, y = lat,label = "At so" ), stat = 'unique', size = 3,color="black",fontface = "bold") +
   geom_text(data = filter(data,Code_point_Libelle == "At so") ,aes(x = 3.5, y = 48,label = "FRANCE" ), stat = 'unique', size = 7,color="burlywood4",fontface = "bold") +
   
+  geom_text(data = filter(data,cluster == "1-Méditerranée") ,aes(x = lon, y = lat,label = "1" ), stat = 'unique', size = 4,color="gray75") +
+  geom_text(data = filter(data,cluster == "2-Manche orientale - Mer du Nord") ,aes(x = lon, y = lat,label = "2" ), stat = 'unique', size = 4,color="gray75") +
+  geom_text(data = filter(data,cluster == "3-Atlantique - Manche occidentale") ,aes(x = lon, y = lat,label = "3" ), stat = 'unique', size = 4,color="gray75") +
+  geom_text(data = filter(data,cluster == "4-Mer des Pertuis") ,aes(x = lon, y = lat,label = "4" ), stat = 'unique', size = 4,color="gray75") +
+  
   geom_text(aes(x = -3.5, y = 46, label = 'Océan Atlantique'), stat = 'unique', size = 4,color = "lightblue4",fontface="italic",angle=-45) +
   geom_text(aes(x = -3.2, y = 50, label = 'Manche'), stat = 'unique', size = 4,color = "lightblue4",fontface="italic",angle=28) +
   geom_text(aes(x = 5, y = 42, label = 'Mer Méditerranée'), stat = 'unique', size = 4,color = "lightblue4",fontface="italic",angle=8) +
   
-  scale_colour_manual(values = cluster_col,name="Cluster")+
-  theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
-        panel.background = element_rect(fill = 'lightblue1'))+
-  guides(color = guide_legend(override.aes = list(size = 10)))
+  scale_colour_manual(values = cluster_col,name="Région :")+
+  theme(panel.grid.major = element_line(color = 'gray10', size = .25),
+        panel.background = element_rect(fill = 'lightblue1'),panel.border = element_blank(),
+        legend.background = element_rect(fill = "white"),legend.key = element_rect(fill = "white"),legend.text = element_text(size=8,color = "black"),
+        legend.title = element_text(size = 8, color = "black",face="bold"),
+        plot.background = element_rect(color = "white", linewidth = 0.001),
+        legend.position = "bottom",plot.title = element_text(size=10,color ="black"),axis.text = element_text(size=8),axis.title.x = element_text(size=8),axis.title.y = element_text(size=8))+
+  guides(color = guide_legend(override.aes = list(size = 3),direction = "horizontal"))
 
 # Save it as final version
 ggsave('maps_station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/final", dpi = 600, width = 200, height = 200, units = 'mm')
