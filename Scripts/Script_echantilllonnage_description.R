@@ -1,16 +1,14 @@
-# Script adapte de Time_series_MP_modif et Script_echantillonage_new
-# JY
+# Script JY.Dias - Stage M2 #
 
-# Time Series 
+# Load packages
 
 library(readr)
 library(tidyverse)
 library (ggplot2)
-# for representing missing values
 library(naniar)
 
 ################## FLORTOT SURFACE ################
-Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum.csv", 
+Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylum_final.csv", 
                     delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                         grouping_mark = ""), trim_ws = TRUE)
 
@@ -124,7 +122,7 @@ ggplot(fq_month_heatmap_gg) +
         legend.position = 'top') +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
-ggsave('Ech_Regions1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Regions1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -142,7 +140,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Regions2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Regions2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -162,7 +160,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Regions3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Regions3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 ########## PAR REGION
 Time_series_REPHY <- Table.WC %>% 
@@ -238,7 +236,7 @@ ggplot(fq_month_heatmap_gg) +
         legend.position = 'top') +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
-ggsave('Ech_WC1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_WC1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -256,7 +254,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_WC2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_WC2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -276,7 +274,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_WC3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_WC3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -344,7 +342,7 @@ ggplot(fq_month_heatmap_gg) +
         legend.position = 'top') +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
-ggsave('Ech_SthBrty1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBrty1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -362,7 +360,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_SthBrty2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBrty2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -382,7 +380,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_SthBrty3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBrty3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -452,7 +450,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_SthBob1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBob1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -470,7 +468,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_SthBob2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBob2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -490,7 +488,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_SthBob3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_SthBob3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -559,7 +557,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Sb1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Sb1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -577,7 +575,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Sb2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Sb2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -597,7 +595,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Sb3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Sb3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -668,7 +666,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_PLP1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_PLP1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -686,7 +684,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_PLP2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_PLP2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -706,7 +704,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_PLP3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_PLP3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -775,7 +773,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_MLC1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_MLC1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -793,7 +791,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_MLC2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_MLC2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -813,7 +811,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_MLC3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_MLC3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -883,7 +881,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_GoL1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_GoL1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -901,7 +899,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_GoL2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_GoL2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -921,7 +919,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_GoL3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_GoL3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -991,7 +989,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_ECNS1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_ECNS1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1009,7 +1007,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_ECNS2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_ECNS2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1029,7 +1027,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_ECNS3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_ECNS3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 
@@ -1118,7 +1116,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1136,7 +1134,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Manche_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1156,7 +1154,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Manche_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Manche.csv", row.names = FALSE,dec = ".")
 
@@ -1243,7 +1241,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1261,7 +1259,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Atlantic_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1281,7 +1279,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Atlantic_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Atlantic.csv", row.names = FALSE,dec = ".")
 
 
@@ -1367,7 +1365,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_select5A.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1385,7 +1383,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_select5A_2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1405,7 +1403,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Med_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_select5A_3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Med.csv", row.names = FALSE,dec = ".")
 
 
@@ -1493,7 +1491,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Manche_select_period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select_period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1511,7 +1509,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Manche_select_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1531,7 +1529,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Manche_select_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Manche_select_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Manche_period.csv", row.names = FALSE,dec = ".")
 
@@ -1618,7 +1616,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Atlantic__period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic__period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1636,7 +1634,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Atlantic_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1656,7 +1654,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Atlantic_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Atlantic_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Atlantic_period.csv", row.names = FALSE,dec = ".")
 
 
@@ -1742,7 +1740,7 @@ ggplot(fq_month_heatmap_gg) +
   guides(size = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE),
          colour = guide_legend(title = 'Sampling effort', nrow = 1, byrow = TRUE))
 
-ggsave('Ech_Med_period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_period1.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - Sampling frequences - Horizontal
@@ -1760,7 +1758,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Med_select_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_select_period2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
 
 ## Heatmap - NA or not NA - Horizontal
@@ -1780,112 +1778,7 @@ ggplot(fq_month_heatmap_gg) +
         axis.title = element_blank(),
         legend.position = 'top') +
   guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_Med_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
+#ggsave('Ech_Med_period3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 write.csv2(fq_month_heatmap_gg,file="output/data/Ech_Med_period.csv", row.names = FALSE,dec = ".")
 
-
-
-
-
-# Pour verifier la periode commune : 
-Table <- dplyr::select(Table_select, -c(Year,Month))
-
-# Transform the sampling date as date format 
-Table$sampling_date <- as.Date(Table$Date, "%d/%m/%Y")
-
-# Create three separate column for day, month and year
-Table$day <- day(Table$sampling_date)
-Table$month <- month(Table$sampling_date, label = F)
-Table$year <- year(Table$sampling_date)
-
-# Change the column name to match 'site'
-colnames(Table)[which(names(Table) == "Code_point_Libelle")] <- "site"
-colnames(Table)[which(names(Table) == "Code_point_Mnemonique")] <- "site_code"
-
-Time_series_REPHY <- Table %>% 
-  dplyr::select(site, day, month, year, sampling_date) %>%
-  unique()
-
-# Create a fq_month to visualize the sampling frequency by month
-fq_month <- Time_series_REPHY %>%
-  group_by(site) %>% 
-  count(year, month) %>% 
-  pivot_wider(names_from = "site", values_from = "n")
-
-# Change months' numbers into letters
-fq_month$lettres <- ifelse(fq_month$month == '10', 'J',
-                           ifelse(fq_month$month == '11', 'K',
-                                  ifelse(fq_month$month == '12', 'L',
-                                         ifelse(fq_month$month == '1', 'A',
-                                                ifelse(fq_month$month == '2', 'B',
-                                                       ifelse(fq_month$month == '3', 'C',
-                                                              ifelse(fq_month$month == '4', 'D',
-                                                                     ifelse(fq_month$month == '5', 'E',
-                                                                            ifelse(fq_month$month == '6', 'F',
-                                                                                   ifelse(fq_month$month == '7', 'G',
-                                                                                          ifelse(fq_month$month == '8', 'H',
-                                                                                                 ifelse(fq_month$month == '9', 'I', NA))))))))))))
-
-# Order by year 
-fq_month <- fq_month[order(fq_month$year,fq_month$month),] 
-
-# Create a column merging year and month 
-fq_month$sampling <- paste(fq_month$year, fq_month$lettres, sep = '-')
-
-
-# Heatmap
-fq_month_heatmap <- as.data.frame(fq_month[1:23]) ##NOMBRE DE STATIONS A ADAPTER
-# rownames(fq_month_heatmap) <- rownames(fq_month)
-fq_month_heatmap[is.na(fq_month_heatmap)] <- 0
-fq_month_heatmap$date <- fq_month$sampling
-
-fq_month_heatmap_gg <- fq_month_heatmap %>%  
-  pivot_longer(!c(date, year, month), names_to = 'site', values_to = 'sampling_effort')
-
-# Order by chronological order 
-fq_month_heatmap_gg <- fq_month_heatmap_gg %>%
-  group_by(year, month)
-
-## Plot with points
-vertical <- paste(levels(as.factor(fq_month_heatmap_gg$year)), '-L', sep = '') ################ ANNEES A ADAPTER
-year_half <- paste(levels(as.factor(fq_month_heatmap_gg$year)), '-F', sep = '') ################ IDEM
-
-
-
-## Heatmap - Sampling frequences - Horizontal
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_effort))) +
-  scale_fill_viridis_d('Sampling effort') +
-  geom_vline(xintercept = vertical, colour = 'grey80', linetype = 'dashed', linewidth = 2) +
-  annotate('text', x = year_half, y = rep(21.5,16),############################### A ADAPTER (ERREUR INDIQUE) + 26.5 POSITION DES ANNEES SUR LE GRAPHE
-           label = levels(as.factor(fq_month_heatmap_gg$year)),
-           size = 3, colour = 'grey80') +
-  #scale_x_discrete(labels = rep(seq(1,12,1),37)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_select_lonterme.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
-
-
-## Heatmap - NA or not NA - Horizontal
-fq_month_heatmap_gg$sampling_na <- ifelse(fq_month_heatmap_gg$sampling_effort == '0', 0, 1)
-
-ggplot(fq_month_heatmap_gg) +
-  geom_tile(aes(y = site, x = date,  
-                fill = factor(sampling_na))) +
-  scale_fill_manual('Sampling effort', values = c('grey40','grey80')) +
-  geom_vline(xintercept = vertical, colour = 'black', linetype = 'dashed', size = 1) +
-  annotate('text', x = year_half, y = rep(21.5,16),############################### A ADAPTER (ERREUR INDIQUE) + 26.5 POSITION DES ANNEES SUR LE GRAPHE
-           label = levels(as.factor(fq_month_heatmap_gg$year)),
-           size = 3, colour = 'black') +
-  #scale_x_discrete(labels = rep(seq(1,12,1),38)) +
-  theme_classic(base_size = 20) +
-  theme(axis.text.x = element_text(size = 5),
-        axis.title = element_blank(),
-        legend.position = 'top') +
-  guides(nrow = 1, byrow = TRUE)
-ggsave('Ech_select_lonterme2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/ech_description",dpi = 600, width = 400, height = 300, units = 'mm')
 
