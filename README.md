@@ -23,4 +23,11 @@
 + contains also some datasets with information about the sampling
 
 ##### data_modif folder : 
-+ contains all the dataset created for the study, all can be obtained by the different scripts **except Table_bloom_R_v3c.csv**
++ contains all the dataset created for the study, all can be obtained by the different scripts and the files from the data folder **except Table_bloom_R_v3c.csv**
+
+##### data_outliers folder : 
++ contains some datasets about the outliers from the chlorophyll-a dataseries, used for detect blooms
+
+##### Manuscript.pdf : Internship report
+
+###### Contact : diasjeanyves@yahoo.com
