@@ -1,3 +1,5 @@
+# Script JY.Dias - Stage M2 #
+
 # Load packages 
 library(ggplot2)
 library(readr)
@@ -12,29 +14,37 @@ data <- read_delim("data_modif/Table_FLORTOT_Surf_0722_COM_period_Stselect_hydro
                    delim = ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
                                                                        grouping_mark = ""), trim_ws = TRUE)
 
-data$cluster <- as.factor(data$cluster)
-# One color for each cluster
-cluster_col <- c("1" = "#F8766D","2" = "#CD9600", "3" = "#00BE67", "4" = "#00A9FF")
 
+data$cluster[data$cluster == "1"] <- "1-Méditerranée"
+data$cluster[data$cluster == "2"] <- "2-Manche orientale - Mer du Nord"
+data$cluster[data$cluster == "3"] <- "3-Atlantique - Manche occidentale"
+data$cluster[data$cluster == "4"] <- "4-Mer des Pertuis"
+data$cluster <- as.factor(data$cluster)
+
+# Color for each cluster
+cluster_col <- c("1-Méditerranée" = "#F8766D","2-Manche orientale - Mer du Nord" = "#CD9600", 
+                 "3-Atlantique - Manche occidentale" = "#00BE67",  "4-Mer des Pertuis" = "#00A9FF")
+
+data <- filter(data, cluster != "4-Mer des Pertuis")
 #### Graph to show saisonality ####
 
 # Prepare data for graphs
 data$`log(CHLOROA+1)` <- log(data$CHLOROA +1)
-data$Rspe <- rowSums(data[,c(24:247)] != 0,na.rm = T)
+data$`Dino/Bac` <- data$Dinophyceae/data$Bacillariophyceae
+
 dataforbox_hydro <- pivot_longer(data, names_to = "Variable",cols = c(SALI:`TURB-FNU`,`log(CHLOROA+1)`))
 dataforbox_hydro <- dplyr::select(dataforbox_hydro,Code.Region:Code.parametre,Variable,value)
 dataforbox_hydro <- filter(dataforbox_hydro,Variable != "TURB")
 
-dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Ciliophora,Cryptophyceae,Haptophyta))
+dataforbox_phyto <- pivot_longer(data, names_to = "Variable",cols = c(Bacillariophyceae,Dinophyceae,Shannon,Pielou,BergerParker,Rspe,`Dino/Bac`))
 dataforbox_phyto <- dplyr::select(dataforbox_phyto,Code.Region:Code.parametre,Variable,value)
 
-dataforbox_div <- pivot_longer(data, names_to = "Variable",cols = c(Shannon,Pielou,BergerParker,Rspe))
-dataforbox_div <- dplyr::select(dataforbox_div,Code.Region:Code.parametre,Variable,value)
-
 # Make one to one plot to agglomerate them after
-temp <- ggplot(filter(dataforbox_hydro, Variable == "TEMP"))+
+TEMP <- filter(dataforbox_hydro, Variable == "TEMP")
+TEMP$Variable <- "Température (°C)"
+temp <- ggplot(TEMP)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Température (°C)",colour="Station")+
+  labs(x = "Mois", y = "Mesure", colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -43,12 +53,14 @@ temp <- ggplot(filter(dataforbox_hydro, Variable == "TEMP"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-sali <- ggplot(filter(dataforbox_hydro, Variable == "SALI"))+
+SALI <- filter(dataforbox_hydro, Variable == "SALI")
+SALI$Variable <- "Salinité (PSU)"
+sali <- ggplot(SALI)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Salinité (PSU)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -57,12 +69,13 @@ sali <- ggplot(filter(dataforbox_hydro, Variable == "SALI"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
-
-turb <- ggplot(filter(dataforbox_hydro, Variable == "TURB-FNU"))+
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
+TURB <- filter(dataforbox_hydro, Variable == "TURB-FNU")
+TURB$Variable <- "Turbidité (FNU)"
+turb <- ggplot(TURB)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Turbidité (NTU)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,90, by = 30),limits = c(0,90))+
@@ -71,12 +84,14 @@ turb <- ggplot(filter(dataforbox_hydro, Variable == "TURB-FNU"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-NH4 <- ggplot(filter(dataforbox_hydro, Variable == "NH4"))+
+NH4 <- filter(dataforbox_hydro, Variable == "NH4")
+NH4$Variable <- "NH4 (mg/L)"
+NH4 <- ggplot(NH4)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en ammonium (µmol.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -85,12 +100,14 @@ NH4 <- ggplot(filter(dataforbox_hydro, Variable == "NH4"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-NO3NO2 <- ggplot(filter(dataforbox_hydro, Variable == "NO3+NO2"))+
+NO3 <- filter(dataforbox_hydro, Variable == "NO3+NO2")
+NO3$Variable <- "NO3+NO2 (mg/L)"
+NO3NO2 <- ggplot(NO3)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en nitrate + nitrite (µmol.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -99,13 +116,14 @@ NO3NO2 <- ggplot(filter(dataforbox_hydro, Variable == "NO3+NO2"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-
-PO4 <- ggplot(filter(dataforbox_hydro, Variable == "PO4"))+
+PO4 <- filter(dataforbox_hydro, Variable == "PO4")
+PO4$Variable <- "PO4 (mg/L)"
+PO4 <- ggplot(PO4)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en phosphate (µmol.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -114,12 +132,14 @@ PO4 <- ggplot(filter(dataforbox_hydro, Variable == "PO4"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-SIOH <- ggplot(filter(dataforbox_hydro, Variable == "SIOH"))+
+SIOH <- filter(dataforbox_hydro, Variable == "SIOH")
+SIOH$Variable <- "SIOH (mg/L)"
+SIOH <- ggplot(SIOH)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en silicate (µmol.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -128,12 +148,14 @@ SIOH <- ggplot(filter(dataforbox_hydro, Variable == "SIOH"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-OXYGENE <- ggplot(filter(dataforbox_hydro, Variable == "OXYGENE"))+
+OXY <- filter(dataforbox_hydro, Variable == "OXYGENE")
+OXY$Variable <- "Oxygene (mg/L)"
+OXYGENE <- ggplot(OXY)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en oxygene (mg.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -142,12 +164,14 @@ OXYGENE <- ggplot(filter(dataforbox_hydro, Variable == "OXYGENE"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-CHLOROA <- ggplot(filter(dataforbox_hydro, Variable == "log(CHLOROA+1)"))+
+CHLORO <- filter(dataforbox_hydro, Variable == "log(CHLOROA+1)")
+CHLORO$Variable <- "log(Chlorophylle a +1)"
+CHLOROA <- ggplot(CHLORO)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Concentration en chlorophylle a (µg.L-1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,100, by = 5),limits = c(0,100))+
@@ -156,17 +180,18 @@ CHLOROA <- ggplot(filter(dataforbox_hydro, Variable == "log(CHLOROA+1)"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
 plot_grid(temp , sali , NH4 , NO3NO2 , PO4 , SIOH , turb , OXYGENE , CHLOROA, ncol = 9)
-ggsave('Hydro_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+#ggsave('Hydro_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 500, width = 740, height = 426, units = 'mm',limitsize = F)
 
 # Doing the same with some phyla
-
-Bacilla <- ggplot(filter(dataforbox_phyto, Variable == "Bacillariophyceae"))+
+Bac <- filter(dataforbox_phyto, Variable == "Bacillariophyceae")
+Bac$Variable <- "log(Bacillariophyceae +1)"
+Bacilla <- ggplot(Bac)+
   geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "log(Abondance en Bacillariophyceae +1)",colour="Station")+
+  labs(x = "Mois", y = "Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
@@ -175,12 +200,13 @@ Bacilla <- ggplot(filter(dataforbox_phyto, Variable == "Bacillariophyceae"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
-
-Dino <- ggplot(filter(dataforbox_phyto, Variable == "Dinophyceae"))+
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
+Dino <- filter(dataforbox_phyto, Variable == "Dinophyceae")
+Dino$Variable <- "log(Dinophyceae +1)"
+Dino <- ggplot(Dino)+
   geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "log(Abondance en Dinophyceae +1)",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
@@ -189,56 +215,15 @@ Dino <- ggplot(filter(dataforbox_phyto, Variable == "Dinophyceae"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-Cilio <- ggplot(filter(dataforbox_phyto, Variable == "Ciliophora"))+
-  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "log(Abondance en Ciliophora +1)",colour="Station")+
-  scale_colour_discrete(guide= "none")+
-  scale_fill_manual(values = cluster_col,guide="none")+
-  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
-  scale_x_continuous(breaks = c(1:12))+
-  facet_wrap(cluster ~ Variable, nrow = 4)+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
-  theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
 
-Hapto <- ggplot(filter(dataforbox_phyto, Variable == "Haptophyta"))+
-  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "log(Abondance en Haptophyta +1)",colour="Station")+
-  scale_colour_discrete(guide= "none")+
-  scale_fill_manual(values = cluster_col,guide="none")+
-  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
-  scale_x_continuous(breaks = c(1:12))+
-  facet_wrap(cluster ~ Variable, nrow = 4)+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
-  theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
-
-Crypto <- ggplot(filter(dataforbox_phyto, Variable == "Cryptophyceae"))+
-  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "log(Abondance en Cryptophyceae +1)",colour="Station")+
-  scale_colour_discrete(guide= "none")+
-  scale_fill_manual(values = cluster_col,guide="none")+
-  scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
-  scale_x_continuous(breaks = c(1:12))+
-  facet_wrap(cluster ~ Variable, nrow = 4)+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
-  theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
-plot_grid(Bacilla , Dino , Cilio  , Hapto , Crypto, ncol = 5)
-ggsave('Phyto_Mois_lgtermcluster_final_V2.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 300, height = 280, units = 'mm')
-
-shannon <- ggplot(filter(dataforbox_div, Variable == "Shannon"))+
+Sha <- filter(dataforbox_phyto, Variable == "Shannon")
+Sha$Variable <- "Indice de Shannon"
+shannon <- ggplot(Sha)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Indice de Shannon",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   #scale_y_continuous(breaks = seq(0,17, by = 3),limits = c(0,17))+
@@ -247,12 +232,14 @@ shannon <- ggplot(filter(dataforbox_div, Variable == "Shannon"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-pielou <- ggplot(filter(dataforbox_div, Variable == "Pielou"))+
+Piel <- filter(dataforbox_phyto, Variable == "Pielou")
+Piel$Variable <- "Indice de Pielou"
+pielou <- ggplot(Piel)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Indice de Pielou",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,1, by = 0.2),limits = c(0,1))+
@@ -261,12 +248,13 @@ pielou <- ggplot(filter(dataforbox_div, Variable == "Pielou"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
-
-bergerparker <- ggplot(filter(dataforbox_div, Variable == "BergerParker"))+
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
+BK <- filter(dataforbox_phyto, Variable == "BergerParker")
+BK$Variable <- "Indice de Berger-Parker"
+bergerparker <- ggplot(BK)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Indice de Berger-Parker",colour="Station")+
+  labs(x = "Mois", y = NULL,colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,1, by = 0.2),limits = c(0,1))+
@@ -275,13 +263,19 @@ bergerparker <- ggplot(filter(dataforbox_div, Variable == "BergerParker"))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
+Rspe <- filter(dataforbox_phyto, Variable == "Rspe")
+Rspe$Variable <- "Richesse spécifique"
 Rspe <- 
-  ggplot(filter(dataforbox_div, Variable == "Rspe"))+
+  ggplot(Rspe)+
   geom_boxplot(aes(y=value,x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
-  labs(x = "Mois", y = "Richesse spécifique",colour="Station")+
+  labs(x = "Mois", y = "
+  
+  
+  
+       Valeur",colour="Station")+
   scale_colour_discrete(guide= "none")+
   scale_fill_manual(values = cluster_col,guide="none")+
   scale_y_continuous(breaks = seq(0,50, by = 10),limits = c(0,50))+
@@ -290,13 +284,28 @@ Rspe <-
   theme_bw()+
   theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
   theme(strip.text = element_text(face = "bold", color = "black",
-                                  hjust = 0, size = 10),
-        strip.background = element_rect(fill = "grey"))
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-plot_grid(shannon , pielou , bergerparker,Rspe, ncol =4)
-ggsave('Div_Mois_lgtermcluster_final_V3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
+DB <- filter(dataforbox_phyto, Variable == "Dino/Bac")
+DB$Variable <- "log(Dinophyceae/Bacillariophyceae+1)"
+BacDino <- 
+  ggplot(DB)+
+  geom_boxplot(aes(y=log(value+1),x=Month,group = Month,fill= cluster,fill=cluster),linewidth = 0.5)+
+  labs(x = "Mois", y = NULL,colour="Station")+
+  scale_colour_discrete(guide= "none")+
+  scale_fill_manual(values = cluster_col,guide="none")+
+  scale_y_continuous(breaks = seq(0,1.5, by = 0.5),limits = c(0,1.5))+
+  scale_x_continuous(breaks = c(1:12))+
+  facet_wrap(cluster ~ Variable, nrow = 4)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1, size = 7))+
+  theme(strip.text = element_text(face = "bold", color = "black",
+                                  hjust = 0.5, size = 10),
+        strip.background = element_rect(fill = NULL))
 
-
+plot_grid(Bacilla, Dino,Rspe,shannon , pielou , bergerparker, ncol =6)
+#ggsave('Div_Mois_lgtermcluster_final_V3.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/cluster_description",dpi = 600, width = 400, height = 380, units = 'mm')
 
 
 ### Difference between cluster #####
@@ -353,6 +362,9 @@ DunnTest(data$BergerParker~data$cluster,method="BH")
 
 kruskal.test(data$Rspe~data$cluster)
 DunnTest(data$Rspe~data$cluster,method="BH") 
+
+kruskal.test(data$`Dino/Bac`~data$cluster)
+DunnTest(data$`Dino/Bac`~data$cluster,method="BH")
 
 ### Difference between cluster by season #####
 
