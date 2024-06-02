@@ -1,3 +1,5 @@
+# Script JY.Dias - Stage M2 #
+
 # Loading packages
 library(readr)
 library(dplyr)
@@ -228,7 +230,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original
        Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Calvi_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Calvi_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 datagraph <- data_Ansecarteau
@@ -254,7 +256,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Ansecarteau_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Ansecarteau_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 datagraph <- data_Antifer
@@ -280,7 +282,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Antifer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Antifer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Atso
 ggplot()+
@@ -305,7 +307,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Atso_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Atso_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Auger
 ggplot()+
@@ -330,7 +332,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Auger_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Auger_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Barcares
 ggplot()+
@@ -355,7 +357,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Barcares_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Barcares_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Boisdelachaise
 ggplot()+
@@ -380,7 +382,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Boisdelachaise_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Boisdelachaise_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Boulogne
 ggplot()+
@@ -405,7 +407,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Boulogne_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Boulogne_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Cabourg
 ggplot()+
@@ -430,7 +432,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Cabourg_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Cabourg_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Cornard
 ggplot()+
@@ -455,7 +457,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Cornard_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Cornard_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Dianacentre
 ggplot()+
@@ -480,7 +482,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Dianacentre_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Dianacentre_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Géfosse
 ggplot()+
@@ -505,7 +507,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Gefosse_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Gefosse_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Hebihens
 ggplot()+
@@ -530,7 +532,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Hebihens_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Hebihens_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Loguivy
 ggplot()+
@@ -555,7 +557,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Loguivy_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Loguivy_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_MenerRoue
 ggplot()+
@@ -580,7 +582,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('MenerRoue_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('MenerRoue_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_OuestLoscolo
 ggplot()+
@@ -605,7 +607,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('OuestLoscolo_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('OuestLoscolo_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 
 datagraph <- data_Setemer
@@ -631,7 +633,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Setemer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Setemer_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Teychan
 ggplot()+
@@ -656,7 +658,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Teychan_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Teychan_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Toulon
 ggplot()+
@@ -681,7 +683,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Toulon_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Toulon_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_ParcLeucate
 ggplot()+
@@ -705,7 +707,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('ParcLeucate_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('ParcLeucate_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 datagraph <- data_Bouzigues
 ggplot()+
@@ -729,7 +731,7 @@ ggplot()+
        x = "Date", y = "Concentration en chlorophylle",colour="Outlier",
        caption = "Bleu: serie regularise, Rouge: regularise + desaisonnalise, Vert:original,
               Rose : quantile 95%, rouge foncé 90 et Violet : 99% ")
-ggsave('Bouzigues_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
+#ggsave('Bouzigues_CHLORO.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/Outliers_change_trend/",dpi = 600, width = 400, height = 280, units = 'mm')
 
 }
 
