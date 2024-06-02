@@ -1,3 +1,5 @@
+# Script JY.Dias - Stage M2 #
+
 # Load packages
 library(ggplot2)
 library(maps)
@@ -77,5 +79,5 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
         legend.position = "bottom",plot.title = element_text(size=10,color ="black"),axis.text = element_text(size=8),axis.title.x = element_text(size=8),axis.title.y = element_text(size=8))+
   guides(color = guide_legend(override.aes = list(size = 3),direction = "horizontal"))
 
-# Save it as final version
-ggsave('maps_station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/final", dpi = 600, width = 200, height = 200, units = 'mm')
+# Save it 
+#ggsave('maps_station_lgtermcluster.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/final", dpi = 600, width = 200, height = 200, units = 'mm')
