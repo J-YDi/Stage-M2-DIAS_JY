@@ -19,4 +19,5 @@
 + Script_comparaison_blooms.R : Script used to compare blooms
 
 ##### data folder :
-
+data_download : contains the link to the initial datasets used for the training course provided by REPHY national coordination.
+contains also some datasets with information about the sampling
