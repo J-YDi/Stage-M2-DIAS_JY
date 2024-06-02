@@ -1,36 +1,22 @@
-# Stage-M2-JY
-Le rep github pour les scripts et fichiers de données du stage de M2 de Jean-Yves Dias
+# Phytoplankton community structure and composition on the French coast: long-term evolution and response to dinoflagellate and diatom blooms
+## Jean-Yves DIAS Internship - M2 Sciences de la Mer - Sorbonne University
+### Laboratories ISOMer & LS2N - Nantes University
 
-Projet_R.Rproj pour lier l'integralite des scripts et des dossiers
+#### Github organisation
 
-Dossier Scripts :
+##### Scripts folder :
++ Script_echantillonnage_description.R : Script used to analyze sampling at REPHY stations
++ Script_data_import.R : Script used to manipulate datasets and create new ones
++ Script_clustering_station.R : Script used to regionalize REPHY stations
++ Script_maps.R : Script used to vizualise the different regions through a map
++ Script_analyse_cluster.R : Script used to test differences between regions
++ Script_compo_communaute.R : Script used to determine community composition for different regions
++ Script_regul_desaison_trend_change_CHLOROA.R : Script used to detect blooms
++ Script_analyse_outliers_trend_change.R : Script used to return to the real dates of the detected blooms and validate the method
++ Script_caracterisation_bloom.R : Script used to perform some tests on the blooms obtained
++ Script_diversite_beta.R : Script used to calculate and compare beta diversity indices
++ Script_reseaux.R : Script used for all work on association ecological networks
++ Script_comparaison_blooms.R : Script used to compare blooms
 
-  Script_data_import.R : Code pour le traitement des donnees initiales pour creer des donnees pour les analyses     
-    (selection, filtrage...). Les nouveaux tableaux sont stockees dans un dossier data_modif.
-    
-  Script_echantillonnage_description.R : Code pour l'analyse de l'echantillonnage des stations (fréquence).
-  
-  Script_data_description.R : Code pour l'analyse de la description des donnees (Stats descriptives de chacun des 
-    parametres biologiques ou abiotiques.
-    
-  Script_CHLOROA_analysis.R : Code pour l'analyse du conflit entre les methodes de mesures de la chlorophylle et pour 
-  definir la.les methodes a preserver (ou ne pas preserver la chl-a)
+##### data folder :
 
-  Script_clustering_station.R : Code pour le clustering des stations pour faire la régionalisation
-  
-
-
-Dossier data :
-  Dossier necessaire pour le lien avec le Projet_R.Rproj, contient les donnees initiales, qui sont utilisees dans 
-  Script_data_import.R . Les donnees sont trop importantes en taille pour y etre stockées, le fichier takedata permet 
-  de les telecharger a partir d'un onedrive.
-
-
-Dossiers crees par les scripts (non present sur le Github) :
-
-  data_modif : lieu de stockage des nouveaux jeu de donnees à partir de Script_data_import
-  
-  output : lieu de stockage de sorties de R, contenant lui meme des dossiers crees par les scripts d'analyse
-    data : resultats sous forme de tableaux et 
-    graphs : resultats sous forme de graphes, qui peuvent eux meme avoir des dossiers par analyse
-    
