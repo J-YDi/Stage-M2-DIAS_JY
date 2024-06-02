@@ -1,6 +1,8 @@
 # Phytoplankton community structure and composition on the French coast: long-term evolution and response to dinoflagellate and diatom blooms
 ## Jean-Yves DIAS Internship - M2 Sciences de la Mer - Sorbonne University
 ### Laboratories ISOMer & LS2N - Nantes University
+### Supervised by Samuel Chaffron (LS2N), Pierre Gernez (ISOMer) & Victor Pochic (ISOMer, IFREMER)
+### 2024
 
 #### Github organisation
 
