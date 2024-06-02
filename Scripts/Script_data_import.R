@@ -1,6 +1,6 @@
-# Script V. Pochic modifie JY Dias
-# 16/01/2024
+# Script JY.Dias - Stage M2 #
 
+# Load packages
 library(dplyr)
 library(tidyverse)
 library(stringr)
@@ -484,7 +484,7 @@ Table <- read_delim("data_modif/Table_FLORTOT_Surf_9523_hydro_phyto_chloro_phylu
                                                                         grouping_mark = ""), trim_ws = TRUE)
 
 
-# Selection avec periode par station interet sur le critere de continuite de la chlorophylle CRITERE 5 ANS
+# Selection with period by station interest on chlorophyll continuity criterion CRITERION 5 YEARS
 Table_select <- filter(Table, Code_point_Libelle == "Point 1 Boulogne" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2022-12-31"))|
                          Code_point_Libelle == "At so" & (Date >= as.Date("2003-03-01") & Date <= as.Date("2022-12-31"))|
                          Code_point_Libelle == "Sète mer" & (Date >= as.Date("1995-01-01") & Date <= as.Date("2023-01-31"))|
@@ -597,7 +597,7 @@ Data_results[1,2] <- 0
 for (i in 1:7582){
   Table2 <- TableIDiv[i,]
   abondance_sums <- apply(Table2[,2:305],2,sum,na.rm=T)
-  print(i/7582 * 100)
+  #print(i/7582 * 100)
   Data_results[i,1] <- diversity(abondance_sums,index = "shannon")
   Data_results[i,2] <- diversity(abondance_sums,index = "simpson")
   Data_results[i,3] <- max(abondance_sums) / sum(abondance_sums)
