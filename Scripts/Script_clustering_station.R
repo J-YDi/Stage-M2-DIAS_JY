@@ -1,3 +1,5 @@
+# Script JY.Dias - Stage M2 #
+
 # Loading packages
 library(cluster)
 library(ClustGeo)
@@ -153,7 +155,7 @@ ggplot() + geom_polygon(data = Worldmap, aes(x = long, y = lat, group = group), 
   theme(panel.grid.major = element_line(color = 'gray10', size = .25), panel.grid.minor = NULL, panel.ontop = FALSE,
         panel.background = element_rect(fill = 'lightblue2'))+
   guides(color = guide_legend(override.aes = list(size = 10)))
-ggsave('maps_clust_EM_01_k5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/clustering_spatial", dpi = 600, width = 400, height = 200, units = 'mm')
+#ggsave('maps_clust_EM_01_k5.png', path = "C:/Users/jeany/OneDrive - etu.sorbonne-universite.fr/Stage ISOMER M2/Projet_R/output/graphs/clustering_spatial", dpi = 600, width = 400, height = 200, units = 'mm')
 
 #Save the clusters 
 write.csv2(data_clust_result,file="data_modif/clusters_EM_01_k5_final.csv", row.names = FALSE,dec = ".")
