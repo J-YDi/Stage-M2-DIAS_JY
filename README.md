@@ -6,12 +6,6 @@
 
 #### Github organisation
 
-## Jean-Yves DIAS Internship - M2 Sciences de la Mer - Sorbonne University
-### Laboratories ISOMer & LS2N - Nantes University
-### Supervised by Samuel Chaffron (LS2N), Pierre Gernez (ISOMer) & Victor Pochic (ISOMer, IFREMER-LERMPL)
-
-#### Github organisation
-
 ##### Scripts folder :
 + Script_echantillonnage_description.R : Script used to analyze sampling at REPHY stations
 + Script_data_import.R : Script used to manipulate datasets and create new ones
